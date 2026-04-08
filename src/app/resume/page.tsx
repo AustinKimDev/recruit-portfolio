@@ -61,14 +61,21 @@ export default function ResumePage() {
         <h2 className="mb-3 border-b border-zinc-200 pb-1 text-sm font-bold">
           주요 프로젝트
         </h2>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="space-y-2">
           {projects.map((p) => (
             <div key={p.name} className="text-[10px]">
-              <span className="font-semibold">{p.name}</span>
-              {p.isAI && <span className="ml-1 text-violet-600">[AI]</span>}
-              <span className="text-zinc-500"> — {p.stack.slice(0, 3).join(", ")}</span>
+              <div className="flex items-baseline gap-1">
+                <span className="font-semibold">{p.name}</span>
+                {p.isAI && <span className="text-violet-600">[AI]</span>}
+                <span className="text-zinc-400">— {p.summary}</span>
+              </div>
+              <ul className="mt-0.5 list-inside list-disc space-y-0 text-zinc-600">
+                {p.details.slice(0, 2).map((d, i) => (
+                  <li key={i}>{d}</li>
+                ))}
+              </ul>
               {p.metric && (
-                <span className="ml-1 text-emerald-700">({p.metric})</span>
+                <p className="mt-0.5 text-emerald-700">성과: {p.metric}</p>
               )}
             </div>
           ))}
@@ -107,7 +114,7 @@ export default function ResumePage() {
 
       {/* Footer */}
       <footer className="border-t border-zinc-200 pt-3 text-center text-[9px] text-zinc-400">
-        Built with Claude Code ✦ 2026
+        © 2026 김지동
       </footer>
     </div>
   );

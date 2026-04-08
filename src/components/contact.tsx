@@ -22,9 +22,7 @@ export function Contact() {
         </a>
       </div>
       <div className="mt-16 border-t border-zinc-800 pt-6 text-center">
-        <p className="font-mono text-xs text-zinc-600">
-          이 사이트는 Claude Code로 제작되었습니다 ✦ 2026
-        </p>
+        <p className="font-mono text-xs text-zinc-600">© 2026 김지동</p>
       </div>
     </SectionWrapper>
   );

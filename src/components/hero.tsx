@@ -39,9 +39,6 @@ export function Hero() {
               GitHub
             </a>
           </div>
-          <p className="mt-6 font-mono text-xs text-zinc-600">
-            Built with Claude Code ✦
-          </p>
         </motion.div>
       </div>
     </section>

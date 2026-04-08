@@ -16,8 +16,8 @@ export function About() {
           </div>
         ))}
       </div>
-      <p className="mt-6 text-sm text-zinc-500">
-        Claude Code, GPT 등 AI 도구를 일상 개발 워크플로우에 통합하여 생산성을 극대화합니다.
+      <p className="mt-6 text-sm text-zinc-300">
+        AI 에이전트 플랫폼 설계부터 LLM API 연동, 벡터 검색까지 — AI를 활용한 프로덕트를 직접 만듭니다.
       </p>
     </SectionWrapper>
   );
