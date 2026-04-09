@@ -5,6 +5,41 @@
   --font-family-mono: "JetBrains Mono", monospace;
   --color-accent: #8b5cf6;
   --color-accent-light: #a78bfa;
+
+  /* Theme-aware semantic tokens */
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-bg-card: var(--bg-card);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-border-base: var(--border);
+}
+
+/* Light theme (default) */
+:root {
+  --bg-primary: #fafafa;
+  --bg-secondary: #f4f4f5;
+  --bg-card: #ffffff;
+  --text-primary: #18181b;
+  --text-secondary: #52525b;
+  --text-muted: #a1a1aa;
+  --border: #e4e4e7;
+  --accent: #8b5cf6;
+  --accent-light: #a78bfa;
+}
+
+/* Dark theme */
+.dark {
+  --bg-primary: #09090b;
+  --bg-secondary: #18181b;
+  --bg-card: #18181b80;
+  --text-primary: #fafafa;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --border: #27272a;
+  --accent: #8b5cf6;
+  --accent-light: #a78bfa;
 }
 
 html {
@@ -13,6 +48,8 @@ html {
 
 body {
   font-family: "Pretendard Variable", Pretendard, system-ui, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 code, .font-mono {
