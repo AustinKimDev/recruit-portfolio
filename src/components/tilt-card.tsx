@@ -5,12 +5,13 @@ import { useRef, useState, useCallback, useEffect } from "react";
 interface TiltCardProps {
   children: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
   maxTilt?: number;
 }
 
 const FLAT_TRANSFORM = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)";
 
-export function TiltCard({ children, className = "", maxTilt = 5 }: TiltCardProps) {
+export function TiltCard({ children, className = "", style, maxTilt = 5 }: TiltCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   // Whether device supports hover (true = desktop pointer, false = touch)
   const [canHover, setCanHover] = useState(false);
@@ -81,7 +82,7 @@ export function TiltCard({ children, className = "", maxTilt = 5 }: TiltCardProp
     <div
       ref={cardRef}
       className={`relative overflow-hidden ${className}`}
-      style={tiltStyle}
+      style={{ ...style, ...tiltStyle }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >

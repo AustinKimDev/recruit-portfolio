@@ -23,7 +23,7 @@ const tagVariants = {
 
 const tagItemVariants = {
   hidden: { opacity: 0, y: 6 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" as const } },
 };
 
 export function Projects() {
@@ -55,7 +55,7 @@ export function Projects() {
               "relative rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
               activeTab === tab.id
                 ? "text-accent"
-                : "hover:text-zinc-300",
+                : "",
             ].join(" ")}
             style={activeTab !== tab.id ? { color: "var(--text-muted)" } : undefined}
           >
