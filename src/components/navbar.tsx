@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ThemeToggle } from "./theme-toggle";
 
 const NAV_LINKS = [
   { id: "about", label: "About" },
@@ -104,7 +105,11 @@ export function Navbar() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -16 }}
           transition={{ duration: 0.25, ease: "easeOut" }}
-          className="fixed top-0 left-0 right-0 z-50 border-b border-zinc-800/50 bg-zinc-950/80 backdrop-blur-lg"
+          className="fixed top-0 left-0 right-0 z-50 backdrop-blur-lg"
+          style={{
+            borderBottom: "1px solid var(--border)",
+            backgroundColor: "color-mix(in srgb, var(--bg-primary) 80%, transparent)",
+          }}
         >
           <nav
             aria-label="주요 내비게이션"
@@ -113,7 +118,8 @@ export function Navbar() {
             {/* Logo / Name */}
             <button
               onClick={() => scrollToSection("hero")}
-              className="font-mono text-sm font-medium text-zinc-300 transition hover:text-white"
+              className="font-mono text-sm font-medium transition"
+              style={{ color: "var(--text-secondary)" }}
               aria-label="맨 위로 이동"
             >
               김지동
@@ -128,11 +134,8 @@ export function Navbar() {
                     <button
                       onClick={() => scrollToSection(link.id)}
                       aria-current={isActive ? "location" : undefined}
-                      className={`relative px-3 py-2 text-sm transition-colors ${
-                        isActive
-                          ? "text-white"
-                          : "text-zinc-400 hover:text-zinc-200"
-                      }`}
+                      className="relative px-3 py-2 text-sm transition-colors"
+                      style={{ color: isActive ? "var(--text-primary)" : "var(--text-muted)" }}
                     >
                       {link.label}
                       {isActive && (
@@ -154,8 +157,7 @@ export function Navbar() {
 
             {/* Right side: theme toggle slot + hamburger */}
             <div className="flex items-center gap-3">
-              {/* Placeholder for theme toggle — another agent fills this */}
-              <div id="theme-toggle-slot" aria-hidden="true" />
+              <ThemeToggle />
 
               {/* Hamburger (mobile only) */}
               <button
@@ -168,17 +170,20 @@ export function Navbar() {
                 <motion.span
                   animate={mobileOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
                   transition={{ duration: 0.2 }}
-                  className="block h-0.5 w-6 bg-zinc-300"
+                  className="block h-0.5 w-6"
+                  style={{ backgroundColor: "var(--text-secondary)" }}
                 />
                 <motion.span
                   animate={mobileOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
                   transition={{ duration: 0.2 }}
-                  className="block h-0.5 w-6 bg-zinc-300"
+                  className="block h-0.5 w-6"
+                  style={{ backgroundColor: "var(--text-secondary)" }}
                 />
                 <motion.span
                   animate={mobileOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
                   transition={{ duration: 0.2 }}
-                  className="block h-0.5 w-6 bg-zinc-300"
+                  className="block h-0.5 w-6"
+                  style={{ backgroundColor: "var(--text-secondary)" }}
                 />
               </button>
             </div>
@@ -195,7 +200,8 @@ export function Navbar() {
                 animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.25, ease: "easeInOut" }}
-                className="overflow-hidden border-t border-zinc-800/50 md:hidden"
+                className="overflow-hidden md:hidden"
+                style={{ borderTop: "1px solid var(--border)" }}
               >
                 <ul role="list" className="flex flex-col py-2">
                   {NAV_LINKS.map((link) => {
@@ -205,11 +211,8 @@ export function Navbar() {
                         <button
                           onClick={() => scrollToSection(link.id)}
                           aria-current={isActive ? "location" : undefined}
-                          className={`w-full px-6 py-3 text-left text-base transition-colors ${
-                            isActive
-                              ? "text-white"
-                              : "text-zinc-400 hover:text-zinc-200"
-                          }`}
+                          className="w-full px-6 py-3 text-left text-base transition-colors"
+                          style={{ color: isActive ? "var(--text-primary)" : "var(--text-muted)" }}
                         >
                           {isActive && (
                             <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-accent align-middle" />

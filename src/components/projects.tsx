@@ -9,21 +9,42 @@ export function Projects() {
         {projects.map((p) => (
           <div
             key={p.name}
-            className="group rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 transition hover:border-zinc-700"
+            className="group rounded-xl p-5 transition"
+            style={{
+              border: "1px solid var(--border)",
+              backgroundColor: "var(--bg-card)",
+            }}
           >
             <div className="mb-1 flex items-center gap-2">
-              <h4 className="font-bold text-white">{p.name}</h4>
+              <h4
+                className="font-bold"
+                style={{ color: "var(--text-primary)" }}
+              >
+                {p.name}
+              </h4>
               {p.isAI && (
                 <span className="rounded-full bg-accent/20 px-2 py-0.5 text-[10px] font-semibold text-accent">
                   AI
                 </span>
               )}
             </div>
-            <p className="mb-3 text-xs text-zinc-500">{p.summary}</p>
+            <p
+              className="mb-3 text-xs"
+              style={{ color: "var(--text-muted)" }}
+            >
+              {p.summary}
+            </p>
             <ul className="mb-4 space-y-1.5">
               {p.details.map((d, i) => (
-                <li key={i} className="flex gap-2 text-sm leading-relaxed text-zinc-300">
-                  <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-zinc-600" />
+                <li
+                  key={i}
+                  className="flex gap-2 text-sm leading-relaxed"
+                  style={{ color: "var(--text-secondary)" }}
+                >
+                  <span
+                    className="mt-2 h-1 w-1 shrink-0 rounded-full"
+                    style={{ backgroundColor: "var(--text-muted)" }}
+                  />
                   {d}
                 </li>
               ))}
@@ -32,7 +53,11 @@ export function Projects() {
               {p.stack.map((s) => (
                 <span
                   key={s}
-                  className="rounded-md bg-zinc-800 px-2 py-0.5 font-mono text-[11px] text-zinc-400"
+                  className="rounded-md px-2 py-0.5 font-mono text-[11px]"
+                  style={{
+                    backgroundColor: "var(--bg-secondary)",
+                    color: "var(--text-muted)",
+                  }}
                 >
                   {s}
                 </span>
@@ -50,7 +75,11 @@ export function Projects() {
                     href={p.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="rounded-md border border-zinc-700 px-2.5 py-1 text-xs text-zinc-400 transition hover:border-zinc-500 hover:text-white"
+                    className="rounded-md px-2.5 py-1 text-xs transition"
+                    style={{
+                      border: "1px solid var(--border)",
+                      color: "var(--text-muted)",
+                    }}
                   >
                     GitHub &rarr;
                   </a>

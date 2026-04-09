@@ -8,7 +8,8 @@ export function Contact() {
       <div className="flex flex-wrap gap-6 text-sm">
         <a
           href={`mailto:${profile.email}`}
-          className="text-zinc-300 transition hover:text-white"
+          className="transition"
+          style={{ color: "var(--text-secondary)" }}
         >
           {profile.email}
         </a>
@@ -16,13 +17,22 @@ export function Contact() {
           href={profile.github}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-zinc-300 transition hover:text-white"
+          className="transition"
+          style={{ color: "var(--text-secondary)" }}
         >
           GitHub
         </a>
       </div>
-      <div className="mt-16 border-t border-zinc-800 pt-6 text-center">
-        <p className="font-mono text-xs text-zinc-600">© 2026 김지동</p>
+      <div
+        className="mt-16 pt-6 text-center"
+        style={{ borderTop: "1px solid var(--border)" }}
+      >
+        <p
+          className="font-mono text-xs"
+          style={{ color: "var(--text-muted)" }}
+        >
+          © 2026 김지동
+        </p>
       </div>
     </SectionWrapper>
   );
