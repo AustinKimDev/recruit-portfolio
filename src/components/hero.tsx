@@ -5,7 +5,7 @@ import { profile } from "@/data/profile";
 
 export function Hero() {
   return (
-    <section className="flex min-h-[80vh] flex-col justify-center px-6">
+    <section id="hero" className="flex min-h-[80vh] flex-col justify-center px-6">
       <div className="mx-auto max-w-4xl">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
