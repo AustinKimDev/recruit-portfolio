@@ -186,7 +186,7 @@ export function Skills() {
     <SectionWrapper id="skills">
       <h3 className="mb-10 text-lg font-semibold text-accent">Skills</h3>
       <motion.div
-        className="grid gap-5 sm:grid-cols-2"
+        className="columns-1 gap-5 sm:columns-2 lg:columns-3 [&>*]:mb-5 [&>*]:break-inside-avoid"
         variants={prefersReducedMotion ? undefined : categoryContainerVariants}
         initial={prefersReducedMotion ? undefined : "hidden"}
         whileInView={prefersReducedMotion ? undefined : "visible"}
@@ -195,6 +195,7 @@ export function Skills() {
         {skillCategories.map((cat) => (
           <motion.div
             key={cat.name}
+            className="inline-block w-full"
             variants={prefersReducedMotion ? undefined : categoryVariants}
           >
             <CategoryCard name={cat.name} items={cat.items} prefersReducedMotion={prefersReducedMotion} />
