@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
   title: "김지동 | 프론트엔드 개발자",
@@ -19,8 +20,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko" className="dark scroll-smooth">
+    <html lang="ko" suppressHydrationWarning>
       <head>
+        {/* FOUC 방지: 페인트 전 테마 클래스 적용 */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var t=localStorage.getItem('theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark');}else{document.documentElement.classList.remove('dark');}})()`,
+          }}
+        />
         <link
           rel="stylesheet"
           as="style"
@@ -32,7 +39,9 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap"
         />
       </head>
-      <body className="bg-zinc-950 text-zinc-100 antialiased">{children}</body>
+      <body className="antialiased" style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }
