@@ -1,17 +1,39 @@
 import type { Metadata } from "next";
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-jetbrains-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "김지동 | 프론트엔드 개발자",
   description:
-    "React/Next.js 프론트엔드 개발자. GIS 플랫폼 20+개 구축, AI 도구 적극 활용.",
+    "React/Next.js 기반 프론트엔드 개발자. 위성 GIS 플랫폼부터 AI 에이전트 시스템까지.",
+  keywords: [
+    "프론트엔드",
+    "개발자",
+    "React",
+    "Next.js",
+    "이력서",
+    "포트폴리오",
+  ],
+  authors: [{ name: "김지동" }],
   openGraph: {
     title: "김지동 | 프론트엔드 개발자",
-    description:
-      "React/Next.js 프론트엔드 개발자. GIS 플랫폼 20+개 구축, AI 도구 적극 활용.",
+    description: "React/Next.js 기반 프론트엔드 개발자 포트폴리오",
     type: "website",
+    locale: "ko_KR",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "김지동 | 프론트엔드 개발자",
+  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
@@ -20,7 +42,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko" suppressHydrationWarning>
+    <html lang="ko" suppressHydrationWarning className={jetbrainsMono.variable}>
       <head>
         {/* FOUC 방지: 페인트 전 테마 클래스 적용 */}
         <script
@@ -28,18 +50,22 @@ export default function RootLayout({
             __html: `(function(){var t=localStorage.getItem('theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark');}else{document.documentElement.classList.remove('dark');}})()`,
           }}
         />
+        {/* Pretendard: CDN 자체 호스팅 불가 → preconnect + font-display:swap 포함 stylesheet */}
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
         <link
           rel="stylesheet"
           as="style"
           crossOrigin="anonymous"
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
         />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap"
-        />
       </head>
-      <body className="antialiased" style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}>
+      <body
+        className="antialiased"
+        style={{
+          backgroundColor: "var(--bg-primary)",
+          color: "var(--text-primary)",
+        }}
+      >
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
