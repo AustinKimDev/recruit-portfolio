@@ -6,6 +6,7 @@ export interface Project {
   metric?: string;
   isAI?: boolean;
   github?: string;
+  link?: string;
 }
 
 export const projects: Project[] = [
@@ -86,8 +87,9 @@ export const projects: Project[] = [
     metric: "2년+ 무중단 운영",
   },
   {
-    name: "신송식당지도 (Lunchix)",
+    name: "Lunchix",
     summary: "AI 추천 맛집 지도 — 사내 사이드 프로젝트",
+    link: "https://lunchix.peo.kr",
     details: [
       "OpenAI API + pgvector 임베딩으로 벡터/공간 하이브리드 검색 구현",
       "PostGIS 기반 거리순 정렬 + AI 취향 매칭 결합 추천 알고리즘",
@@ -97,7 +99,7 @@ export const projects: Project[] = [
     isAI: true,
   },
   {
-    name: "Cosplan",
+    name: "Comitsu",
     summary: "코스플레이어 네트워킹 및 일정 관리 플랫폼 — 1인 개발",
     details: [
       "SwiftUI iOS 앱 + ASP.NET Core C# 백엔드 풀스택 아키텍처, ~25K LOC",
