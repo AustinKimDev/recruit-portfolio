@@ -2,7 +2,7 @@
 
 @theme inline {
   --font-family-sans: "Pretendard Variable", Pretendard, system-ui, sans-serif;
-  --font-family-mono: "JetBrains Mono", monospace;
+  --font-family-mono: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
   --color-accent: #8b5cf6;
   --color-accent-light: #a78bfa;
 
@@ -59,7 +59,7 @@ body {
 }
 
 code, .font-mono {
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
 }
 
 @media print {
