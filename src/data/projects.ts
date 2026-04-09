@@ -96,4 +96,45 @@ export const projects: Project[] = [
     stack: ["Next.js", "KakaoMap", "OpenAI", "pgvector", "PostGIS"],
     isAI: true,
   },
+  {
+    name: "Cosplan",
+    summary: "코스플레이어 네트워킹 및 일정 관리 플랫폼 — 1인 개발",
+    details: [
+      "SwiftUI iOS 앱 + ASP.NET Core C# 백엔드 풀스택 아키텍처, ~25K LOC",
+      "이벤트 초대/참여, 캘린더 일정 공유, 코스플레이어 검색/팔로우 소셜 기능",
+      "FCM 푸시 알림 + 딥링크, Keychain 인증, Docker/K8s 인프라 구성",
+    ],
+    stack: ["SwiftUI", "ASP.NET Core", "Entity Framework", "Docker", "K8s"],
+  },
+  {
+    name: "MateU",
+    summary: "매칭 기반 라이브 방송 및 출근부 관리 플랫폼",
+    details: [
+      "LiveKit WebRTC 라이브 스트리밍 + HLS, P2P 피어 서버, 음성/영상 통화 시스템",
+      "Toss Payments 결제 연동, 포인트/정산 시스템, 파트너 수익 관리",
+      "Supabase + PostgreSQL 30+ 마이그레이션, 관리자 대시보드, 타임시트 출근부 관리",
+    ],
+    stack: ["React", "TypeScript", "Node.js", "LiveKit", "Supabase", "Toss Payments"],
+  },
+  {
+    name: "Fruiting",
+    summary: "증권사 웹사이트 유지보수 — 외주 프로젝트",
+    details: [
+      "Next.js 12 + Redux 기반 증권 웹 프론트엔드, Highcharts/Chart.js 시세 차트",
+      "Django + Elasticsearch + MongoDB/MySQL 백엔드, Selenium 금융 데이터 크롤링",
+      "Expo React Native 크로스플랫폼 모바일 앱, BootPay/웰컴페이먼츠 결제 연동",
+    ],
+    stack: ["Next.js", "Redux", "Django", "Elasticsearch", "React Native", "Expo"],
+  },
+  {
+    name: "Stockelper",
+    summary: "AI 기반 주식 투자 분석 플랫폼 — 웹 개발 담당",
+    details: [
+      "Next.js 15 + React 19 풀스택, Prisma ORM, TanStack Query, SSE 스트리밍 AI 채팅",
+      "LangGraph 멀티에이전트(5개 전문 에이전트 + Supervisor) 연동 UI, 백테스팅/포트폴리오 시각화",
+      "Neo4j GraphRAG + Airflow 데이터 파이프라인 연동, React Flow 지식 그래프 시각화",
+    ],
+    stack: ["Next.js 15", "React 19", "Prisma", "TanStack Query", "React Flow"],
+    isAI: true,
+  },
 ];
