@@ -43,6 +43,30 @@ export function Projects() {
                 {p.metric}
               </p>
             )}
+            {(p.github || p.link) && (
+              <div className="mt-3 flex gap-3">
+                {p.github && (
+                  <a
+                    href={p.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-zinc-500 underline-offset-2 hover:text-zinc-300 hover:underline"
+                  >
+                    GitHub
+                  </a>
+                )}
+                {p.link && (
+                  <a
+                    href={p.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-zinc-500 underline-offset-2 hover:text-zinc-300 hover:underline"
+                  >
+                    Live
+                  </a>
+                )}
+              </div>
+            )}
           </div>
         ))}
       </div>
