@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { skillCategories, type SkillItem } from "@/data/skills";
 import { SectionWrapper } from "./section-wrapper";
 
@@ -15,8 +15,8 @@ const levelWidth: Record<NonNullable<SkillItem["level"]>, number> = {
 // Level → bar color class
 const levelBarColor: Record<NonNullable<SkillItem["level"]>, string> = {
   primary: "bg-accent",
-  secondary: "", // inline style
-  experience: "", // inline style
+  secondary: "",
+  experience: "",
 };
 
 // Level → label inline color (theme-aware)
@@ -78,6 +78,19 @@ const cardVariants = {
   },
 };
 
+// Category container stagger
+const categoryContainerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.1 },
+  },
+};
+
+const categoryVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
+};
+
 interface SkillBarProps {
   item: SkillItem;
   index: number;
@@ -128,18 +141,19 @@ function SkillBar({ item, index }: SkillBarProps) {
 interface CategoryCardProps {
   name: string;
   items: SkillItem[];
+  prefersReducedMotion: boolean | null;
 }
 
-function CategoryCard({ name, items }: CategoryCardProps) {
+function CategoryCard({ name, items, prefersReducedMotion }: CategoryCardProps) {
   const icon = categoryIcon[name] ?? "💡";
 
   return (
     <motion.div
       className="rounded-xl p-5 backdrop-blur-sm"
       style={{ border: "1px solid var(--border)", backgroundColor: "var(--bg-card)" }}
-      variants={cardVariants}
+      variants={prefersReducedMotion ? undefined : cardVariants}
       initial="rest"
-      whileHover="hover"
+      whileHover={prefersReducedMotion ? undefined : "hover"}
     >
       {/* Card header */}
       <div className="mb-4 flex items-center gap-2">
@@ -152,9 +166,9 @@ function CategoryCard({ name, items }: CategoryCardProps) {
       {/* Skill bars with stagger, animate on scroll */}
       <motion.div
         className="flex flex-col gap-3"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
+        variants={prefersReducedMotion ? undefined : containerVariants}
+        initial={prefersReducedMotion ? undefined : "hidden"}
+        whileInView={prefersReducedMotion ? undefined : "visible"}
         viewport={{ once: true, margin: "-60px" }}
       >
         {items.map((item, i) => (
@@ -166,14 +180,27 @@ function CategoryCard({ name, items }: CategoryCardProps) {
 }
 
 export function Skills() {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <SectionWrapper id="skills">
       <h3 className="mb-10 text-lg font-semibold text-accent">Skills</h3>
-      <div className="grid gap-5 sm:grid-cols-2">
+      <motion.div
+        className="grid gap-5 sm:grid-cols-2"
+        variants={prefersReducedMotion ? undefined : categoryContainerVariants}
+        initial={prefersReducedMotion ? undefined : "hidden"}
+        whileInView={prefersReducedMotion ? undefined : "visible"}
+        viewport={{ once: true, margin: "-60px" }}
+      >
         {skillCategories.map((cat) => (
-          <CategoryCard key={cat.name} name={cat.name} items={cat.items} />
+          <motion.div
+            key={cat.name}
+            variants={prefersReducedMotion ? undefined : categoryVariants}
+          >
+            <CategoryCard name={cat.name} items={cat.items} prefersReducedMotion={prefersReducedMotion} />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </SectionWrapper>
   );
 }

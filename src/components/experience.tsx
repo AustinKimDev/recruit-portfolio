@@ -1,16 +1,41 @@
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
 import { experiences } from "@/data/experience";
 import { SectionWrapper } from "./section-wrapper";
 
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.12 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, x: -24 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: "easeOut" } },
+};
+
 export function Experience() {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <SectionWrapper id="experience">
       <h3 className="mb-10 text-lg font-semibold text-accent">Experience</h3>
-      <div
+      <motion.div
         className="relative space-y-10 pl-8"
         style={{ borderLeft: "1px solid var(--border)" }}
+        variants={prefersReducedMotion ? undefined : containerVariants}
+        initial={prefersReducedMotion ? undefined : "hidden"}
+        whileInView={prefersReducedMotion ? undefined : "visible"}
+        viewport={{ once: true, margin: "-60px" }}
       >
         {experiences.map((exp) => (
-          <div key={exp.company} className="relative">
+          <motion.div
+            key={exp.company}
+            className="relative"
+            variants={prefersReducedMotion ? undefined : itemVariants}
+          >
             <div
               className="absolute -left-[41px] top-1 h-3 w-3 rounded-full border-2 border-accent"
               style={{ backgroundColor: "var(--bg-primary)" }}
@@ -54,9 +79,9 @@ export function Experience() {
                 ))}
               </ul>
             )}
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </SectionWrapper>
   );
 }
