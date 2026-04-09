@@ -1,3 +1,5 @@
+export type ProjectCategory = "ai" | "gis" | "fullstack" | "infra";
+
 export interface Project {
   name: string;
   summary: string;
@@ -7,6 +9,7 @@ export interface Project {
   isAI?: boolean;
   github?: string;
   link?: string;
+  categories?: ProjectCategory[];
 }
 
 export const projects: Project[] = [
@@ -20,6 +23,7 @@ export const projects: Project[] = [
     ],
     stack: ["Next.js", "React", "OpenLayers", "MapLibre", "Zustand"],
     metric: "로딩 불가 → 0.2초",
+    categories: ["gis"],
   },
   {
     name: "Bluebon",
@@ -30,6 +34,7 @@ export const projects: Project[] = [
       "Drizzle ORM + LibSQL 풀스택 아키텍처, NextAuth 인증, zod 스키마 검증",
     ],
     stack: ["Next.js 15", "Three.js", "Mapbox GL", "Drizzle ORM"],
+    categories: ["gis", "fullstack"],
   },
   {
     name: "telepix-ui",
@@ -40,6 +45,7 @@ export const projects: Project[] = [
       "v0.8.5까지 반복 릴리즈, 사내 전 프로젝트에서 공통 사용",
     ],
     stack: ["React", "Radix UI", "TailwindCSS 4", "Rollup", "Storybook"],
+    categories: [],
   },
   {
     name: "LIC 플랫폼",
@@ -50,6 +56,7 @@ export const projects: Project[] = [
       "react-pdf 리포트 뷰어, Vaul 모바일 Drawer — 텔레픽스 최대 규모 FE 프로젝트",
     ],
     stack: ["Remix v2", "Mapbox GL", "turf.js", "react-pdf"],
+    categories: ["gis"],
   },
   {
     name: "멀티모달 AI 시각화",
@@ -62,6 +69,7 @@ export const projects: Project[] = [
     stack: ["React", "react-force-graph", "Canvas API", "MSW"],
     metric: "500노드 실시간 시각화",
     isAI: true,
+    categories: ["ai"],
   },
   {
     name: "Orgentic",
@@ -74,6 +82,7 @@ export const projects: Project[] = [
     stack: ["React 19", "FastAPI", "Claude Agent SDK", "@xyflow/react"],
     isAI: true,
     github: "https://github.com/AustinKimDev/orgentic",
+    categories: ["ai", "fullstack"],
   },
   {
     name: "사내 인프라 전면 구축",
@@ -85,6 +94,7 @@ export const projects: Project[] = [
     ],
     stack: ["Docker", "Jenkins", "Terraform", "AWS", "Portainer"],
     metric: "2년+ 무중단 운영",
+    categories: ["infra"],
   },
   {
     name: "Lunchix",
@@ -97,6 +107,7 @@ export const projects: Project[] = [
     ],
     stack: ["Next.js", "KakaoMap", "OpenAI", "pgvector", "PostGIS"],
     isAI: true,
+    categories: ["ai", "fullstack"],
   },
   {
     name: "Comitsu",
@@ -107,6 +118,7 @@ export const projects: Project[] = [
       "FCM 푸시 알림 + 딥링크, Keychain 인증, Docker/K8s 인프라 구성",
     ],
     stack: ["SwiftUI", "ASP.NET Core", "Entity Framework", "Docker", "K8s"],
+    categories: ["fullstack"],
   },
   {
     name: "MateYou",
@@ -117,6 +129,7 @@ export const projects: Project[] = [
       "Docker Compose 기반 스트리밍 서버 인프라 구성, RTMP 인증 및 스트림 정리 자동화",
     ],
     stack: ["React", "TypeScript", "LiveKit", "HLS", "FFmpeg", "Docker", "Nginx"],
+    categories: ["fullstack", "infra"],
   },
   {
     name: "증권사 웹사이트",
@@ -127,6 +140,7 @@ export const projects: Project[] = [
       "Expo React Native 앱 초기 설정 (EAS 빌드, WebView, 푸시알림 훅)",
     ],
     stack: ["Next.js 13", "Redux", "Node.js", "BootPay", "Expo", "Elasticsearch"],
+    categories: ["fullstack"],
   },
   {
     name: "Stockelper",
@@ -138,5 +152,6 @@ export const projects: Project[] = [
     ],
     stack: ["Next.js 15", "React 19", "Prisma", "TanStack Query", "Docker"],
     isAI: true,
+    categories: ["ai", "fullstack"],
   },
 ];
