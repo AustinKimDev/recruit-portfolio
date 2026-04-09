@@ -44,15 +44,15 @@ export function Projects() {
               </p>
             )}
             {(p.github || p.link) && (
-              <div className="mt-3 flex gap-3">
+              <div className="mt-3 flex gap-2">
                 {p.github && (
                   <a
                     href={p.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs text-zinc-500 underline-offset-2 hover:text-zinc-300 hover:underline"
+                    className="rounded-md border border-zinc-700 px-2.5 py-1 text-xs text-zinc-400 transition hover:border-zinc-500 hover:text-white"
                   >
-                    GitHub
+                    GitHub &rarr;
                   </a>
                 )}
                 {p.link && (
@@ -60,9 +60,9 @@ export function Projects() {
                     href={p.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs text-zinc-500 underline-offset-2 hover:text-zinc-300 hover:underline"
+                    className="rounded-md border border-accent/30 bg-accent/10 px-2.5 py-1 text-xs text-accent transition hover:border-accent/60 hover:bg-accent/20"
                   >
-                    Live
+                    Live &rarr;
                   </a>
                 )}
               </div>
