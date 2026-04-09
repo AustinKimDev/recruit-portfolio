@@ -1,12 +1,58 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
 import { profile } from "@/data/profile";
 
 export function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const prefersReducedMotion = useReducedMotion();
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  // Parallax: orbs move slower than scroll
+  const orb1Y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const orb2Y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const orb3Y = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+
   return (
-    <section className="flex min-h-[80vh] flex-col justify-center px-6">
-      <div className="mx-auto max-w-4xl">
+    <section
+      ref={sectionRef}
+      className="relative flex min-h-[80vh] flex-col justify-center overflow-hidden px-6"
+    >
+      {/* Decorative background orbs */}
+      {!prefersReducedMotion && (
+        <>
+          {/* Primary orb — top right */}
+          <motion.div
+            aria-hidden="true"
+            style={{ y: orb1Y, willChange: "transform" }}
+            className="pointer-events-none absolute right-[-10%] top-[-5%] h-[480px] w-[480px] rounded-full bg-accent/10 blur-[120px]"
+          />
+          {/* Secondary orb — bottom left */}
+          <motion.div
+            aria-hidden="true"
+            style={{ y: orb2Y, willChange: "transform" }}
+            className="pointer-events-none absolute bottom-[0%] left-[-15%] h-[360px] w-[360px] rounded-full bg-indigo-500/8 blur-[100px]"
+          />
+          {/* Accent orb — center right */}
+          <motion.div
+            aria-hidden="true"
+            style={{ y: orb3Y, willChange: "transform" }}
+            className="pointer-events-none absolute right-[20%] top-[40%] h-[200px] w-[200px] rounded-full bg-violet-500/6 blur-[80px]"
+          />
+        </>
+      )}
+
+      {/* Content with subtle parallax */}
+      <motion.div
+        style={prefersReducedMotion ? undefined : { y: contentY, willChange: "transform" }}
+        className="relative mx-auto max-w-4xl"
+      >
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -40,7 +86,7 @@ export function Hero() {
             </a>
           </div>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }
