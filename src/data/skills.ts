@@ -45,7 +45,7 @@ export const skillCategories: SkillCategory[] = [
     name: "Backend",
     items: [
       { name: "Node.js (Express)", projectCount: "3", level: "secondary" },
-      { name: "Python (FastAPI / Django)", projectCount: "10", level: "secondary" },
+      { name: "Python (FastAPI)", projectCount: "8", level: "secondary" },
       { name: "C# (ASP.NET Core / WPF)", projectCount: "7", level: "secondary" },
       { name: "Rust (Axum)", projectCount: "1", level: "experience" },
     ],
@@ -56,7 +56,6 @@ export const skillCategories: SkillCategory[] = [
       { name: "PostgreSQL / Supabase", projectCount: "6", level: "secondary" },
       { name: "MongoDB", projectCount: "3", level: "secondary" },
       { name: "Elasticsearch", projectCount: "2", level: "experience" },
-      { name: "Neo4j", projectCount: "1", level: "experience" },
     ],
   },
   {
@@ -75,7 +74,6 @@ export const skillCategories: SkillCategory[] = [
       { name: "Claude Code", level: "primary" },
       { name: "Claude Agent SDK", level: "secondary" },
       { name: "OpenAI API", level: "secondary" },
-      { name: "LangGraph / LangChain", projectCount: "2", level: "secondary" },
       { name: "Gemini", level: "experience" },
     ],
   },
