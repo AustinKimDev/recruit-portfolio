@@ -9,14 +9,25 @@ export function About() {
         {profile.stats.map((stat) => (
           <div
             key={stat.label}
-            className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 text-center"
+            className="rounded-xl p-5 text-center"
+            style={{
+              border: "1px solid var(--border)",
+              backgroundColor: "var(--bg-card)",
+            }}
           >
-            <p className="text-2xl font-bold text-white">{stat.value}</p>
-            <p className="mt-1 text-sm text-zinc-400">{stat.label}</p>
+            <p
+              className="text-2xl font-bold"
+              style={{ color: "var(--text-primary)" }}
+            >
+              {stat.value}
+            </p>
+            <p className="mt-1 text-sm" style={{ color: "var(--text-muted)" }}>
+              {stat.label}
+            </p>
           </div>
         ))}
       </div>
-      <p className="mt-6 text-sm text-zinc-300">
+      <p className="mt-6 text-sm" style={{ color: "var(--text-secondary)" }}>
         AI 에이전트 플랫폼 설계부터 LLM API 연동, 벡터 검색까지 — AI를 활용한 프로덕트를 직접 만듭니다.
       </p>
     </SectionWrapper>
