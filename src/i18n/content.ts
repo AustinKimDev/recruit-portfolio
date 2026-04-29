@@ -23,10 +23,26 @@ export const copy = {
         "지도/GIS, 데이터 시각화, 인증, 배포까지 직접 다루며 데이터가 무거운 제품을 끝까지 굴리는 프론트엔드 개발자입니다.",
       githubRepo: "https://github.com/AustinKimDev/recruit-portfolio",
       stats: [
-        { label: "위성영상 응답 개선", value: "0.2초" },
-        { label: "인프라 안정 운영", value: "2년+" },
-        { label: "지식그래프 시각화", value: "500노드" },
-        { label: "라이브/근태 운영 모듈", value: "HLS + Timesheet" },
+        {
+          label: "위성영상이 비어 보이던 병목",
+          value: "0.2초",
+          detail: "WMTS 캐시와 좌표계 정합으로 탐색 응답 흐름을 줄였습니다.",
+        },
+        {
+          label: "잦은 네트워크/배포 장애",
+          value: "2년+",
+          detail: "사내 네트워크와 Jenkins/Docker 배포 기반을 안정화했습니다.",
+        },
+        {
+          label: "AI 산출물 검증 지연",
+          value: "500노드",
+          detail: "브라우저 파서와 Canvas 지식그래프로 분석 결과를 연결했습니다.",
+        },
+        {
+          label: "방송과 내부 운영의 분리",
+          value: "HLS + Timesheet",
+          detail: "LiveKit/HLS 방송 경로와 Supabase 근태 모듈을 함께 구현했습니다.",
+        },
       ],
       impact: [
         "위성영상 로딩 불가 상태를 WMTS 캐시 구성으로 0.2초 응답 흐름까지 개선",
@@ -42,20 +58,21 @@ export const copy = {
     },
     about: {
       title: "소개",
+      proofTitle: "제가 맡아온 문제는 이런 형태였습니다.",
       body:
-        "백엔드와 인프라에서 시작해 프론트엔드로 옮겨왔습니다. 그래서 화면을 만들 때도 API, 데이터 모델, 인증, 배포 경로까지 같이 봅니다.",
+        "제가 잘하는 일은 지도, 영상, 운영 데이터처럼 무거운 제품을 사용자가 판단할 수 있는 화면으로 바꾸는 것입니다. 백엔드와 인프라를 먼저 겪었기 때문에 프론트엔드에서도 API, 데이터 모델, 인증, 배포, 장애 조건을 함께 봅니다.",
       cards: [
         {
-          title: "지도/GIS 화면",
-          body: "OpenLayers, Mapbox GL, MapLibre, Leaflet을 프로젝트 성격에 맞게 선택했고 WMTS/WMS, AOI, 좌표계 변환, 마커 클러스터링까지 다뤘습니다.",
+          title: "지도/GIS를 제품 흐름의 중심에 둡니다.",
+          body: "단순 지도 표시보다 좌표계 정합, 타일 캐시, AOI 편집, 관측 데이터 레이어, 대량 마커 상태를 업무 흐름에 맞게 설계했습니다.",
         },
         {
-          title: "방송/운영 인프라",
-          body: "LiveKit, HLS, FFmpeg, Nginx, CloudFront, Docker Compose로 방송 경로를 만들고, MateYou 내부 timesheet 운영 모듈까지 연결했습니다.",
+          title: "운영 기능을 프론트 밖까지 이어 붙입니다.",
+          body: "LiveKit/HLS 방송, FFmpeg/Nginx/CloudFront 배포 경로, Supabase Realtime 근태 모듈처럼 화면 뒤의 실행 조건까지 같이 만들었습니다.",
         },
         {
-          title: "제품 운영 감각",
-          body: "인증, 네트워크 장애, CI/CD, 사내 패키지 운영까지 처리했습니다. 화면 구현에서 멈추지 않고 제품이 돌아가는 조건을 챙깁니다.",
+          title: "제품이 계속 돌아가는 조건을 챙깁니다.",
+          body: "인증 토큰, 권한, 결제 콜백, 네트워크 장애, CI/CD, 사내 패키지 운영까지 다루며 기능 출시 이후의 유지보수 비용을 줄이는 쪽으로 일합니다.",
         },
       ],
     },
@@ -119,10 +136,26 @@ export const copy = {
         "I build data-heavy frontend products across GIS, visualization, auth, streaming, deployment, and the infrastructure around them.",
       githubRepo: "https://github.com/AustinKimDev/recruit-portfolio",
       stats: [
-        { label: "Satellite imagery response", value: "0.2s" },
-        { label: "Stable infra operation", value: "2y+" },
-        { label: "Knowledge graph render", value: "500 nodes" },
-        { label: "Live/timesheet module", value: "HLS + Timesheet" },
+        {
+          label: "Blank satellite imagery bottleneck",
+          value: "0.2s",
+          detail: "Reduced the map exploration path with WMTS caching and CRS alignment.",
+        },
+        {
+          label: "Recurring network/deploy failures",
+          value: "2y+",
+          detail: "Stabilized internal networking and Jenkins/Docker deployment foundations.",
+        },
+        {
+          label: "Delayed AI output validation",
+          value: "500 nodes",
+          detail: "Linked browser parsing with a Canvas-based knowledge graph.",
+        },
+        {
+          label: "Separated streaming and operations",
+          value: "HLS + Timesheet",
+          detail: "Built both LiveKit/HLS streaming and Supabase-backed timesheet workflows.",
+        },
       ],
       impact: [
         "Reduced blank satellite imagery loading paths into a 0.2s WMTS cache-backed flow",
@@ -138,20 +171,21 @@ export const copy = {
     },
     about: {
       title: "About",
+      proofTitle: "These are the kinds of problems I have owned.",
       body:
-        "I started from backend and infrastructure, then moved into frontend. That background makes me design UI with APIs, data models, auth, and deployment paths in mind.",
+        "My strength is turning heavy map, media, and operations data into interfaces people can actually use to make decisions. Because I started with backend and infrastructure, I design frontend work with APIs, data models, auth, deployment paths, and failure modes in mind.",
       cards: [
         {
-          title: "GIS interfaces",
-          body: "I have used OpenLayers, Mapbox GL, MapLibre, and Leaflet for WMTS/WMS, AOI editing, CRS transforms, and marker-heavy workflows.",
+          title: "I place GIS at the center of product workflows.",
+          body: "Beyond rendering a map, I have handled CRS alignment, tile caching, AOI editing, observation layers, and marker-heavy states around the actual operator flow.",
         },
         {
-          title: "Streaming infra",
-          body: "I built live streaming paths with LiveKit, HLS, FFmpeg, Nginx, CloudFront, and Docker Compose, plus MateYou's internal timesheet module.",
+          title: "I connect operations beyond the frontend.",
+          body: "I have built LiveKit/HLS streaming, FFmpeg/Nginx/CloudFront delivery paths, and Supabase Realtime timesheet modules alongside the user-facing screens.",
         },
         {
-          title: "Product operations",
-          body: "I handle auth, network issues, CI/CD, and internal packages so the product can keep running beyond the UI layer.",
+          title: "I care about what keeps the product running.",
+          body: "Auth tokens, permissions, payment callbacks, network failures, CI/CD, and internal packages are part of how I reduce maintenance cost after launch.",
         },
       ],
     },
