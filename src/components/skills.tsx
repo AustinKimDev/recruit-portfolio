@@ -1,84 +1,11 @@
 "use client";
 
-import type React from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { skillCategories, type SkillItem } from "@/data/skills";
+import { localize } from "@/data/projects";
+import { useI18n } from "@/i18n/i18n-provider";
 import { SectionWrapper } from "./section-wrapper";
 
-// Level → bar width (%)
-const levelWidth: Record<NonNullable<SkillItem["level"]>, number> = {
-  primary: 92,
-  secondary: 68,
-  experience: 38,
-};
-
-// Level → bar color class
-const levelBarColor: Record<NonNullable<SkillItem["level"]>, string> = {
-  primary: "bg-accent",
-  secondary: "",
-  experience: "",
-};
-
-// Level → label inline color (theme-aware)
-const levelTagStyle: Record<NonNullable<SkillItem["level"]>, React.CSSProperties> = {
-  primary: { color: "#8b5cf6" },
-  secondary: { color: "var(--text-secondary)" },
-  experience: { color: "var(--text-muted)" },
-};
-
-// Category icon map
-const categoryIcon: Record<string, string> = {
-  Frontend: "⚛️",
-  "GIS / 지도": "🗺️",
-  "데이터 시각화": "📊",
-  Backend: "⚙️",
-  Database: "🗄️",
-  "Infra / DevOps": "🐳",
-  "AI Tools": "🤖",
-};
-
-// Stagger container
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-// Bar fill animation
-const barVariants = {
-  hidden: { width: 0 },
-  visible: (targetWidth: number) => ({
-    width: `${targetWidth}%`,
-    transition: {
-      duration: 0.8,
-      ease: "easeOut" as const,
-    },
-  }),
-};
-
-// Row fade-in
-const rowVariants = {
-  hidden: { opacity: 0, x: -8 },
-  visible: (i: number) => ({
-    opacity: 1,
-    x: 0,
-    transition: { delay: i * 0.06, duration: 0.4 },
-  }),
-};
-
-// Card hover elevation
-const cardVariants = {
-  rest: { y: 0 },
-  hover: {
-    y: -4,
-    transition: { duration: 0.2 },
-  },
-};
-
-// Category container stagger
 const categoryContainerVariants = {
   hidden: {},
   visible: {
@@ -91,114 +18,61 @@ const categoryVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" as const } },
 };
 
-interface SkillBarProps {
-  item: SkillItem;
-  index: number;
-}
-
-function SkillBar({ item, index }: SkillBarProps) {
-  const level = item.level ?? "secondary";
-  const targetWidth = levelWidth[level];
-  const barColor = levelBarColor[level];
-  const tagStyle = levelTagStyle[level];
+function SkillRow({ item }: { item: SkillItem }) {
+  const { locale } = useI18n();
 
   return (
-    <motion.div className="group relative" custom={index} variants={rowVariants}>
-      {/* Skill label row */}
-      <div className="mb-1.5 flex items-center justify-between">
-        <span className="text-sm font-medium" style={tagStyle}>{item.name}</span>
-        {item.projectCount && (
-          <span className="text-xs tabular-nums" style={{ color: "var(--text-muted)" }}>
-            {item.projectCount} projects
-          </span>
-        )}
-      </div>
-
-      {/* Progress bar track */}
-      <div className="relative h-1.5 w-full overflow-hidden rounded-full" style={{ backgroundColor: "var(--bg-secondary)" }}>
-        <motion.div
-          className={`absolute left-0 top-0 h-full rounded-full ${barColor}`}
-          style={
-            level === "secondary"
-              ? { backgroundColor: "var(--text-muted)" }
-              : level === "experience"
-              ? { backgroundColor: "var(--border)" }
-              : undefined
-          }
-          custom={targetWidth}
-          variants={barVariants}
-          role="progressbar"
-          aria-valuenow={targetWidth}
-          aria-valuemin={0}
-          aria-valuemax={100}
-          aria-label={`${item.name} proficiency`}
-        />
-      </div>
-    </motion.div>
-  );
-}
-
-interface CategoryCardProps {
-  name: string;
-  items: SkillItem[];
-  prefersReducedMotion: boolean | null;
-}
-
-function CategoryCard({ name, items, prefersReducedMotion }: CategoryCardProps) {
-  const icon = categoryIcon[name] ?? "💡";
-
-  return (
-    <motion.div
-      className="rounded-xl p-5 backdrop-blur-sm"
-      style={{ border: "1px solid var(--border)", backgroundColor: "var(--bg-card)" }}
-      variants={prefersReducedMotion ? undefined : cardVariants}
-      initial="rest"
-      whileHover={prefersReducedMotion ? undefined : "hover"}
-    >
-      {/* Card header */}
-      <div className="mb-4 flex items-center gap-2">
-        <span className="text-xl leading-none" aria-hidden="true">
-          {icon}
+    <div className="border-t py-3 first:border-t-0 first:pt-0" style={{ borderColor: "var(--border)" }}>
+      <div className="mb-1 flex flex-wrap items-center gap-2">
+        <span className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
+          {item.name}
         </span>
-        <h4 className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>{name}</h4>
       </div>
-
-      {/* Skill bars with stagger, animate on scroll */}
-      <motion.div
-        className="flex flex-col gap-3"
-        variants={prefersReducedMotion ? undefined : containerVariants}
-        initial={prefersReducedMotion ? undefined : "hidden"}
-        whileInView={prefersReducedMotion ? undefined : "visible"}
-        viewport={{ once: true, margin: "-60px" }}
-      >
-        {items.map((item, i) => (
-          <SkillBar key={item.name} item={item} index={i} />
-        ))}
-      </motion.div>
-    </motion.div>
+      <p className="text-xs leading-5" style={{ color: "var(--text-secondary)" }}>
+        {localize(item.evidence, locale)}
+      </p>
+    </div>
   );
 }
 
 export function Skills() {
   const prefersReducedMotion = useReducedMotion();
+  const { locale, t } = useI18n();
 
   return (
     <SectionWrapper id="skills">
-      <h3 className="mb-10 text-lg font-semibold text-accent">Skills</h3>
+      <div className="mb-10 flex flex-col gap-2">
+        <h3 className="section-title">{t.skills.title}</h3>
+        <p className="max-w-3xl text-sm leading-6" style={{ color: "var(--text-secondary)" }}>
+          {t.skills.body}
+        </p>
+      </div>
       <motion.div
-        className="columns-1 gap-5 sm:columns-2 lg:columns-3 [&>*]:mb-5 [&>*]:break-inside-avoid"
+        className="grid gap-5 md:grid-cols-2"
         variants={prefersReducedMotion ? undefined : categoryContainerVariants}
-        initial={prefersReducedMotion ? undefined : "hidden"}
+        initial={false}
         whileInView={prefersReducedMotion ? undefined : "visible"}
         viewport={{ once: true, margin: "-60px" }}
       >
         {skillCategories.map((cat) => (
           <motion.div
-            key={cat.name}
-            className="inline-block w-full"
+            key={localize(cat.name, "ko")}
+            className="rounded-lg p-5"
             variants={prefersReducedMotion ? undefined : categoryVariants}
+            initial={false}
+            style={{ border: "1px solid var(--border)", backgroundColor: "var(--bg-card)" }}
           >
-            <CategoryCard name={cat.name} items={cat.items} prefersReducedMotion={prefersReducedMotion} />
+            <h4 className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
+              {localize(cat.name, locale)}
+            </h4>
+            <p className="mt-2 min-h-10 text-xs leading-5" style={{ color: "var(--text-muted)" }}>
+              {localize(cat.summary, locale)}
+            </p>
+            <div className="mt-4">
+              {cat.items.map((item) => (
+                <SkillRow key={item.name} item={item} />
+              ))}
+            </div>
           </motion.div>
         ))}
       </motion.div>

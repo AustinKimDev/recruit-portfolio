@@ -1,105 +1,66 @@
 "use client";
 
-import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
-import { useRef } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import { CyberOrbit } from "@/components/cyber-orbit";
 import { profile } from "@/data/profile";
+import { useI18n } from "@/i18n/i18n-provider";
 
 export function Hero() {
-  const sectionRef = useRef<HTMLElement>(null);
   const prefersReducedMotion = useReducedMotion();
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
-
-  // Parallax: orbs move slower than scroll
-  const orb1Y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const orb2Y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const orb3Y = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+  const { t } = useI18n();
 
   return (
     <section
       id="hero"
-      ref={sectionRef}
-      className="relative flex min-h-[80vh] flex-col justify-center overflow-hidden px-6"
+      className="relative flex min-h-[92vh] items-center overflow-hidden px-6 pb-20 pt-32"
     >
-      {/* Decorative background orbs */}
-      {!prefersReducedMotion && (
-        <>
-          {/* Primary orb — top right */}
-          <motion.div
-            aria-hidden="true"
-            style={{ y: orb1Y, willChange: "transform" }}
-            className="pointer-events-none absolute right-[-10%] top-[-5%] h-[480px] w-[480px] rounded-full bg-accent/10 blur-[120px]"
-          />
-          {/* Secondary orb — bottom left */}
-          <motion.div
-            aria-hidden="true"
-            style={{ y: orb2Y, willChange: "transform" }}
-            className="pointer-events-none absolute bottom-[0%] left-[-15%] h-[360px] w-[360px] rounded-full bg-indigo-500/8 blur-[100px]"
-          />
-          {/* Accent orb — center right */}
-          <motion.div
-            aria-hidden="true"
-            style={{ y: orb3Y, willChange: "transform" }}
-            className="pointer-events-none absolute right-[20%] top-[40%] h-[200px] w-[200px] rounded-full bg-violet-500/6 blur-[80px]"
-          />
-        </>
-      )}
+      <div className="cyber-grid absolute inset-0" aria-hidden="true" />
+      <div className="plasma-field absolute inset-0" aria-hidden="true" />
 
-      {/* Content with subtle parallax */}
       <motion.div
-        style={prefersReducedMotion ? undefined : { y: contentY, willChange: "transform" }}
-        className="relative mx-auto max-w-4xl"
+        initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 24 }}
+        animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, ease: "easeOut" }}
+        className="relative z-10 mx-auto grid w-full max-w-7xl gap-10 lg:grid-cols-[1fr_520px] lg:items-center"
       >
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <p className="mb-3 font-mono text-sm text-accent">안녕하세요,</p>
-          <h1
-            className="mb-2 text-5xl font-bold tracking-tight sm:text-6xl"
-            style={{ color: "var(--text-primary)" }}
-          >
-            {profile.name}
+        <div>
+          <h1 className="max-w-4xl text-5xl font-black leading-[1.02] tracking-normal sm:text-7xl">
+            {t.hero.headline}
           </h1>
-          <h2
-            className="mb-6 text-2xl font-medium sm:text-3xl"
-            style={{ color: "var(--text-muted)" }}
-          >
-            {profile.title}
-          </h2>
           <p
-            className="mb-8 max-w-2xl text-lg leading-relaxed"
+            className="mt-7 max-w-2xl text-lg leading-8"
             style={{ color: "var(--text-secondary)" }}
           >
-            {profile.tagline}
+            {t.profile.tagline}
           </p>
-          <div className="flex flex-wrap gap-4">
-            <a
-              href="/resume"
-              target="_blank"
-              className="rounded-lg bg-accent px-6 py-3 font-medium text-white transition hover:bg-accent-light"
-            >
-              이력서 PDF
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a href="#projects" className="cyber-button">
+              {t.hero.primary}
             </a>
             <a
               href={profile.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-lg px-6 py-3 font-medium transition"
-              style={{
-                border: "1px solid var(--border)",
-                color: "var(--text-secondary)",
-              }}
+              className="cyber-button-secondary"
             >
-              GitHub
+              {t.hero.secondary}
+            </a>
+            <a
+              href={profile.siteRepo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cyber-button-secondary"
+            >
+              {t.nav.githubRepo}
             </a>
           </div>
-        </motion.div>
+        </div>
+
+        <div className="relative">
+          <div className="absolute inset-0 rounded-lg bg-fuchsia-500/20 blur-3xl" aria-hidden="true" />
+          <CyberOrbit />
+        </div>
       </motion.div>
     </section>
   );

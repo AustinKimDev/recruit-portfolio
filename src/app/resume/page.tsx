@@ -2,17 +2,20 @@
 
 import { profile } from "@/data/profile";
 import { experiences } from "@/data/experience";
-import { projects } from "@/data/projects";
+import { localize, projects } from "@/data/projects";
 import { skillCategories } from "@/data/skills";
+import { useI18n } from "@/i18n/i18n-provider";
 import "@/styles/print.css";
 
 export default function ResumePage() {
+  const { locale, t } = useI18n();
+
   return (
     <div className="mx-auto max-w-[210mm] bg-white p-8 text-zinc-900 print:p-0">
       {/* Print Button */}
       <button
         onClick={() => window.print()}
-        className="no-print mb-6 rounded-lg bg-violet-600 px-4 py-2 text-sm text-white hover:bg-violet-700"
+        className="no-print mb-6 rounded-lg bg-teal-700 px-4 py-2 text-sm text-white hover:bg-teal-800"
       >
         PDF로 저장 (Ctrl+P)
       </button>
@@ -20,7 +23,7 @@ export default function ResumePage() {
       {/* Header */}
       <header className="mb-6 border-b border-zinc-200 pb-4">
         <h1 className="text-2xl font-bold">{profile.name}</h1>
-        <p className="text-sm text-zinc-600">{profile.title}</p>
+        <p className="text-sm text-zinc-600">{t.profile.title}</p>
         <div className="mt-2 flex flex-wrap gap-4 text-xs text-zinc-500">
           <span>{profile.email}</span>
           <span>{profile.phone}</span>
@@ -30,7 +33,18 @@ export default function ResumePage() {
 
       {/* Summary */}
       <section className="mb-5">
-        <p className="text-xs leading-relaxed text-zinc-700">{profile.tagline}</p>
+        <p className="text-xs leading-relaxed text-zinc-700">{t.profile.tagline}</p>
+      </section>
+
+      <section className="mb-5">
+        <h2 className="mb-3 border-b border-zinc-200 pb-1 text-sm font-bold">
+          핵심 성과
+        </h2>
+        <ul className="list-inside list-disc space-y-0.5 text-[10px] text-zinc-700">
+          {t.profile.impact.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
       </section>
 
       {/* Experience */}
@@ -39,16 +53,16 @@ export default function ResumePage() {
           경력
         </h2>
         {experiences.map((exp) => (
-          <div key={exp.company} className="mb-3">
+          <div key={localize(exp.company, locale)} className="mb-3">
             <div className="flex items-baseline justify-between">
-              <span className="text-sm font-semibold">{exp.company}</span>
+              <span className="text-sm font-semibold">{localize(exp.company, locale)}</span>
               <span className="text-[10px] text-zinc-500">{exp.period}</span>
             </div>
-            <p className="text-[10px] text-zinc-500">{exp.role}</p>
+            <p className="text-[10px] text-zinc-500">{localize(exp.role, locale)}</p>
             {exp.highlights.length > 0 && (
               <ul className="mt-1 list-inside list-disc space-y-0.5 text-[10px] text-zinc-700">
                 {exp.highlights.map((h, i) => (
-                  <li key={i}>{h}</li>
+                  <li key={i}>{localize(h, locale)}</li>
                 ))}
               </ul>
             )}
@@ -62,20 +76,27 @@ export default function ResumePage() {
           주요 프로젝트
         </h2>
         <div className="space-y-2">
-          {projects.map((p) => (
-            <div key={p.name} className="text-[10px]">
+          {projects
+            .filter((p) => p.featured || ["Orgentic", "Comitsu", "Lunchix"].includes(localize(p.name, "ko")))
+            .map((p) => (
+            <div key={localize(p.name, "ko")} className="text-[10px]">
               <div className="flex items-baseline gap-1">
-                <span className="font-semibold">{p.name}</span>
-                {p.isAI && <span className="text-violet-600">[AI]</span>}
-                <span className="text-zinc-400">— {p.summary}</span>
+                <span className="font-semibold">{localize(p.name, locale)}</span>
+                {p.isAI && <span className="text-teal-700">[AI]</span>}
+                <span className="text-zinc-400">— {localize(p.summary, locale)}</span>
               </div>
+              {p.caseStudy && (
+                <p className="mt-0.5 text-zinc-600">
+                  {t.projects.role}: {localize(p.caseStudy.role, locale)} / {t.projects.result}: {localize(p.caseStudy.outcome, locale)}
+                </p>
+              )}
               <ul className="mt-0.5 list-inside list-disc space-y-0 text-zinc-600">
                 {p.details.slice(0, 2).map((d, i) => (
-                  <li key={i}>{d}</li>
+                  <li key={i}>{localize(d, locale)}</li>
                 ))}
               </ul>
               {p.metric && (
-                <p className="mt-0.5 text-emerald-700">성과: {p.metric}</p>
+                <p className="mt-0.5 text-emerald-700">{t.projects.result}: {localize(p.metric, locale)}</p>
               )}
             </div>
           ))}
@@ -89,9 +110,9 @@ export default function ResumePage() {
         </h2>
         <div className="space-y-1 text-[10px]">
           {skillCategories.map((cat) => (
-            <div key={cat.name} className="flex gap-2">
+            <div key={localize(cat.name, locale)} className="flex gap-2">
               <span className="w-24 shrink-0 font-semibold text-zinc-600">
-                {cat.name}
+                {localize(cat.name, locale)}
               </span>
               <span className="text-zinc-700">
                 {cat.items.map((i) => i.name).join(", ")}

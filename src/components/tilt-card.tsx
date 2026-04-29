@@ -29,10 +29,13 @@ export function TiltCard({ children, className = "", style, maxTilt = 5 }: TiltC
   // Detect hover capability once on mount (avoids SSR mismatch)
   useEffect(() => {
     const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
-    setCanHover(mq.matches);
+    const frame = requestAnimationFrame(() => setCanHover(mq.matches));
     const handler = (e: MediaQueryListEvent) => setCanHover(e.matches);
     mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
+    return () => {
+      cancelAnimationFrame(frame);
+      mq.removeEventListener("change", handler);
+    };
   }, []);
 
   const handleMouseMove = useCallback(

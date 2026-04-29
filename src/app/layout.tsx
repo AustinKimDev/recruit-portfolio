@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
+import "maplibre-gl/dist/maplibre-gl.css";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { I18nProvider } from "@/i18n/i18n-provider";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -11,9 +13,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "김지동 | 프론트엔드 개발자",
+  title: "김지동 | Frontend Engineer",
   description:
-    "React/Next.js 기반 프론트엔드 개발자. 위성 GIS 플랫폼부터 AI 에이전트 시스템까지.",
+    "지도/GIS, 데이터 시각화, 인증, 배포까지 다루는 React/Next.js 기반 프론트엔드 개발자 포트폴리오.",
   keywords: [
     "프론트엔드",
     "개발자",
@@ -24,14 +26,14 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "김지동" }],
   openGraph: {
-    title: "김지동 | 프론트엔드 개발자",
-    description: "React/Next.js 기반 프론트엔드 개발자 포트폴리오",
+    title: "김지동 | Frontend Engineer",
+    description: "지도/GIS와 데이터 집약형 제품을 다루는 프론트엔드 개발자 포트폴리오",
     type: "website",
     locale: "ko_KR",
   },
   twitter: {
     card: "summary_large_image",
-    title: "김지동 | 프론트엔드 개발자",
+    title: "김지동 | Frontend Engineer",
   },
   robots: { index: true, follow: true },
 };
@@ -66,7 +68,9 @@ export default function RootLayout({
           color: "var(--text-primary)",
         }}
       >
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <I18nProvider>{children}</I18nProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

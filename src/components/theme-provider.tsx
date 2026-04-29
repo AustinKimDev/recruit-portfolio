@@ -46,9 +46,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>("dark");
 
   useEffect(() => {
-    const initial = getInitialTheme();
-    setThemeState(initial);
-    applyTheme(initial);
+    const frame = requestAnimationFrame(() => {
+      const initial = getInitialTheme();
+      setThemeState(initial);
+      applyTheme(initial);
+    });
+
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   const setTheme = useCallback((next: Theme) => {

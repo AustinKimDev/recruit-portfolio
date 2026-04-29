@@ -1,10 +1,15 @@
+"use client";
+
 import { profile } from "@/data/profile";
+import { useI18n } from "@/i18n/i18n-provider";
 import { SectionWrapper } from "./section-wrapper";
 
 export function Contact() {
+  const { t } = useI18n();
+
   return (
     <SectionWrapper id="contact" className="pb-8">
-      <h3 className="mb-6 text-lg font-semibold text-accent">Contact</h3>
+      <h3 className="section-title mb-6">{t.contact.title}</h3>
       <div className="flex flex-wrap gap-6 text-sm">
         <a
           href={`mailto:${profile.email}`}
@@ -21,6 +26,15 @@ export function Contact() {
           style={{ color: "var(--text-secondary)" }}
         >
           GitHub
+        </a>
+        <a
+          href={profile.siteRepo}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="transition"
+          style={{ color: "var(--text-secondary)" }}
+        >
+          {t.nav.githubRepo}
         </a>
       </div>
       <div

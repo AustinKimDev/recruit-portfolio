@@ -2,6 +2,8 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { experiences } from "@/data/experience";
+import { localize } from "@/data/projects";
+import { useI18n } from "@/i18n/i18n-provider";
 import { SectionWrapper } from "./section-wrapper";
 
 const containerVariants = {
@@ -18,23 +20,25 @@ const itemVariants = {
 
 export function Experience() {
   const prefersReducedMotion = useReducedMotion();
+  const { locale, t } = useI18n();
 
   return (
     <SectionWrapper id="experience">
-      <h3 className="mb-10 text-lg font-semibold text-accent">Experience</h3>
+      <h3 className="section-title mb-10">{t.experience.title}</h3>
       <motion.div
         className="relative space-y-10 pl-8"
         style={{ borderLeft: "1px solid var(--border)" }}
         variants={prefersReducedMotion ? undefined : containerVariants}
-        initial={prefersReducedMotion ? undefined : "hidden"}
+        initial={false}
         whileInView={prefersReducedMotion ? undefined : "visible"}
         viewport={{ once: true, margin: "-60px" }}
       >
         {experiences.map((exp) => (
           <motion.div
-            key={exp.company}
+            key={localize(exp.company, locale)}
             className="relative"
             variants={prefersReducedMotion ? undefined : itemVariants}
+            initial={false}
           >
             <div
               className="absolute -left-[41px] top-1 h-3 w-3 rounded-full border-2 border-accent"
@@ -45,13 +49,13 @@ export function Experience() {
                 className="text-xl font-bold"
                 style={{ color: "var(--text-primary)" }}
               >
-                {exp.company}
+                {localize(exp.company, locale)}
               </h4>
               <span
                 className="text-sm"
                 style={{ color: "var(--text-muted)" }}
               >
-                {exp.role}
+                {localize(exp.role, locale)}
               </span>
             </div>
             <p
@@ -64,7 +68,7 @@ export function Experience() {
               className="mb-3 text-sm"
               style={{ color: "var(--text-muted)" }}
             >
-              {exp.description}
+              {localize(exp.description, locale)}
             </p>
             {exp.highlights.length > 0 && (
               <ul className="space-y-1.5 text-sm" style={{ color: "var(--text-secondary)" }}>
@@ -74,7 +78,7 @@ export function Experience() {
                       className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full"
                       style={{ backgroundColor: "var(--text-muted)" }}
                     />
-                    {h}
+                    {localize(h, locale)}
                   </li>
                 ))}
               </ul>

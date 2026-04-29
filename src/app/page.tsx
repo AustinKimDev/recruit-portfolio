@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import { Hero } from "@/components/hero";
+import { InteractionBurst } from "@/components/interaction-burst";
 import { Navbar } from "@/components/navbar";
 
 // 폴드 위: Hero, Navbar는 즉시 로드
@@ -34,6 +35,14 @@ const Projects = dynamic(
   { loading: () => <SectionSkeleton /> }
 );
 
+const PortfolioMapShell = dynamic(
+  () =>
+    import("@/components/portfolio-map-shell").then((m) => ({
+      default: m.PortfolioMapShell,
+    })),
+  { loading: () => <SectionSkeleton /> }
+);
+
 const Skills = dynamic(
   () => import("@/components/skills").then((m) => ({ default: m.Skills })),
   { loading: () => <SectionSkeleton /> }
@@ -47,10 +56,12 @@ const Contact = dynamic(
 export default function Home() {
   return (
     <>
+      <InteractionBurst />
       <Navbar />
       <main className="min-h-screen">
         <Hero />
         <About />
+        <PortfolioMapShell />
         <Experience />
         <Projects />
         <Skills />

@@ -3,42 +3,26 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ThemeToggle } from "./theme-toggle";
+import { profile } from "@/data/profile";
+import { useI18n } from "@/i18n/i18n-provider";
 
 const NAV_LINKS = [
-  { id: "about", label: "About" },
-  { id: "experience", label: "Experience" },
-  { id: "projects", label: "Projects" },
-  { id: "skills", label: "Skills" },
-  { id: "contact", label: "Contact" },
+  { id: "about", labelKey: "about" },
+  { id: "map", labelKey: "map" },
+  { id: "experience", labelKey: "experience" },
+  { id: "projects", labelKey: "projects" },
+  { id: "skills", labelKey: "skills" },
+  { id: "contact", labelKey: "contact" },
 ] as const;
 
 type SectionId = (typeof NAV_LINKS)[number]["id"];
 
 export function Navbar() {
-  const [visible, setVisible] = useState(false);
   const [activeSection, setActiveSection] = useState<SectionId | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
-
-  // Show navbar after scrolling past hero
-  useEffect(() => {
-    const hero = document.getElementById("hero");
-
-    const handleScroll = () => {
-      if (!hero) {
-        setVisible(window.scrollY > 80);
-        return;
-      }
-      const heroBottom = hero.getBoundingClientRect().bottom;
-      setVisible(heroBottom < 0);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const { locale, toggleLocale, t } = useI18n();
 
   // Scroll spy via Intersection Observer
   useEffect(() => {
@@ -98,22 +82,21 @@ export function Navbar() {
 
   return (
     <AnimatePresence>
-      {visible && (
-        <motion.header
-          key="navbar"
-          initial={{ opacity: 0, y: -16 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -16 }}
-          transition={{ duration: 0.25, ease: "easeOut" }}
-          className="fixed top-0 left-0 right-0 z-50 backdrop-blur-lg"
-          style={{
-            borderBottom: "1px solid var(--border)",
-            backgroundColor: "color-mix(in srgb, var(--bg-primary) 80%, transparent)",
-          }}
-        >
+      <motion.header
+        key="navbar"
+        initial={{ opacity: 0, y: -16 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -16 }}
+        transition={{ duration: 0.25, ease: "easeOut" }}
+        className="fixed top-0 left-0 right-0 z-50 backdrop-blur-lg"
+        style={{
+          borderBottom: "1px solid var(--border)",
+          backgroundColor: "color-mix(in srgb, var(--bg-primary) 80%, transparent)",
+        }}
+      >
           <nav
             aria-label="주요 내비게이션"
-            className="mx-auto flex max-w-4xl items-center justify-between px-6 py-3"
+            className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3"
           >
             {/* Logo / Name */}
             <button
@@ -122,7 +105,7 @@ export function Navbar() {
               style={{ color: "var(--text-secondary)" }}
               aria-label="맨 위로 이동"
             >
-              김지동
+              {t.profile.name}
             </button>
 
             {/* Desktop Links */}
@@ -137,7 +120,7 @@ export function Navbar() {
                       className="relative px-3 py-2 text-sm transition-colors"
                       style={{ color: isActive ? "var(--text-primary)" : "var(--text-muted)" }}
                     >
-                      {link.label}
+                      {t.nav[link.labelKey]}
                       {isActive && (
                         <motion.span
                           layoutId="active-underline"
@@ -157,6 +140,30 @@ export function Navbar() {
 
             {/* Right side: theme toggle slot + hamburger */}
             <div className="flex items-center gap-3">
+              <a
+                href={profile.siteRepo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden rounded-md px-3 py-2 text-xs font-semibold transition md:inline-flex"
+                style={{
+                  border: "1px solid var(--border)",
+                  color: "var(--text-secondary)",
+                }}
+              >
+                {t.nav.githubRepo}
+              </a>
+              <button
+                type="button"
+                onClick={toggleLocale}
+                className="rounded-md px-3 py-2 font-mono text-xs font-semibold transition"
+                style={{
+                  border: "1px solid var(--border)",
+                  color: "var(--text-secondary)",
+                }}
+                aria-label={locale === "ko" ? "Switch to English" : "한국어로 전환"}
+              >
+                {locale === "ko" ? "EN" : "KO"}
+              </button>
               <ThemeToggle />
 
               {/* Hamburger (mobile only) */}
@@ -217,7 +224,7 @@ export function Navbar() {
                           {isActive && (
                             <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-accent align-middle" />
                           )}
-                          {link.label}
+                          {t.nav[link.labelKey]}
                         </button>
                       </li>
                     );
@@ -226,8 +233,7 @@ export function Navbar() {
               </motion.div>
             )}
           </AnimatePresence>
-        </motion.header>
-      )}
+      </motion.header>
     </AnimatePresence>
   );
 }

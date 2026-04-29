@@ -1,157 +1,390 @@
-export type ProjectCategory = "ai" | "gis" | "fullstack" | "infra";
+import type { Locale } from "@/i18n/content";
+
+export type ProjectCategory = "ai" | "gis" | "backend" | "fullstack" | "infra";
+export type LocalizedText = Record<Locale, string>;
+
+export interface ProjectCaseStudy {
+  role: LocalizedText;
+  challenge: LocalizedText;
+  approach: LocalizedText;
+  outcome: LocalizedText;
+}
+
+export interface ProjectMapPoint {
+  coordinates: [number, number];
+  label: LocalizedText;
+  note: LocalizedText;
+}
 
 export interface Project {
-  name: string;
-  summary: string;
-  details: string[];
+  name: LocalizedText;
+  summary: LocalizedText;
+  details: LocalizedText[];
   stack: string[];
-  metric?: string;
+  metric?: LocalizedText;
+  period?: string;
+  scope?: LocalizedText;
   isAI?: boolean;
+  featured?: boolean;
   github?: string;
   link?: string;
   categories?: ProjectCategory[];
+  caseStudy?: ProjectCaseStudy;
+  map?: ProjectMapPoint;
 }
+
+const lt = (ko: string, en: string): LocalizedText => ({ ko, en });
 
 export const projects: Project[] = [
   {
-    name: "PIXATIVE v1→v2",
-    summary: "위성영상 GIS 제공 플랫폼 — 산업통상자원부 과제",
+    name: lt("Bluebon / Bluebon-prod", "Bluebon / Bluebon-prod"),
+    summary: lt(
+      "위성 미션 계획 플랫폼. TLE 궤도 계산, 접근성 분석, 운영 인증 흐름까지 확장했습니다.",
+      "Satellite mission planning platform with TLE orbit propagation, access analysis, and production auth flows."
+    ),
+    period: "2024 -",
+    scope: lt("사내 핵심 프로덕트 / 풀스택 참여", "Core internal product / full-stack contribution"),
     details: [
-      "OpenLayers + MapLibre 이중 지도 시스템 설계, proj4 좌표계 변환으로 다양한 좌표체계 위성영상을 단일 맵에 정합",
-      "WMTS Cache 서버 도입으로 네트워크 병목 시 로딩 불가 상태를 0.2초로 개선",
-      "v2에서 Recoil→Zustand, MUI→TailwindCSS 마이그레이션 주도",
+      lt("satellite.js 기반 SGP4 궤도 전파로 위성 지상 궤적과 관측 접근성 분석을 구현했습니다.", "Implemented ground tracks and access analysis with satellite.js-based SGP4 propagation."),
+      lt("Mapbox GL/Deck.gl 지도와 Three.js 3D 지구 뷰를 함께 구성해 미션 계획의 시간/공간 맥락을 시각화했습니다.", "Combined Mapbox GL/Deck.gl maps with a Three.js globe to visualize mission planning across time and space."),
+      lt("프로덕션 버전에서 Keycloak SSO, FastAPI 프록시, refresh token 재시도 흐름으로 운영 인증 구조를 보강했습니다.", "Hardened the production version with Keycloak SSO, a FastAPI proxy, and refresh-token retry flows."),
+    ],
+    stack: ["Next.js 15", "Mapbox GL", "Deck.gl", "Three.js", "FastAPI", "Keycloak"],
+    metric: lt("운영 인증/프록시 구조까지 확장", "Expanded into production auth and proxy architecture"),
+    featured: true,
+    categories: ["gis", "fullstack"],
+    caseStudy: {
+      role: lt("지도/3D 시각화, 궤도 계산 UI, 인증 연동", "Map/3D visualization, orbit UI, auth integration"),
+      challenge: lt("CLI 중심 미션 계획은 비개발 직군이 검증하기 어렵고, 궤도/시간/관측 조건을 동시에 봐야 했습니다.", "CLI-based mission planning was hard for non-engineers and required orbit, time, and access context in one view."),
+      approach: lt("TLE 기반 계산 결과를 지도 레이어, 3D 궤도, 시간 컨트롤에 연결하고 운영 인증은 별도 프록시 계층으로 분리했습니다.", "Connected TLE calculations to map layers, 3D orbit paths, and time controls while isolating production auth behind a proxy layer."),
+      outcome: lt("사내 미션 계획 업무에 실사용되는 웹 플랫폼이 되었고, 외부 사업용 운영 버전으로 이어졌습니다.", "It became a real internal mission planning workflow and evolved into an externally deployable production version."),
+    },
+    map: {
+      coordinates: [126.978, 37.566],
+      label: lt("미션 계획", "Mission planning"),
+      note: lt("SGP4, Mapbox GL, Deck.gl, Keycloak", "SGP4, Mapbox GL, Deck.gl, Keycloak"),
+    },
+  },
+  {
+    name: lt("PIXATIVE v1 -> v2", "PIXATIVE v1 -> v2"),
+    summary: lt(
+      "위성영상 GIS 제공 플랫폼. 다좌표계 위성영상을 하나의 지도 경험으로 정리했습니다.",
+      "Satellite imagery GIS platform that unified multi-CRS imagery into a coherent map workflow."
+    ),
+    period: "2022.07 - 2024",
+    scope: lt("산업통상자원부 과제 / 프론트엔드 주도", "Government R&D / frontend lead"),
+    details: [
+      lt("OpenLayers + MapLibre 이중 지도 시스템과 proj4 좌표계 변환으로 서로 다른 위성영상을 단일 맵에 정합했습니다.", "Aligned heterogeneous satellite imagery through OpenLayers, MapLibre, and proj4 CRS transforms."),
+      lt("WMTS Cache 서버를 붙여 네트워크 병목 시 영상이 멈추던 흐름을 0.2초 응답 경로로 줄였습니다.", "Added a WMTS cache path to reduce previously blank imagery loading into a 0.2s response flow."),
+      lt("v2에서는 Recoil -> Zustand, MUI -> TailwindCSS/Radix UI로 전환하며 운영 UI를 재정리했습니다.", "Migrated v2 from Recoil to Zustand and from MUI to Tailwind/Radix while simplifying the operator UI."),
     ],
     stack: ["Next.js", "React", "OpenLayers", "MapLibre", "Zustand"],
-    metric: "로딩 불가 → 0.2초",
+    metric: lt("로딩 불가 -> 0.2초", "Blank imagery path -> 0.2s"),
+    featured: true,
     categories: ["gis"],
+    caseStudy: {
+      role: lt("지도 렌더링, 좌표계 정합, 캐시 구조 개선", "Map rendering, CRS alignment, cache architecture"),
+      challenge: lt("위성영상 원본 좌표계와 타일 응답 지연 때문에 사용자가 빈 지도를 보는 시간이 길었습니다.", "Source CRS differences and slow tile responses created long blank-map periods."),
+      approach: lt("OpenLayers 래퍼와 proj4 변환 계층을 분리하고, WMTS 캐시를 영상 요청 경로 앞단에 배치했습니다.", "Separated the OpenLayers wrapper from the proj4 transform layer and placed WMTS cache in front of imagery requests."),
+      outcome: lt("지도 탐색 중 빈 화면 병목을 줄였고, 이후 v2 마이그레이션의 기준 구조가 됐습니다.", "Reduced blank-map bottlenecks and set the structure for the v2 migration."),
+    },
+    map: {
+      coordinates: [127.035, 37.508],
+      label: lt("위성영상", "Satellite imagery"),
+      note: lt("OpenLayers, MapLibre, WMTS, CRS 변환", "OpenLayers, MapLibre, WMTS, CRS transform"),
+    },
   },
   {
-    name: "Bluebon",
-    summary: "위성 미션 계획 풀스택 플랫폼 — 사내 핵심 프로덕트",
+    name: lt("MateYou Live", "MateYou Live"),
+    summary: lt(
+      "매칭 기반 라이브 방송 플랫폼. 프론트엔드와 스트리밍 인프라를 함께 담당했습니다.",
+      "Live broadcasting platform where I handled both frontend workflows and streaming infrastructure."
+    ),
+    period: "2025",
+    scope: lt("외주 / 방송 인프라", "Client project / streaming infrastructure"),
     details: [
-      "SGP4 궤도 전파 알고리즘으로 위성 지상 궤적 계산 및 관측 접근성 분석 구현",
-      "Three.js로 지구-위성 3D 시각화, supercluster로 대량 마커 클러스터링",
-      "Drizzle ORM + LibSQL 풀스택 아키텍처, NextAuth 인증, zod 스키마 검증",
+      lt("LiveKit WebRTC 기반 실시간 방송 구조를 HLS 시청 경로로 확장하고 FFmpeg 트랜스코딩 파이프라인을 구성했습니다.", "Extended LiveKit WebRTC streaming into an HLS viewing path with an FFmpeg transcoding pipeline."),
+      lt("Nginx 리버스 프록시, CloudFront 배포, Docker Compose 기반 서버 구성을 연결해 송출/시청 경로를 분리했습니다.", "Separated broadcaster and viewer paths through Nginx reverse proxying, CloudFront delivery, and Docker Compose services."),
+      lt("모바일 세로 방송 해상도, 레터박스, 보이스룸 권한, 미션 타임아웃과 스트림 정리 자동화를 처리했습니다.", "Handled vertical mobile streams, letterboxing, voice-room permissions, mission timeouts, and stream cleanup automation."),
     ],
-    stack: ["Next.js 15", "Three.js", "Mapbox GL", "Drizzle ORM"],
-    categories: ["gis", "fullstack"],
+    stack: ["React", "TypeScript", "LiveKit", "HLS", "FFmpeg", "Docker", "Nginx", "CloudFront"],
+    metric: lt("방송 송출/시청 인프라 직접 구성", "Built broadcast and viewer delivery infrastructure"),
+    featured: true,
+    categories: ["fullstack", "infra"],
+    caseStudy: {
+      role: lt("방송 UI, WebRTC/HLS 전환, 스트리밍 서버 구성", "Broadcast UI, WebRTC/HLS bridge, streaming server setup"),
+      challenge: lt("실시간 송출과 다수 시청자 전달 경로가 달라 WebRTC만으로는 운영/확장성이 부족했습니다.", "The broadcaster and viewer paths had different requirements, and WebRTC alone was not enough for operating and scaling viewers."),
+      approach: lt("송출은 LiveKit으로 유지하고, 시청은 FFmpeg로 HLS 변환 후 Nginx/CloudFront 경로로 전달하는 구조를 만들었습니다.", "Kept LiveKit for broadcasting and converted streams to HLS through FFmpeg, then served them via Nginx and CloudFront."),
+      outcome: lt("방송 기능을 화면 구현에서 끝내지 않고 인프라와 운영 경로까지 직접 설계한 사례가 됐습니다.", "It became a clear case of building not only the UI but the infrastructure needed to operate live media."),
+    },
+    map: {
+      coordinates: [126.923, 37.556],
+      label: lt("라이브 방송", "Live streaming"),
+      note: lt("LiveKit, HLS, FFmpeg, Nginx, CloudFront", "LiveKit, HLS, FFmpeg, Nginx, CloudFront"),
+    },
   },
   {
-    name: "telepix-ui",
-    summary: "사내 UI 디자인 시스템 — NPM 패키지로 배포",
+    name: lt("Fruiting 증권 플랫폼", "Fruiting Securities Platform"),
+    summary: lt(
+      "증권사 웹/백엔드 유지보수 프로젝트. 2026.02까지 장기간 운영 이슈와 결제/알림/검색 흐름을 담당했습니다.",
+      "Long-running securities web/backend maintenance project covering payments, notifications, search, and operational issues through 2026.02."
+    ),
+    period: "2022 - 2026.02",
+    scope: lt("증권사 프로젝트 / 백엔드 유지보수", "Securities project / backend maintenance"),
     details: [
-      "Radix UI + TailwindCSS 4 기반 컴포넌트 라이브러리 설계, 100+ 시맨틱 디자인 토큰",
-      "Rollup ESM/CJS 듀얼 번들링, Storybook v9 문서화 (a11y 접근성 포함)",
-      "v0.8.5까지 반복 릴리즈, 사내 전 프로젝트에서 공통 사용",
+      lt("Next.js/Redux 기반 화면 유지보수와 함께 Node.js 백엔드의 권한, 댓글, 회원, 배포 이슈를 처리했습니다.", "Maintained Next.js/Redux frontend flows while handling Node.js backend issues around permissions, comments, users, and deployment."),
+      lt("BootPay 정기결제 등록/콜백, Expo 푸시 토큰, 회원탈퇴 시 예약결제 확인 등 운영에 직접 닿는 흐름을 보강했습니다.", "Improved operational flows including BootPay recurring payments/callbacks, Expo push tokens, and subscription checks on account deletion."),
+      lt("Elasticsearch 검색과 모바일 프로필, React Native WebView/Push 초기 설정까지 이어지는 유지보수 범위를 맡았습니다.", "Covered Elasticsearch search, mobile profile flows, and the initial React Native WebView/Push setup."),
     ],
-    stack: ["React", "Radix UI", "TailwindCSS 4", "Rollup", "Storybook"],
-    categories: [],
+    stack: ["Next.js", "Redux", "Node.js", "BootPay", "Expo", "Elasticsearch"],
+    metric: lt("2026.02까지 장기 유지보수", "Long-term maintenance through 2026.02"),
+    featured: true,
+    categories: ["backend", "fullstack"],
+    caseStudy: {
+      role: lt("백엔드 유지보수, 결제/알림/검색 흐름 개선", "Backend maintenance, payment/notification/search flows"),
+      challenge: lt("증권 서비스 특성상 화면 수정만으로 끝나지 않고 결제, 알림, 권한, 검색, 탈퇴 흐름이 서로 연결되어 있었습니다.", "The securities product tied UI changes to payments, notifications, permissions, search, and account deletion flows."),
+      approach: lt("기존 서비스 구조를 유지하면서 콜백/토큰/권한 경계의 오류 가능성을 줄이는 방향으로 수정했습니다.", "Worked within the existing system and reduced failure points around callbacks, tokens, and permission boundaries."),
+      outcome: lt("장기간 운영되는 서비스에서 안정적인 유지보수와 도메인 흐름 이해를 쌓은 프로젝트입니다.", "This project strengthened my experience maintaining a long-running domain product with backend ownership."),
+    },
+    map: {
+      coordinates: [126.929, 37.521],
+      label: lt("금융 백엔드", "Finance backend"),
+      note: lt("BootPay, Expo Push, Elasticsearch, Node.js", "BootPay, Expo Push, Elasticsearch, Node.js"),
+    },
   },
   {
-    name: "LIC 플랫폼",
-    summary: "지역혁신클러스터 해양 관측 GIS — 정부 R&D",
+    name: lt("근태/출근부 관리 시스템", "Attendance Management System"),
+    summary: lt(
+      "출근부와 근태 데이터를 다루는 내부 운영 시스템. 기록, 승인, 집계 흐름을 웹 화면으로 정리했습니다.",
+      "Internal attendance management system for records, approvals, and aggregated work-time views."
+    ),
+    period: "2025",
+    scope: lt("운영툴 / 풀스택", "Operations tool / full-stack"),
     details: [
-      "Remix v2 SSR + Mapbox GL 통합, WKT 기반 AOI 폴리곤 시스템",
-      "5개 관측소 항목(조위/수온/파고/풍향/풍속) 실시간 데이터 시각화",
-      "react-pdf 리포트 뷰어, Vaul 모바일 Drawer — 텔레픽스 최대 규모 FE 프로젝트",
+      lt("출근/퇴근 기록, 근태 상태, 관리자 승인 흐름을 한 화면에서 확인할 수 있도록 운영 UI를 구성했습니다.", "Built an operations UI for check-in/out records, attendance status, and manager approval flows."),
+      lt("반복 입력과 예외 케이스가 많은 업무 특성에 맞춰 필터, 테이블, 상태 뱃지, 수정 흐름을 촘촘히 설계했습니다.", "Designed filters, tables, status badges, and edit flows for repetitive operational work with many exception cases."),
+      lt("단순 CRUD보다 운영자가 빠르게 확인하고 수정할 수 있는 데이터 밀도와 사용성을 우선했습니다.", "Prioritized dense, scannable data and quick corrections over a plain CRUD surface."),
     ],
-    stack: ["Remix v2", "Mapbox GL", "turf.js", "react-pdf"],
+    stack: ["React", "TypeScript", "Table UI", "Admin UX", "API Integration"],
+    metric: lt("운영자 중심 데이터 밀도 설계", "Operator-focused dense data UI"),
+    categories: ["fullstack", "backend"],
+    caseStudy: {
+      role: lt("운영 화면, 상태 모델, 승인/수정 UX", "Operations UI, state model, approval/edit UX"),
+      challenge: lt("근태 데이터는 단순 목록보다 예외 확인, 수정, 승인, 집계가 빠르게 이어져야 했습니다.", "Attendance data required fast exception checks, edits, approvals, and summaries beyond simple listing."),
+      approach: lt("테이블 중심 UI와 상태별 필터를 먼저 잡고, 수정/승인 흐름을 같은 화면 안에서 이어지게 설계했습니다.", "Started with table-first UI and status filters, then kept edit and approval flows within the same working surface."),
+      outcome: lt("반복 운영 업무를 빠르게 처리하는 백오피스 화면 설계 경험을 보강했습니다.", "Added practical back-office experience for repetitive operational workflows."),
+    },
+    map: {
+      coordinates: [127.027, 37.497],
+      label: lt("운영툴", "Operations tool"),
+      note: lt("출근부, 근태 상태, 승인 흐름", "Attendance records, status, approvals"),
+    },
+  },
+  {
+    name: lt("LIC 플랫폼", "LIC Platform"),
+    summary: lt(
+      "지역혁신클러스터 해양 관측 GIS. AOI, 관측소, 리포트 업무를 한 화면 흐름으로 묶었습니다.",
+      "Marine observation GIS platform that connected AOI management, station data, and reporting in one workflow."
+    ),
+    period: "2024",
+    scope: lt("정부 R&D / B2G 운영 화면", "Government R&D / B2G operations UI"),
+    details: [
+      lt("Remix v2 SSR + Mapbox GL 기반으로 AOI 관리, 관측소 데이터, 리포트 작성 흐름을 구성했습니다.", "Built AOI management, station data, and report workflows with Remix SSR and Mapbox GL."),
+      lt("WKT와 turf.js로 폴리곤 편집/계산 로직을 만들고 조위, 수온, 파고, 풍향, 풍속 데이터를 지도에 연결했습니다.", "Used WKT and turf.js for polygon editing/calculation and linked tide, temperature, wave, wind direction, and wind speed data to the map."),
+      lt("react-pdf 뷰어와 Vaul 모바일 Drawer를 붙여 데스크톱/모바일 운영자 화면을 함께 대응했습니다.", "Supported desktop and mobile operator flows with react-pdf and Vaul drawer UI."),
+    ],
+    stack: ["Remix v2", "Mapbox GL", "turf.js", "react-pdf", "Vaul"],
+    metric: lt("AOI/관측소/리포트 통합", "AOI, station data, and reports unified"),
+    featured: true,
     categories: ["gis"],
+    caseStudy: {
+      role: lt("SSR 앱 구조, 지도 상호작용, 리포트 UX", "SSR app structure, map interactions, reporting UX"),
+      challenge: lt("관측 구역, 실시간 데이터, 문서 리포트가 흩어져 있어 운영자가 맥락을 잃기 쉬웠습니다.", "Observation areas, live data, and reports were separated, making it hard for operators to keep context."),
+      approach: lt("지도 AOI를 중심에 두고 관측소 데이터와 리포트 CRUD를 같은 동선으로 배치했습니다.", "Placed AOI on the map as the center and connected station data and report CRUD into one flow."),
+      outcome: lt("복합 기능을 가진 B2G 플랫폼을 단일 프론트엔드 경험으로 정리했습니다.", "Turned a multi-feature B2G platform into a single coherent frontend experience."),
+    },
+    map: {
+      coordinates: [129.075, 35.179],
+      label: lt("해양 관측", "Marine observation"),
+      note: lt("AOI, WKT, turf.js, Mapbox GL", "AOI, WKT, turf.js, Mapbox GL"),
+    },
   },
   {
-    name: "멀티모달 AI 시각화",
-    summary: "AI 분석 결과를 지식 그래프로 시각화 — 미래도전과제 R&D",
+    name: lt("멀티모달 AI 시각화", "Multimodal AI Visualization"),
+    summary: lt(
+      "AI 산출물을 프론트엔드에서 직접 파싱하고 지식 그래프로 시각화했습니다.",
+      "Parsed AI output directly in the frontend and visualized it as an interactive knowledge graph."
+    ),
+    period: "2022.09 - 2023.01",
+    scope: lt("미래도전과제 R&D / FE 단독 파싱", "R&D / frontend-owned parsing"),
     details: [
-      "AI 산출물 3개 파일(LTF, Graph, Entity)을 FE에서 직접 파싱하는 알고리즘 자체 설계",
-      "react-force-graph + Canvas API로 최대 500노드 그래프 렌더링",
-      "그래프 노드 호버 시 원문 텍스트 토큰 하이라이트 양방향 연동",
+      lt("LTF, Graph, Entity 산출물을 브라우저에서 직접 파싱해 Entity/Relation/Event 구조로 변환했습니다.", "Parsed LTF, Graph, and Entity output in the browser into Entity/Relation/Event structures."),
+      lt("react-force-graph + Canvas API로 500개 노드 규모의 지식 그래프를 렌더링했습니다.", "Rendered a 500-node knowledge graph with react-force-graph and Canvas API."),
+      lt("그래프 노드 호버와 원문 텍스트 토큰 하이라이트를 양방향으로 연결했습니다.", "Connected graph node hover states with source text token highlighting in both directions."),
     ],
     stack: ["React", "react-force-graph", "Canvas API", "MSW"],
-    metric: "500노드 실시간 시각화",
+    metric: lt("500노드 실시간 시각화", "500-node real-time visualization"),
     isAI: true,
+    featured: true,
     categories: ["ai"],
+    caseStudy: {
+      role: lt("파서 설계, 그래프 렌더링, 텍스트 연동 UX", "Parser design, graph rendering, text-linked UX"),
+      challenge: lt("AI 산출물 포맷이 표준화되지 않아 백엔드 API를 기다리면 화면 검증이 지연되는 상황이었습니다.", "AI output was not standardized, so waiting for backend APIs would delay UI validation."),
+      approach: lt("프론트엔드 파싱 알고리즘을 직접 작성하고 MSW 기반 독립 개발 환경에서 데이터 흐름을 고정했습니다.", "Wrote frontend parsing logic and locked the data flow in an MSW-powered local environment."),
+      outcome: lt("백엔드 없이 분석 결과 검증 화면을 먼저 완성했고, 모델 결과를 사람이 읽을 수 있는 그래프로 바꿨습니다.", "Completed the validation UI before backend readiness and made model output readable as a graph."),
+    },
+    map: {
+      coordinates: [127.385, 36.351],
+      label: lt("지식그래프", "Knowledge graph"),
+      note: lt("Canvas, graph parsing, token highlight", "Canvas, graph parsing, token highlight"),
+    },
   },
   {
-    name: "Orgentic",
-    summary: "멀티 테넌트 AI 에이전트 오케스트레이션 플랫폼 — 사이드 프로젝트",
+    name: lt("telepix-ui", "telepix-ui"),
+    summary: lt(
+      "사내 UI 디자인 시스템. 프로젝트마다 반복되던 UI 구현을 패키지로 표준화했습니다.",
+      "Internal design system that standardized recurring UI work across projects."
+    ),
+    period: "2024 -",
+    scope: lt("사내 NPM 패키지 / 설계 및 운영", "Internal NPM package / design and operation"),
     details: [
-      "4계층 구조(Org→Team→Agent→Task) 멀티 테넌트 아키텍처 설계",
-      "Claude Agent SDK + FastAPI 백엔드, WebSocket 실시간 브로드캐스트",
-      "@xyflow/react로 에이전트 간 태스크 흐름 그래프 시각화",
+      lt("Radix UI + TailwindCSS 4 기반 컴포넌트 라이브러리와 100+ 시맨틱 디자인 토큰을 설계했습니다.", "Designed a Radix UI + TailwindCSS component library with 100+ semantic design tokens."),
+      lt("Rollup ESM/CJS 듀얼 번들링, Storybook v9 문서화, 접근성 애드온을 포함해 운영 가능한 패키지로 만들었습니다.", "Built an operational package with ESM/CJS bundles, Storybook v9 docs, and accessibility addons."),
+      lt("반복 UI 구현 비용을 줄이고 사내 화면의 기본 품질선을 맞추는 기준 패키지로 운영했습니다.", "Reduced repeated UI work and created a baseline quality bar for internal products."),
     ],
-    stack: ["React 19", "FastAPI", "Claude Agent SDK", "@xyflow/react"],
+    stack: ["React", "Radix UI", "TailwindCSS 4", "Rollup", "Storybook"],
+    metric: lt("사내 공통 UI 패키지 운영", "Operated as the internal shared UI package"),
+    featured: true,
+    categories: ["fullstack"],
+    caseStudy: {
+      role: lt("컴포넌트 API, 토큰, 번들/문서화", "Component API, tokens, bundles, documentation"),
+      challenge: lt("프로젝트별 UI 중복과 일관성 부족으로 신규 화면을 만들 때마다 같은 문제가 반복됐습니다.", "Duplicate UI work and inconsistent patterns kept reappearing in every project."),
+      approach: lt("토큰과 컴포넌트 레이어를 분리하고, Storybook 문서와 패키지 배포 흐름을 함께 만들었습니다.", "Separated tokens from components and built documentation and package release flows together."),
+      outcome: lt("반복 UI 구현 비용을 줄이고 사내 화면의 기본 품질선을 맞추는 기준 패키지가 됐습니다.", "Became the shared UI baseline that reduced repetitive implementation work."),
+    },
+  },
+  {
+    name: lt("사내 인프라 전면 구축", "Internal Infrastructure Rebuild"),
+    summary: lt(
+      "프론트엔드 밖의 문제까지 직접 정리해 개발 조직의 배포/운영 기반을 만들었습니다.",
+      "Rebuilt the deployment and network foundation behind the frontend organization."
+    ),
+    period: "2023 -",
+    scope: lt("네트워크, CI/CD, AWS", "Network, CI/CD, AWS"),
+    details: [
+      lt("Switch/Router/방화벽/VPN/DNS 세팅, VLAN 분리, NAS 전용 회선을 직접 구성했습니다.", "Configured switches, routers, firewalls, VPN, DNS, VLANs, and a dedicated NAS line."),
+      lt("Jenkins + Docker(Portainer) 기반 CI/CD를 구축해 수동 배포와 상시 대기 구조를 줄였습니다.", "Built Jenkins and Docker/Portainer CI/CD to reduce manual deployment and standby work."),
+      lt("사내 전용 서버에서 AWS로 운영 범위를 확장하고 Terraform IaC를 도입했습니다.", "Expanded operations from internal servers to AWS and introduced Terraform IaC."),
+    ],
+    stack: ["Docker", "Jenkins", "Terraform", "AWS", "Portainer"],
+    metric: lt("1~2일 장애 -> 2년+ 무중단", "Frequent outages -> 2y+ stable operation"),
+    featured: true,
+    categories: ["infra"],
+    caseStudy: {
+      role: lt("네트워크/배포 인프라 설계와 운영", "Network and deployment infrastructure design"),
+      challenge: lt("잦은 네트워크 장애와 수동 배포 때문에 개발 속도와 서비스 안정성이 모두 흔들렸습니다.", "Frequent network outages and manual deployments hurt both development speed and stability."),
+      approach: lt("물리 네트워크, 내부 DNS/VPN, Docker 배포, Jenkins 파이프라인을 한 번에 정비했습니다.", "Reworked physical networking, internal DNS/VPN, Docker deployment, and Jenkins pipelines together."),
+      outcome: lt("개발팀이 자율적으로 배포할 수 있는 환경이 되었고, 네트워크 장애는 장기간 재발하지 않았습니다.", "Enabled team-owned deployments and eliminated recurring network failures for a long period."),
+    },
+    map: {
+      coordinates: [126.705, 37.456],
+      label: lt("인프라", "Infrastructure"),
+      note: lt("Network, Jenkins, Docker, Terraform", "Network, Jenkins, Docker, Terraform"),
+    },
+  },
+  {
+    name: lt("Orgentic", "Orgentic"),
+    summary: lt(
+      "멀티 테넌트 AI 에이전트 오케스트레이션 플랫폼. 에이전트 작업 흐름을 그래프로 다룹니다.",
+      "Multi-tenant AI agent orchestration platform with graph-based task flow management."
+    ),
+    period: "2026",
+    scope: lt("사이드 프로젝트 / 풀스택", "Side project / full-stack"),
+    details: [
+      lt("Org -> Team -> Agent -> Task 4계층 멀티 테넌트 모델을 설계했습니다.", "Designed a four-layer multi-tenant model: Org -> Team -> Agent -> Task."),
+      lt("Claude Agent SDK + FastAPI 백엔드와 WebSocket 실시간 브로드캐스트를 연결했습니다.", "Connected Claude Agent SDK, a FastAPI backend, and WebSocket broadcasts."),
+      lt("@xyflow/react로 태스크 흐름, 에이전트 상태, 산출물을 추적하는 그래프 UI를 만들었습니다.", "Built a graph UI with @xyflow/react for tasks, agent states, and artifacts."),
+    ],
+    stack: ["React 19", "FastAPI", "Claude Agent SDK", "@xyflow/react", "WebSocket"],
+    metric: lt("멀티 테넌트 에이전트 흐름 시각화", "Multi-tenant agent flow visualization"),
     isAI: true,
     github: "https://github.com/AustinKimDev/orgentic",
     categories: ["ai", "fullstack"],
+    map: {
+      coordinates: [127.108, 37.402],
+      label: lt("AI 오케스트레이션", "AI orchestration"),
+      note: lt("Agents, WebSocket, task graph", "Agents, WebSocket, task graph"),
+    },
   },
   {
-    name: "사내 인프라 전면 구축",
-    summary: "네트워크부터 CI/CD, 클라우드까지 자발적으로 구축",
-    details: [
-      "Switch/Router/방화벽/VPN/DNS 세팅, VLAN 분리 → 1~2일 중단 → 2년+ 무중단",
-      "Jenkins + Docker(Portainer) CI/CD 파이프라인 → 배포 담당자 상시 대기 → 팀 자율 배포",
-      "사내 전용 서버 → AWS 이관, Terraform IaC 도입",
-    ],
-    stack: ["Docker", "Jenkins", "Terraform", "AWS", "Portainer"],
-    metric: "2년+ 무중단 운영",
-    categories: ["infra"],
-  },
-  {
-    name: "Lunchix",
-    summary: "AI 추천 맛집 지도 — 사내 사이드 프로젝트",
+    name: lt("Lunchix", "Lunchix"),
+    summary: lt(
+      "AI 추천 맛집 지도. 벡터 검색과 공간 검색을 결합한 지도형 추천 서비스입니다.",
+      "AI restaurant map that combines vector search and spatial ranking."
+    ),
+    period: "2025",
+    scope: lt("사내 사이드 프로젝트 / 풀스택", "Internal side project / full-stack"),
     link: "https://lunchix.peo.kr",
     details: [
-      "OpenAI API + pgvector 임베딩으로 벡터/공간 하이브리드 검색 구현",
-      "PostGIS 기반 거리순 정렬 + AI 취향 매칭 결합 추천 알고리즘",
-      "Kakao Map 시각화, Recharts 트렌드 분석, 크롤러 + 어드민 풀스택 구성",
+      lt("OpenAI API + pgvector 임베딩으로 취향 기반 벡터 검색을 구성했습니다.", "Built preference-based vector search with OpenAI embeddings and pgvector."),
+      lt("PostGIS 거리순 정렬과 AI 매칭 점수를 결합해 주변 식당 추천 알고리즘을 만들었습니다.", "Combined PostGIS distance ranking with AI match scores for nearby restaurant recommendations."),
+      lt("Kakao Map 시각화, Recharts 트렌드 분석, 크롤러와 어드민까지 풀스택으로 구성했습니다.", "Built the Kakao Map UI, Recharts analytics, crawler, and admin flows."),
     ],
     stack: ["Next.js", "KakaoMap", "OpenAI", "pgvector", "PostGIS"],
     isAI: true,
     categories: ["ai", "fullstack"],
+    map: {
+      coordinates: [127.048, 37.503],
+      label: lt("AI 맛집 지도", "AI food map"),
+      note: lt("KakaoMap, pgvector, PostGIS", "KakaoMap, pgvector, PostGIS"),
+    },
   },
   {
-    name: "Comitsu",
-    summary: "코스플레이어 네트워킹 및 일정 관리 플랫폼 — 1인 개발",
+    name: lt("Comitsu", "Comitsu"),
+    summary: lt(
+      "코스플레이어 일정/참여/알림 플랫폼. iOS 앱과 .NET 백엔드를 함께 만들었습니다.",
+      "Cosplayer schedule, participation, and notification platform with SwiftUI and .NET."
+    ),
+    period: "2026",
+    scope: lt("1인 개발 / TestFlight", "Solo build / TestFlight"),
     details: [
-      "SwiftUI iOS 앱 + ASP.NET Core C# 백엔드 풀스택 아키텍처, ~25K LOC",
-      "이벤트 초대/참여, 캘린더 일정 공유, 코스플레이어 검색/팔로우 소셜 기능",
-      "FCM 푸시 알림 + 딥링크, Keychain 인증, Docker/K8s 인프라 구성",
+      lt("SwiftUI iOS 앱과 Clean Architecture .NET 8 백엔드를 함께 설계했습니다.", "Designed both a SwiftUI iOS app and Clean Architecture .NET 8 backend."),
+      lt("이벤트 초대/참여, 캘린더 일정 공유, 검색/팔로우 소셜 기능을 구현했습니다.", "Implemented event invitations, participation, shared calendars, search, and follow features."),
+      lt("FCM 푸시 알림, 딥링크, Keychain 인증, Docker/K8s 인프라 구성을 붙였습니다.", "Added FCM push notifications, deep links, Keychain auth, and Docker/K8s setup."),
     ],
-    stack: ["SwiftUI", "ASP.NET Core", "Entity Framework", "Docker", "K8s"],
-    categories: ["fullstack"],
+    stack: ["SwiftUI", "ASP.NET Core", "Entity Framework", "Firebase FCM", "Docker"],
+    metric: lt("TestFlight 배포 / FCM 알림", "TestFlight delivery / FCM notifications"),
+    categories: ["backend", "fullstack"],
+    map: {
+      coordinates: [139.765, 35.681],
+      label: lt("이벤트 네트워크", "Event network"),
+      note: lt("SwiftUI, .NET 8, FCM", "SwiftUI, .NET 8, FCM"),
+    },
   },
   {
-    name: "MateYou",
-    summary: "매칭 기반 라이브 방송 플랫폼 — 프론트엔드 및 스트리밍 인프라 담당",
+    name: lt("Stockelper", "Stockelper"),
+    summary: lt(
+      "AI 주식 투자 분석 플랫폼. 스트리밍 채팅과 금융 데이터 UI를 만들었습니다.",
+      "AI stock analysis platform with streaming chat and financial data interfaces."
+    ),
+    period: "2025",
+    scope: lt("팀 프로젝트 / 프론트엔드", "Team project / frontend"),
     details: [
-      "LiveKit WebRTC → HLS 라이브 스트리밍 전환, FFmpeg 트랜스코딩, Nginx 역프록시 + CloudFront 배포",
-      "모바일 세로 방송 해상도/레터박스 최적화, 보이스룸 마이크 권한 및 미션 타임아웃 처리",
-      "Docker Compose 기반 스트리밍 서버 인프라 구성, RTMP 인증 및 스트림 정리 자동화",
-    ],
-    stack: ["React", "TypeScript", "LiveKit", "HLS", "FFmpeg", "Docker", "Nginx"],
-    categories: ["fullstack", "infra"],
-  },
-  {
-    name: "증권사 웹사이트",
-    summary: "증권 플랫폼 프론트엔드 리팩토링 및 백엔드 결제 시스템 — 외주",
-    details: [
-      "Next.js 13 + Redux 프론트엔드 UI 리팩토링, 댓글 권한 로직, 모바일 프로필/배포 자동화",
-      "정기결제(BootPay) 등록/콜백 처리, Expo 푸시 알림 토큰 관리, 회원탈퇴 시 예약결제 확인",
-      "Expo React Native 앱 초기 설정 (EAS 빌드, WebView, 푸시알림 훅)",
-    ],
-    stack: ["Next.js 13", "Redux", "Node.js", "BootPay", "Expo", "Elasticsearch"],
-    categories: ["fullstack"],
-  },
-  {
-    name: "Stockelper",
-    summary: "AI 주식 투자 분석 플랫폼 — 프론트엔드 개발 담당",
-    details: [
-      "Next.js 15 + React 19 풀스택, Prisma ORM, TanStack Query, Docker/PM2 배포 파이프라인",
-      "SSE 스트리밍 AI 채팅 UI, 백테스팅 페이지/상세, 포트폴리오 추천 테이블 구현",
-      "StockForceGraph 관계 시각화, 리사이즈 가능 네트워크 패널, 커스텀 애니메이션",
+      lt("Next.js 15 + React 19 기반으로 SSE 스트리밍 AI 채팅 UI를 구현했습니다.", "Implemented an SSE streaming AI chat UI with Next.js 15 and React 19."),
+      lt("백테스팅 페이지, 포트폴리오 추천 테이블, 네트워크 관계 시각화 패널을 만들었습니다.", "Built backtesting pages, portfolio recommendation tables, and relationship graph panels."),
+      lt("Prisma, TanStack Query, Docker/PM2 배포 흐름에 맞춰 화면과 데이터 로딩을 정리했습니다.", "Aligned UI state and loading flows with Prisma, TanStack Query, Docker, and PM2 deployment."),
     ],
     stack: ["Next.js 15", "React 19", "Prisma", "TanStack Query", "Docker"],
     isAI: true,
     categories: ["ai", "fullstack"],
+    map: {
+      coordinates: [127.015, 37.498],
+      label: lt("금융 AI", "Financial AI"),
+      note: lt("SSE, force graph, backtesting UI", "SSE, force graph, backtesting UI"),
+    },
   },
 ];
+
+export function localize(value: LocalizedText, locale: Locale) {
+  return value[locale];
+}
