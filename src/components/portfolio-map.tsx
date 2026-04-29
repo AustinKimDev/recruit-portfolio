@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import maplibregl, { type GeoJSONSource, type Map as MapLibreMap } from "maplibre-gl";
 import { localize, projects } from "@/data/projects";
 import { useI18n } from "@/i18n/i18n-provider";
@@ -113,6 +113,7 @@ export function PortfolioMap() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
   const markersRef = useRef<Map<string, MarkerRecord>>(new Map());
+  const shouldFlyToSelectedRef = useRef(false);
   const [selectedName, setSelectedName] = useState(INITIAL_SELECTED_PROJECT);
   const { locale, t } = useI18n();
   const { theme } = useTheme();
@@ -128,6 +129,11 @@ export function PortfolioMap() {
       mappedProjects[0],
     [mappedProjects, selectedName]
   );
+
+  const selectProject = useCallback((projectName: string) => {
+    shouldFlyToSelectedRef.current = true;
+    setSelectedName(projectName);
+  }, []);
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
@@ -292,7 +298,7 @@ export function PortfolioMap() {
       element.setAttribute("aria-label", `${projectName} 지도 마커`);
       element.style.setProperty("--marker-color", getProjectColor(project));
       element.dataset.selected = String(INITIAL_SELECTED_PROJECT === projectName);
-      element.addEventListener("click", () => setSelectedName(projectName));
+      element.addEventListener("click", () => selectProject(projectName));
 
       const marker = new maplibregl.Marker({ element, anchor: "center" })
         .setLngLat(project.map!.coordinates)
@@ -305,7 +311,7 @@ export function PortfolioMap() {
       markerStore.forEach(({ marker }) => marker.remove());
       markerStore.clear();
     };
-  }, [mappedProjects]);
+  }, [mappedProjects, selectProject]);
 
   useEffect(() => {
     markersRef.current.forEach(({ element, project }, projectName) => {
@@ -329,6 +335,17 @@ export function PortfolioMap() {
       updateRoutes();
     } else {
       map.once("load", updateRoutes);
+    }
+
+    if (shouldFlyToSelectedRef.current && selectedProject.map) {
+      shouldFlyToSelectedRef.current = false;
+      map.flyTo({
+        center: selectedProject.map.coordinates,
+        zoom: Math.max(map.getZoom(), 6.4),
+        speed: 0.9,
+        curve: 1.35,
+        essential: true,
+      });
     }
 
   }, [selectedProject]);
@@ -444,7 +461,7 @@ export function PortfolioMap() {
                 <button
                   key={localize(project.name, "ko")}
                   type="button"
-                  onClick={() => setSelectedName(localize(project.name, "ko"))}
+                  onClick={() => selectProject(localize(project.name, "ko"))}
                   className="flex w-full items-center justify-between gap-3 rounded-md px-3 py-2 text-left text-sm transition"
                   style={{
                     backgroundColor: selected ? "color-mix(in srgb, var(--accent) 12%, transparent)" : "transparent",
