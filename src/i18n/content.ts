@@ -36,7 +36,7 @@ export const copy = {
     },
     hero: {
       eyebrow: "Cyber GIS Frontend",
-      headline: "지도와 데이터가 무거운 제품을 보라색 궤도로 연결합니다.",
+      headline: "지도, 시각화, 운영 도구를 실제 서비스로 완성합니다.",
       primary: "프로젝트 보기",
       secondary: "GitHub",
     },
@@ -124,7 +124,7 @@ export const copy = {
     },
     hero: {
       eyebrow: "Cyber GIS Frontend",
-      headline: "Connecting heavy maps and product data through a purple orbit.",
+      headline: "I turn maps, visualization, and operations tools into working products.",
       primary: "View Projects",
       secondary: "GitHub",
     },
