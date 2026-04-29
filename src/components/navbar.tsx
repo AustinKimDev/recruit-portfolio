@@ -101,8 +101,8 @@ export function Navbar() {
             {/* Logo / Name */}
             <button
               onClick={() => scrollToSection("hero")}
-              className="font-mono text-sm font-medium transition"
-              style={{ color: "var(--text-secondary)" }}
+              className="text-sm font-bold transition"
+              style={{ color: "var(--text-primary)" }}
               aria-label="맨 위로 이동"
             >
               {t.profile.name}

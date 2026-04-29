@@ -60,14 +60,14 @@ export function ThemeToggle() {
       className="relative flex h-9 w-9 items-center justify-center rounded-lg border transition-colors"
       style={{
         borderColor: "var(--border)",
-        color: "var(--text-secondary)",
-        backgroundColor: "transparent",
+        color: "var(--text-primary)",
+        backgroundColor: "var(--bg-card)",
       }}
       onMouseEnter={(e) => {
-        (e.currentTarget as HTMLButtonElement).style.color = "var(--text-primary)";
+        (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--text-muted)";
       }}
       onMouseLeave={(e) => {
-        (e.currentTarget as HTMLButtonElement).style.color = "var(--text-secondary)";
+        (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--border)";
       }}
     >
       <AnimatePresence mode="wait" initial={false}>

@@ -102,7 +102,7 @@ export function Projects() {
               transition={{ duration: 0.2, ease: "easeOut" }}
             >
               <TiltCard
-                className="group relative h-full rounded-lg p-5 transition"
+                className="group relative h-full rounded-xl p-5 transition"
                 style={{
                   border: "1px solid var(--border)",
                   backgroundColor: "var(--bg-card)",
@@ -110,7 +110,7 @@ export function Projects() {
               >
                 {/* Gradient glow on hover */}
                 <div
-                  className="pointer-events-none absolute inset-0 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                  className="pointer-events-none absolute inset-0 rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                   style={{
                     background: "var(--card-hover-overlay)",
                     boxShadow: "var(--card-hover-inset)",

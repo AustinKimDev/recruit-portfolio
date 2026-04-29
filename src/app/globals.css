@@ -18,70 +18,58 @@
 
 /* Light theme (default) */
 :root {
-  --bg-primary: #fcfbff;
-  --bg-secondary: #f5f1ff;
-  --bg-card: rgba(255, 255, 255, 0.94);
-  --text-primary: #180f2a;
-  --text-secondary: #4d4263;
-  --text-muted: #796b92;
-  --border: rgba(101, 69, 161, 0.18);
-  --accent: #6d28d9;
-  --accent-light: #a855f7;
-  --accent-cyan: #0891b2;
-  --accent-warm: #f59e0b;
-  --panel-shadow: 0 18px 50px rgba(67, 43, 118, 0.08);
-  --panel-shadow-hover: 0 20px 58px rgba(78, 45, 140, 0.12);
-  --hero-bg:
-    linear-gradient(180deg, #ffffff 0%, #fcfbff 62%, #f7f2ff 100%);
-  --hero-overlay:
-    linear-gradient(90deg, rgba(109, 40, 217, 0.065), transparent 30%),
-    radial-gradient(ellipse at 80% 20%, rgba(8, 145, 178, 0.12), transparent 34%);
-  --panel-bg:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(249, 246, 255, 0.94));
-  --button-primary-bg: #6d28d9;
-  --button-primary-shadow: 0 12px 26px rgba(109, 40, 217, 0.24);
-  --button-secondary-bg: rgba(255, 255, 255, 0.86);
-  --card-hover-overlay:
-    linear-gradient(180deg, rgba(109, 40, 217, 0.055), rgba(8, 145, 178, 0.032));
-  --card-hover-inset: inset 0 0 0 1px rgba(109, 40, 217, 0.18);
-  --orbit-aura:
-    linear-gradient(90deg, transparent, rgba(109, 40, 217, 0.08), transparent);
+  --bg-primary: #f7f8fa;
+  --bg-secondary: #f2f4f6;
+  --bg-card: #ffffff;
+  --text-primary: #191f28;
+  --text-secondary: #4e5968;
+  --text-muted: #8b95a1;
+  --border: #e5e8eb;
+  --accent: #6f5cff;
+  --accent-light: #8b7bff;
+  --accent-cyan: #3182f6;
+  --accent-warm: #ff8a00;
+  --panel-shadow: 0 8px 22px rgba(25, 31, 40, 0.06);
+  --panel-shadow-hover: 0 12px 30px rgba(25, 31, 40, 0.09);
+  --hero-bg: #f7f8fa;
+  --hero-overlay: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(247, 248, 250, 0));
+  --panel-bg: #ffffff;
+  --button-primary-bg: #191f28;
+  --button-primary-shadow: 0 8px 18px rgba(25, 31, 40, 0.14);
+  --button-secondary-bg: #ffffff;
+  --card-hover-overlay: linear-gradient(180deg, rgba(111, 92, 255, 0.035), rgba(255, 255, 255, 0));
+  --card-hover-inset: inset 0 0 0 1px rgba(111, 92, 255, 0.14);
+  --orbit-aura: linear-gradient(180deg, rgba(111, 92, 255, 0.08), transparent);
   --orbit-aura-opacity: 1;
-  --map-filter: saturate(0.86) contrast(0.96) brightness(1.08);
+  --map-filter: saturate(0.74) contrast(0.93) brightness(1.08);
 }
 
 /* Dark theme */
 .dark {
-  --bg-primary: #07030f;
-  --bg-secondary: #120720;
-  --bg-card: rgba(22, 12, 38, 0.72);
-  --text-primary: #fbf7ff;
-  --text-secondary: #cabce8;
-  --text-muted: #8573a6;
-  --border: rgba(216, 180, 254, 0.2);
-  --accent: #a855f7;
-  --accent-light: #f0abfc;
-  --accent-cyan: #22d3ee;
-  --accent-warm: #f59e0b;
-  --panel-shadow: 0 24px 90px rgba(168, 85, 247, 0.22);
-  --panel-shadow-hover: 0 24px 96px rgba(217, 70, 239, 0.24);
-  --hero-bg: #07030f;
-  --hero-overlay:
-    radial-gradient(circle at 16% 22%, rgba(168, 85, 247, 0.18), transparent 36%),
-    radial-gradient(circle at 86% 18%, rgba(34, 211, 238, 0.14), transparent 32%),
-    linear-gradient(180deg, transparent 0%, rgba(18, 7, 32, 0.72) 100%);
-  --panel-bg:
-    linear-gradient(135deg, color-mix(in srgb, var(--bg-card) 88%, transparent), color-mix(in srgb, var(--accent) 8%, transparent));
-  --button-primary-bg: linear-gradient(135deg, #7c3aed, #d946ef 54%, #06b6d4);
-  --button-primary-shadow: 0 16px 46px rgba(168, 85, 247, 0.36);
-  --button-secondary-bg: color-mix(in srgb, var(--bg-card) 70%, transparent);
-  --card-hover-overlay:
-    linear-gradient(135deg, rgba(168, 85, 247, 0.14), rgba(34, 211, 238, 0.08), rgba(217, 70, 239, 0.10));
-  --card-hover-inset: inset 0 0 0 1px color-mix(in srgb, var(--accent) 24%, transparent);
-  --orbit-aura:
-    radial-gradient(circle at 48% 58%, rgba(217, 70, 239, 0.2), transparent 52%);
+  --bg-primary: #111318;
+  --bg-secondary: #171a21;
+  --bg-card: #1b1f27;
+  --text-primary: #f2f4f6;
+  --text-secondary: #c9d1dc;
+  --text-muted: #8b95a1;
+  --border: #2b313b;
+  --accent: #8b7bff;
+  --accent-light: #a79dff;
+  --accent-cyan: #64a8ff;
+  --accent-warm: #ff9f2e;
+  --panel-shadow: 0 10px 28px rgba(0, 0, 0, 0.24);
+  --panel-shadow-hover: 0 16px 36px rgba(0, 0, 0, 0.3);
+  --hero-bg: #111318;
+  --hero-overlay: linear-gradient(180deg, rgba(139, 123, 255, 0.05), transparent 38%);
+  --panel-bg: #1b1f27;
+  --button-primary-bg: #f2f4f6;
+  --button-primary-shadow: 0 8px 18px rgba(0, 0, 0, 0.28);
+  --button-secondary-bg: #171a21;
+  --card-hover-overlay: linear-gradient(180deg, rgba(139, 123, 255, 0.06), transparent);
+  --card-hover-inset: inset 0 0 0 1px rgba(139, 123, 255, 0.22);
+  --orbit-aura: linear-gradient(180deg, rgba(139, 123, 255, 0.08), transparent);
   --orbit-aura-opacity: 1;
-  --map-filter: saturate(1.3) contrast(1.08);
+  --map-filter: saturate(0.82) contrast(0.9) brightness(0.72);
 }
 
 html {
@@ -107,7 +95,7 @@ code, .font-mono {
 
 .section-title {
   color: var(--accent);
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 800;
   letter-spacing: 0;
 }
@@ -127,38 +115,29 @@ code, .font-mono {
 }
 
 .cyber-grid {
-  background:
-    linear-gradient(color-mix(in srgb, var(--accent) 7%, transparent) 1px, transparent 1px),
-    linear-gradient(90deg, color-mix(in srgb, var(--accent-cyan) 7%, transparent) 1px, transparent 1px);
-  background-size: 96px 96px;
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), transparent 76%);
-  opacity: 0.32;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--border) 60%, transparent) 1px, transparent 1px);
+  background-size: 88px 88px;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.24), transparent 58%);
+  opacity: 0.18;
 }
 
 .dark .cyber-grid {
-  background:
-    linear-gradient(color-mix(in srgb, var(--accent) 10%, transparent) 1px, transparent 1px),
-    linear-gradient(90deg, color-mix(in srgb, var(--accent-cyan) 10%, transparent) 1px, transparent 1px);
-  background-size: 72px 72px;
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.78), transparent 80%);
-  opacity: 0.5;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--border) 54%, transparent) 1px, transparent 1px);
+  background-size: 88px 88px;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.34), transparent 62%);
+  opacity: 0.22;
 }
 
 .plasma-field {
-  background:
-    linear-gradient(120deg, rgba(109, 40, 217, 0.08), transparent 38%),
-    radial-gradient(ellipse at 54% 82%, rgba(109, 40, 217, 0.08), transparent 36%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), transparent 42%);
   filter: none;
-  opacity: 0.42;
+  opacity: 0.7;
 }
 
 .dark .plasma-field {
-  background:
-    radial-gradient(circle at 20% 18%, color-mix(in srgb, var(--accent-light) 32%, transparent), transparent 28%),
-    radial-gradient(circle at 82% 24%, color-mix(in srgb, var(--accent-cyan) 24%, transparent), transparent 26%),
-    radial-gradient(circle at 50% 86%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 34%);
-  filter: blur(10px);
-  opacity: 0.85;
+  background: linear-gradient(180deg, rgba(139, 123, 255, 0.05), transparent 46%);
+  filter: none;
+  opacity: 1;
 }
 
 .cyber-panel {
@@ -166,8 +145,7 @@ code, .font-mono {
   border: 1px solid var(--border);
   background: var(--panel-bg);
   box-shadow: var(--panel-shadow);
-  backdrop-filter: blur(16px);
-  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 }
 
 .cyber-panel::before {
@@ -176,9 +154,7 @@ code, .font-mono {
   inset: 0;
   pointer-events: none;
   border-radius: inherit;
-  background:
-    linear-gradient(120deg, color-mix(in srgb, var(--accent-light) 9%, transparent), transparent 34%),
-    linear-gradient(300deg, color-mix(in srgb, var(--accent-cyan) 7%, transparent), transparent 42%);
+  background: var(--card-hover-overlay);
   opacity: 0;
   transition: opacity 180ms ease;
 }
@@ -188,14 +164,12 @@ code, .font-mono {
 }
 
 .cyber-panel:hover {
-  border-color: color-mix(in srgb, var(--accent) 28%, var(--border));
+  border-color: color-mix(in srgb, var(--accent) 22%, var(--border));
   box-shadow: var(--panel-shadow-hover);
 }
 
 .dark .cyber-panel::before {
-  background:
-    linear-gradient(120deg, color-mix(in srgb, var(--accent-light) 22%, transparent), transparent 32%),
-    linear-gradient(300deg, color-mix(in srgb, var(--accent-cyan) 16%, transparent), transparent 38%);
+  background: var(--card-hover-overlay);
 }
 
 .cyber-button,
@@ -204,19 +178,21 @@ code, .font-mono {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 0 18px;
   font-size: 0.9rem;
   font-weight: 800;
-  isolation: isolate;
-  overflow: hidden;
-  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+  transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease, background-color 140ms ease;
 }
 
 .cyber-button {
-  color: white;
+  color: var(--bg-card);
   background: var(--button-primary-bg);
   box-shadow: var(--button-primary-shadow);
+}
+
+.dark .cyber-button {
+  color: #111318;
 }
 
 .cyber-button-secondary {
@@ -227,19 +203,13 @@ code, .font-mono {
 
 .cyber-button:hover,
 .cyber-button-secondary:hover {
-  transform: translateY(-2px);
+  transform: translateY(-1px);
   box-shadow: var(--panel-shadow-hover);
 }
 
 .cyber-button::after,
 .cyber-button-secondary::after {
-  content: "";
-  position: absolute;
-  inset: -120% -20%;
-  z-index: -1;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
-  transform: translateX(-70%) rotate(18deg);
-  transition: transform 400ms ease;
+  display: none;
 }
 
 .cyber-button:hover::after,
@@ -248,17 +218,13 @@ code, .font-mono {
 }
 
 .cyber-orbit {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(246, 241, 255, 0.96));
+  background: var(--bg-card);
   border: 1px solid var(--border);
   box-shadow: var(--panel-shadow);
 }
 
 .dark .cyber-orbit {
-  background:
-    radial-gradient(circle at 50% 48%, rgba(168, 85, 247, 0.28), transparent 34%),
-    radial-gradient(circle at 75% 20%, rgba(34, 211, 238, 0.22), transparent 28%),
-    rgba(15, 6, 28, 0.38);
+  background: var(--bg-card);
 }
 
 .orbit-aura {
@@ -276,18 +242,18 @@ code, .font-mono {
   position: absolute;
   left: 0;
   top: 0;
-  height: 6px;
-  width: 6px;
+  height: 4px;
+  width: 4px;
   border-radius: 999px;
-  background: linear-gradient(135deg, #f0abfc, #22d3ee);
-  box-shadow: 0 0 18px rgba(217, 70, 239, 0.75);
-  animation: interaction-burst 640ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  background: var(--accent);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 28%, transparent);
+  animation: interaction-burst 420ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
   animation-delay: var(--delay);
 }
 
 :root:not(.dark) .interaction-burst i {
-  background: linear-gradient(135deg, #7c3aed, #0891b2);
-  box-shadow: 0 0 14px rgba(109, 40, 217, 0.38);
+  background: var(--accent);
+  box-shadow: 0 0 10px rgba(111, 92, 255, 0.18);
 }
 
 @keyframes interaction-burst {
@@ -304,9 +270,7 @@ code, .font-mono {
 
 .atlas-detail-panel {
   position: relative;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(248, 245, 255, 0.95)),
-    linear-gradient(135deg, color-mix(in srgb, var(--project-color) 9%, transparent), transparent 46%);
+  background: var(--bg-card);
   scrollbar-color: color-mix(in srgb, var(--accent) 34%, transparent) transparent;
   scrollbar-width: thin;
 }
@@ -316,38 +280,23 @@ code, .font-mono {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background:
-    linear-gradient(90deg, color-mix(in srgb, var(--project-color) 14%, transparent) 1px, transparent 1px),
-    linear-gradient(color-mix(in srgb, var(--accent) 9%, transparent) 1px, transparent 1px);
-  background-size: 48px 48px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--project-color) 5%, transparent), transparent 34%);
+  background-size: auto;
   mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7), transparent 74%);
-  opacity: 0.26;
+  opacity: 1;
 }
 
 .atlas-detail-panel::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 120px;
-  pointer-events: none;
-  background: linear-gradient(180deg, color-mix(in srgb, var(--project-color) 14%, transparent), transparent);
-  opacity: 0.55;
+  display: none;
 }
 
 .dark .atlas-detail-panel {
-  background:
-    linear-gradient(180deg, rgba(9, 3, 20, 0.96), rgba(15, 6, 31, 0.92)),
-    radial-gradient(circle at 12% 0%, color-mix(in srgb, var(--project-color) 24%, transparent), transparent 34%);
+  background: var(--bg-card);
 }
 
 .dark .atlas-detail-panel::before {
-  opacity: 0.42;
-  background:
-    linear-gradient(90deg, color-mix(in srgb, var(--project-color) 18%, transparent) 1px, transparent 1px),
-    linear-gradient(color-mix(in srgb, var(--accent-light) 12%, transparent) 1px, transparent 1px);
-  background-size: 40px 40px;
+  opacity: 1;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--project-color) 6%, transparent), transparent 36%);
 }
 
 .atlas-status-chip,
@@ -377,7 +326,7 @@ code, .font-mono {
   margin-right: 8px;
   border-radius: 999px;
   background: var(--project-color);
-  box-shadow: 0 0 14px color-mix(in srgb, var(--project-color) 72%, transparent);
+  box-shadow: none;
   animation: atlas-live-dot 1.4s ease-in-out infinite;
 }
 
@@ -385,21 +334,15 @@ code, .font-mono {
 .atlas-impact-grid > div,
 .atlas-case-grid > div {
   border: 1px solid color-mix(in srgb, var(--project-color) 20%, var(--border));
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--project-color) 10%, transparent), transparent 44%),
-    color-mix(in srgb, var(--bg-card) 86%, transparent);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.58);
+  background: color-mix(in srgb, var(--project-color) 4%, var(--bg-card));
+  box-shadow: none;
 }
 
 .dark .atlas-hero-card,
 .dark .atlas-impact-grid > div,
 .dark .atlas-case-grid > div {
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--project-color) 16%, transparent), transparent 46%),
-    color-mix(in srgb, var(--bg-card) 80%, transparent);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    0 0 28px color-mix(in srgb, var(--project-color) 12%, transparent);
+  background: color-mix(in srgb, var(--project-color) 5%, var(--bg-card));
+  box-shadow: none;
 }
 
 .atlas-hero-card {
@@ -410,12 +353,7 @@ code, .font-mono {
 }
 
 .atlas-hero-card::after {
-  content: "";
-  position: absolute;
-  inset: auto 18px 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--project-color), transparent);
-  opacity: 0.7;
+  display: none;
 }
 
 .atlas-node-orb {
@@ -426,8 +364,8 @@ code, .font-mono {
   flex: 0 0 auto;
   place-items: center;
   border-radius: 999px;
-  background: conic-gradient(from 120deg, var(--project-color), var(--accent-light), var(--accent-cyan), var(--project-color));
-  box-shadow: 0 0 28px color-mix(in srgb, var(--project-color) 32%, transparent);
+  background: color-mix(in srgb, var(--project-color) 18%, var(--bg-card));
+  box-shadow: none;
 }
 
 .atlas-node-orb::before {
@@ -444,7 +382,7 @@ code, .font-mono {
   height: 16px;
   border-radius: 999px;
   background: var(--project-color);
-  box-shadow: 0 0 18px color-mix(in srgb, var(--project-color) 68%, transparent);
+  box-shadow: none;
 }
 
 .atlas-meta-grid {
@@ -502,7 +440,7 @@ code, .font-mono {
   min-height: 30px;
   border: 1px solid color-mix(in srgb, var(--project-color) 20%, var(--border));
   border-radius: 999px;
-  background: color-mix(in srgb, var(--project-color) 9%, transparent);
+  background: color-mix(in srgb, var(--project-color) 8%, var(--bg-card));
   color: var(--text-secondary);
   font-size: 0.74rem;
   font-weight: 750;
@@ -539,8 +477,8 @@ code, .font-mono {
 .atlas-node-button.is-selected {
   border-color: color-mix(in srgb, var(--project-color) 34%, var(--border));
   background:
-    linear-gradient(90deg, color-mix(in srgb, var(--project-color) 16%, transparent), transparent 72%),
-    color-mix(in srgb, var(--bg-card) 72%, transparent);
+    linear-gradient(90deg, color-mix(in srgb, var(--project-color) 10%, transparent), transparent 72%),
+    var(--bg-card);
   color: var(--text-primary);
 }
 
@@ -551,7 +489,7 @@ code, .font-mono {
 .atlas-node-button.is-selected {
   box-shadow:
     inset 3px 0 0 var(--project-color),
-    0 12px 28px color-mix(in srgb, var(--project-color) 12%, transparent);
+    0 8px 18px color-mix(in srgb, var(--project-color) 8%, transparent);
 }
 
 .atlas-node-index {
@@ -566,7 +504,7 @@ code, .font-mono {
   height: 10px;
   border-radius: 999px;
   background: var(--project-color);
-  box-shadow: 0 0 16px color-mix(in srgb, var(--project-color) 58%, transparent);
+  box-shadow: none;
 }
 
 @keyframes atlas-live-dot {

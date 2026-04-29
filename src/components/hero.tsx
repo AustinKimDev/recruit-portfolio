@@ -12,7 +12,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="hero-surface relative flex min-h-[92vh] items-center overflow-hidden px-6 pb-20 pt-32"
+      className="hero-surface relative flex min-h-[82vh] items-center overflow-hidden px-6 pb-16 pt-28"
     >
       <div className="cyber-grid absolute inset-0" aria-hidden="true" />
       <div className="plasma-field absolute inset-0" aria-hidden="true" />
@@ -21,14 +21,14 @@ export function Hero() {
         initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 24 }}
         animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
         transition={{ duration: 0.55, ease: "easeOut" }}
-        className="relative z-10 mx-auto grid w-full max-w-7xl gap-10 lg:grid-cols-[1fr_520px] lg:items-center"
+        className="relative z-10 mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-[1fr_460px] lg:items-center"
       >
         <div>
-          <h1 className="max-w-4xl text-5xl font-black leading-[1.02] tracking-normal sm:text-7xl">
+          <h1 className="max-w-3xl text-4xl font-black leading-[1.08] tracking-normal sm:text-6xl">
             {t.hero.headline}
           </h1>
           <p
-            className="mt-7 max-w-2xl text-lg leading-8"
+            className="mt-6 max-w-2xl text-base leading-7 sm:text-lg sm:leading-8"
             style={{ color: "var(--text-secondary)" }}
           >
             {t.profile.tagline}
@@ -58,7 +58,7 @@ export function Hero() {
         </div>
 
         <div className="relative">
-          <div className="orbit-aura absolute inset-x-4 bottom-[-52px] top-10 rounded-lg blur-3xl" aria-hidden="true" />
+          <div className="orbit-aura absolute inset-x-8 bottom-[-28px] top-12 rounded-lg blur-2xl" aria-hidden="true" />
           <CyberOrbit />
         </div>
       </motion.div>

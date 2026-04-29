@@ -23,12 +23,12 @@ export function CyberOrbit() {
     scene.add(group);
 
     const core = new THREE.Mesh(
-      new THREE.IcosahedronGeometry(1.18, 3),
+      new THREE.IcosahedronGeometry(1.08, 2),
       new THREE.MeshStandardMaterial({
-        color: 0x8b5cf6,
-        emissive: 0x3b0764,
-        metalness: 0.38,
-        roughness: 0.22,
+        color: 0x6f5cff,
+        emissive: 0x171a21,
+        metalness: 0.18,
+        roughness: 0.58,
         wireframe: true,
       })
     );
@@ -37,22 +37,22 @@ export function CyberOrbit() {
     const shell = new THREE.Mesh(
       new THREE.SphereGeometry(1.62, 64, 32),
       new THREE.MeshBasicMaterial({
-        color: 0xc084fc,
+        color: 0x8b95a1,
         transparent: true,
-        opacity: 0.1,
+        opacity: 0.12,
         wireframe: true,
       })
     );
     group.add(shell);
 
     const orbitMaterial = new THREE.LineBasicMaterial({
-      color: 0x38bdf8,
+      color: 0x6f5cff,
       transparent: true,
-      opacity: 0.72,
+      opacity: 0.34,
     });
 
-    for (let i = 0; i < 4; i += 1) {
-      const curve = new THREE.EllipseCurve(0, 0, 2.05 + i * 0.22, 0.55 + i * 0.08);
+    for (let i = 0; i < 3; i += 1) {
+      const curve = new THREE.EllipseCurve(0, 0, 1.95 + i * 0.18, 0.52 + i * 0.06);
       const points = curve.getPoints(160).map((point) => new THREE.Vector3(point.x, point.y, 0));
       const orbit = new THREE.Line(new THREE.BufferGeometry().setFromPoints(points), orbitMaterial);
       orbit.rotation.x = 0.76 + i * 0.24;
@@ -60,7 +60,7 @@ export function CyberOrbit() {
       group.add(orbit);
     }
 
-    const particleCount = 260;
+    const particleCount = 70;
     const positions = new Float32Array(particleCount * 3);
     for (let i = 0; i < particleCount; i += 1) {
       const radius = 2.2 + Math.random() * 2.8;
@@ -74,19 +74,19 @@ export function CyberOrbit() {
     const particles = new THREE.Points(
       new THREE.BufferGeometry().setAttribute("position", new THREE.BufferAttribute(positions, 3)),
       new THREE.PointsMaterial({
-        color: 0xf0abfc,
-        size: 0.025,
+        color: 0x8b95a1,
+        size: 0.02,
         transparent: true,
-        opacity: 0.82,
+        opacity: 0.42,
       })
     );
     scene.add(particles);
 
-    scene.add(new THREE.AmbientLight(0xffffff, 0.8));
-    const violet = new THREE.PointLight(0xa855f7, 2.4, 20);
+    scene.add(new THREE.AmbientLight(0xffffff, 1));
+    const violet = new THREE.PointLight(0x8b7bff, 1.4, 20);
     violet.position.set(-3, 3, 4);
     scene.add(violet);
-    const cyan = new THREE.PointLight(0x22d3ee, 1.8, 18);
+    const cyan = new THREE.PointLight(0x64a8ff, 0.8, 18);
     cyan.position.set(3, -2, 4);
     scene.add(cyan);
 
@@ -139,7 +139,7 @@ export function CyberOrbit() {
   return (
     <div
       ref={hostRef}
-      className="cyber-orbit relative h-[340px] w-full overflow-hidden rounded-lg md:h-[520px]"
+      className="cyber-orbit relative h-[300px] w-full overflow-hidden rounded-xl md:h-[440px]"
       aria-label="3D orbital visualization"
     />
   );

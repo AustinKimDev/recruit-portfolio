@@ -18,10 +18,10 @@ export function InteractionBurst() {
       burst.style.left = `${event.clientX}px`;
       burst.style.top = `${event.clientY}px`;
 
-      for (let i = 0; i < 10; i += 1) {
+      for (let i = 0; i < 4; i += 1) {
         const particle = document.createElement("i");
-        const angle = (Math.PI * 2 * i) / 10;
-        const distance = 22 + Math.random() * 30;
+        const angle = (Math.PI * 2 * i) / 4;
+        const distance = 12 + Math.random() * 14;
         particle.style.setProperty("--dx", `${Math.cos(angle) * distance}px`);
         particle.style.setProperty("--dy", `${Math.sin(angle) * distance}px`);
         particle.style.setProperty("--delay", `${i * 8}ms`);

@@ -11,7 +11,7 @@ interface TiltCardProps {
 
 const FLAT_TRANSFORM = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)";
 
-export function TiltCard({ children, className = "", style, maxTilt = 5 }: TiltCardProps) {
+export function TiltCard({ children, className = "", style, maxTilt = 0 }: TiltCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   // Whether device supports hover (true = desktop pointer, false = touch)
   const [canHover, setCanHover] = useState(false);
@@ -40,7 +40,7 @@ export function TiltCard({ children, className = "", style, maxTilt = 5 }: TiltC
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
-      if (!canHover) return;
+      if (!canHover || maxTilt <= 0) return;
       const card = cardRef.current;
       if (!card) return;
 
@@ -69,7 +69,7 @@ export function TiltCard({ children, className = "", style, maxTilt = 5 }: TiltC
   );
 
   const handleMouseLeave = useCallback(() => {
-    if (!canHover) return;
+    if (!canHover || maxTilt <= 0) return;
     setTiltStyle({
       transform: FLAT_TRANSFORM,
       transition: "transform 0.4s ease",
@@ -79,7 +79,7 @@ export function TiltCard({ children, className = "", style, maxTilt = 5 }: TiltC
       opacity: 0,
       transition: "opacity 0.4s ease",
     });
-  }, [canHover]);
+  }, [canHover, maxTilt]);
 
   return (
     <div

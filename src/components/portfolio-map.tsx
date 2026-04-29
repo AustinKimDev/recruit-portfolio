@@ -14,12 +14,12 @@ const INITIAL_SELECTED_PROJECT = "Bluebon / Bluebon-prod";
 type MappedProject = (typeof projects)[number];
 
 const categoryColor = {
-  gis: "#38bdf8",
-  ai: "#a855f7",
-  backend: "#f472b6",
-  fullstack: "#f59e0b",
-  infra: "#94a3b8",
-  default: "#c084fc",
+  gis: "#3182f6",
+  ai: "#6f5cff",
+  backend: "#e64980",
+  fullstack: "#ff8a00",
+  infra: "#8b95a1",
+  default: "#6f5cff",
 };
 
 const categoryLabel: Record<ProjectCategory, { ko: string; en: string }> = {
@@ -188,7 +188,7 @@ export function PortfolioMap() {
               "line-join": "round",
             },
             paint: {
-              "line-color": "#c084fc",
+              "line-color": "#6f5cff",
               "line-opacity": 0.18,
               "line-width": 1.2,
             },
@@ -203,7 +203,7 @@ export function PortfolioMap() {
             },
             paint: {
               "line-blur": 5,
-              "line-color": "#c084fc",
+              "line-color": "#6f5cff",
               "line-opacity": 0.2,
               "line-width": 8,
             },
@@ -217,7 +217,7 @@ export function PortfolioMap() {
               "line-join": "round",
             },
             paint: {
-              "line-color": "#c084fc",
+              "line-color": "#6f5cff",
               "line-opacity": 0.66,
               "line-width": 2.2,
             },
@@ -363,13 +363,13 @@ export function PortfolioMap() {
       map.setPaintProperty("osm", "raster-opacity", isDark ? 0.26 : 0.58);
       map.setPaintProperty("osm", "raster-saturation", isDark ? -0.85 : -0.35);
       map.setPaintProperty("osm", "raster-contrast", isDark ? 0.22 : -0.08);
-      map.setPaintProperty("routes-base-line", "line-color", isDark ? "#c084fc" : "#6d28d9");
+      map.setPaintProperty("routes-base-line", "line-color", isDark ? "#8b7bff" : "#6f5cff");
       map.setPaintProperty("routes-base-line", "line-opacity", isDark ? 0.18 : 0.16);
       map.setPaintProperty("routes-base-line", "line-width", isDark ? 1.2 : 1.3);
-      map.setPaintProperty("routes-selected-glow", "line-color", isDark ? "#c084fc" : "#7c3aed");
+      map.setPaintProperty("routes-selected-glow", "line-color", isDark ? "#8b7bff" : "#6f5cff");
       map.setPaintProperty("routes-selected-glow", "line-opacity", isDark ? 0.2 : 0.14);
       map.setPaintProperty("routes-selected-glow", "line-width", isDark ? 8 : 9);
-      map.setPaintProperty("routes-selected-line", "line-color", isDark ? "#c084fc" : "#6d28d9");
+      map.setPaintProperty("routes-selected-line", "line-color", isDark ? "#8b7bff" : "#6f5cff");
       map.setPaintProperty("routes-selected-line", "line-opacity", isDark ? 0.66 : 0.48);
       map.setPaintProperty("routes-selected-line", "line-width", isDark ? 2.2 : 2.4);
     };
