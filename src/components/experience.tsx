@@ -41,7 +41,7 @@ export function Experience() {
             initial={false}
           >
             <div
-              className="absolute -left-[41px] top-1 h-3 w-3 rounded-full border-2 border-accent"
+              className="absolute -left-8 top-1 h-3 w-3 -translate-x-1/2 rounded-full border-2 border-accent"
               style={{ backgroundColor: "var(--bg-primary)" }}
             />
             <div className="mb-1 flex flex-wrap items-baseline gap-x-3">
