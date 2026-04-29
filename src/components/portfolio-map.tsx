@@ -1,7 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import maplibregl, { type GeoJSONSource, type Map as MapLibreMap } from "maplibre-gl";
+import maplibregl, {
+  type GeoJSONSource,
+  type Map as MapLibreMap,
+  type MapLayerMouseEvent,
+} from "maplibre-gl";
 import { localize, projects } from "@/data/projects";
 import { useI18n } from "@/i18n/i18n-provider";
 import { useTheme } from "./theme-provider";
@@ -10,11 +14,6 @@ const HUB: [number, number] = [126.7, 37.3];
 const INITIAL_SELECTED_PROJECT = "Bluebon / Bluebon-prod";
 type MappedProject = (typeof projects)[number];
 type RouteKind = "base" | "active";
-type MarkerRecord = {
-  marker: maplibregl.Marker;
-  element: HTMLButtonElement;
-  project: MappedProject;
-};
 
 const categoryColor = {
   gis: "#38bdf8",
@@ -109,10 +108,31 @@ function buildEndpointGeoJson(selectedName: string | null) {
   };
 }
 
+function buildProjectMarkerGeoJson(selectedName: string | null) {
+  const visibleProjects = projects.filter((project) => project.map);
+  return {
+    type: "FeatureCollection" as const,
+    features: visibleProjects.map((project) => {
+      const projectName = localize(project.name, "ko");
+      return {
+        type: "Feature" as const,
+        properties: {
+          name: projectName,
+          color: getProjectColor(project),
+          selected: selectedName === projectName,
+        },
+        geometry: {
+          type: "Point" as const,
+          coordinates: project.map!.coordinates,
+        },
+      };
+    }),
+  };
+}
+
 export function PortfolioMap() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
-  const markersRef = useRef<Map<string, MarkerRecord>>(new Map());
   const shouldFlyToSelectedRef = useRef(false);
   const [selectedName, setSelectedName] = useState(INITIAL_SELECTED_PROJECT);
   const { locale, t } = useI18n();
@@ -161,6 +181,10 @@ export function PortfolioMap() {
           routeEndpoints: {
             type: "geojson",
             data: buildEndpointGeoJson(INITIAL_SELECTED_PROJECT),
+          },
+          projectMarkers: {
+            type: "geojson",
+            data: buildProjectMarkerGeoJson(INITIAL_SELECTED_PROJECT),
           },
           hub: {
             type: "geojson",
@@ -265,6 +289,73 @@ export function PortfolioMap() {
               "circle-stroke-width": 2,
             },
           },
+          {
+            id: "project-marker-halo",
+            type: "circle",
+            source: "projectMarkers",
+            paint: {
+              "circle-radius": [
+                "case",
+                ["boolean", ["get", "selected"], false],
+                20,
+                14,
+              ],
+              "circle-color": ["get", "color"],
+              "circle-opacity": [
+                "case",
+                ["boolean", ["get", "selected"], false],
+                0.3,
+                0.18,
+              ],
+              "circle-blur": 0.18,
+            },
+          },
+          {
+            id: "project-marker-ring",
+            type: "circle",
+            source: "projectMarkers",
+            paint: {
+              "circle-radius": [
+                "case",
+                ["boolean", ["get", "selected"], false],
+                11,
+                9,
+              ],
+              "circle-color": ["get", "color"],
+              "circle-stroke-color": "#ffffff",
+              "circle-stroke-width": [
+                "case",
+                ["boolean", ["get", "selected"], false],
+                4,
+                3,
+              ],
+            },
+          },
+          {
+            id: "project-marker-core",
+            type: "circle",
+            source: "projectMarkers",
+            paint: {
+              "circle-radius": [
+                "case",
+                ["boolean", ["get", "selected"], false],
+                5,
+                4,
+              ],
+              "circle-color": "#ffffff",
+              "circle-opacity": 0.92,
+            },
+          },
+          {
+            id: "project-marker-hit",
+            type: "circle",
+            source: "projectMarkers",
+            paint: {
+              "circle-radius": 20,
+              "circle-color": "#000000",
+              "circle-opacity": 0,
+            },
+          },
         ],
       },
     });
@@ -273,52 +364,32 @@ export function PortfolioMap() {
     map.addControl(new maplibregl.AttributionControl({ compact: true }), "bottom-right");
 
     mapRef.current = map;
-    const markerStore = markersRef.current;
+
+    const handleMarkerClick = (event: MapLayerMouseEvent) => {
+      const projectName = event.features?.[0]?.properties?.name;
+      if (typeof projectName === "string") {
+        selectProject(projectName);
+      }
+    };
+    const handleMarkerEnter = () => {
+      map.getCanvas().style.cursor = "pointer";
+    };
+    const handleMarkerLeave = () => {
+      map.getCanvas().style.cursor = "";
+    };
+
+    map.on("click", "project-marker-hit", handleMarkerClick);
+    map.on("mouseenter", "project-marker-hit", handleMarkerEnter);
+    map.on("mouseleave", "project-marker-hit", handleMarkerLeave);
 
     return () => {
-      markerStore.forEach(({ marker }) => marker.remove());
-      markerStore.clear();
+      map.off("click", "project-marker-hit", handleMarkerClick);
+      map.off("mouseenter", "project-marker-hit", handleMarkerEnter);
+      map.off("mouseleave", "project-marker-hit", handleMarkerLeave);
       map.remove();
       mapRef.current = null;
     };
-  }, []);
-
-  useEffect(() => {
-    const map = mapRef.current;
-    if (!map) return;
-    const markerStore = markersRef.current;
-
-    mappedProjects.forEach((project) => {
-      const projectName = localize(project.name, "ko");
-      if (markerStore.has(projectName)) return;
-
-      const element = document.createElement("button");
-      element.type = "button";
-      element.className = "portfolio-map-marker";
-      element.setAttribute("aria-label", `${projectName} 지도 마커`);
-      element.style.setProperty("--marker-color", getProjectColor(project));
-      element.dataset.selected = String(INITIAL_SELECTED_PROJECT === projectName);
-      element.addEventListener("click", () => selectProject(projectName));
-
-      const marker = new maplibregl.Marker({ element, anchor: "center" })
-        .setLngLat(project.map!.coordinates)
-        .addTo(map);
-
-      markerStore.set(projectName, { marker, element, project });
-    });
-
-    return () => {
-      markerStore.forEach(({ marker }) => marker.remove());
-      markerStore.clear();
-    };
-  }, [mappedProjects, selectProject]);
-
-  useEffect(() => {
-    markersRef.current.forEach(({ element, project }, projectName) => {
-      element.dataset.selected = String(selectedName === projectName);
-      element.setAttribute("aria-label", `${localize(project.name, locale)} 지도 마커`);
-    });
-  }, [locale, selectedName]);
+  }, [selectProject]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -329,6 +400,8 @@ export function PortfolioMap() {
       source?.setData(buildRouteGeoJson(localize(selectedProject.name, "ko")));
       const endpointSource = map.getSource("routeEndpoints") as GeoJSONSource | undefined;
       endpointSource?.setData(buildEndpointGeoJson(localize(selectedProject.name, "ko")));
+      const markerSource = map.getSource("projectMarkers") as GeoJSONSource | undefined;
+      markerSource?.setData(buildProjectMarkerGeoJson(localize(selectedProject.name, "ko")));
     };
 
     if (map.isStyleLoaded()) {

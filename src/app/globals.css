@@ -302,37 +302,6 @@ code, .font-mono {
   }
 }
 
-.portfolio-map-marker {
-  position: relative;
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  border: 0;
-  border-radius: 999px;
-  background: var(--marker-color);
-  box-shadow:
-    0 0 0 3px color-mix(in srgb, var(--marker-color) 26%, transparent),
-    0 10px 24px rgba(0, 0, 0, 0.24);
-  transition: box-shadow 180ms ease, filter 180ms ease;
-}
-
-.portfolio-map-marker::after {
-  content: "";
-  position: absolute;
-  inset: 5px;
-  border-radius: inherit;
-  background: #fff;
-  opacity: 0.88;
-}
-
-.portfolio-map-marker[data-selected="true"] {
-  filter: brightness(1.12);
-  box-shadow:
-    0 0 0 6px color-mix(in srgb, var(--marker-color) 24%, transparent),
-    0 0 22px color-mix(in srgb, var(--marker-color) 72%, transparent),
-    0 14px 32px rgba(0, 0, 0, 0.3);
-}
-
 .maplibregl-ctrl-group {
   border-radius: 8px;
   overflow: hidden;
