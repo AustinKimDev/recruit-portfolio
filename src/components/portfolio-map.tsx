@@ -7,6 +7,12 @@ import { useI18n } from "@/i18n/i18n-provider";
 
 const HUB: [number, number] = [126.978, 37.566];
 const INITIAL_SELECTED_PROJECT = "Bluebon / Bluebon-prod";
+type MappedProject = (typeof projects)[number];
+type MarkerRecord = {
+  marker: maplibregl.Marker;
+  element: HTMLButtonElement;
+  project: MappedProject;
+};
 
 const categoryColor = {
   gis: "#38bdf8",
@@ -17,7 +23,7 @@ const categoryColor = {
   default: "#c084fc",
 };
 
-function getProjectColor(project: (typeof projects)[number]) {
+function getProjectColor(project: MappedProject) {
   const category = project.categories?.[0] ?? "default";
   return categoryColor[category] ?? categoryColor.default;
 }
@@ -43,7 +49,7 @@ function buildRouteGeoJson(selectedName: string | null) {
 export function PortfolioMap() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
-  const markersRef = useRef<maplibregl.Marker[]>([]);
+  const markersRef = useRef<Map<string, MarkerRecord>>(new Map());
   const [selectedName, setSelectedName] = useState(INITIAL_SELECTED_PROJECT);
   const { locale, t } = useI18n();
 
@@ -146,10 +152,11 @@ export function PortfolioMap() {
     map.addControl(new maplibregl.AttributionControl({ compact: true }), "bottom-right");
 
     mapRef.current = map;
+    const markerStore = markersRef.current;
 
     return () => {
-      markersRef.current.forEach((marker) => marker.remove());
-      markersRef.current = [];
+      markerStore.forEach(({ marker }) => marker.remove());
+      markerStore.clear();
       map.remove();
       mapRef.current = null;
     };
@@ -158,35 +165,43 @@ export function PortfolioMap() {
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;
+    const markerStore = markersRef.current;
 
-    markersRef.current.forEach((marker) => marker.remove());
-    markersRef.current = mappedProjects.map((project) => {
+    mappedProjects.forEach((project) => {
+      const projectName = localize(project.name, "ko");
+      if (markerStore.has(projectName)) return;
+
       const element = document.createElement("button");
-      const selected = selectedName === localize(project.name, "ko");
       element.type = "button";
       element.className = "portfolio-map-marker";
-      element.setAttribute("aria-label", `${localize(project.name, locale)} 지도 마커`);
+      element.setAttribute("aria-label", `${projectName} 지도 마커`);
       element.style.setProperty("--marker-color", getProjectColor(project));
-      element.dataset.selected = String(selected);
-      element.addEventListener("click", () => setSelectedName(localize(project.name, "ko")));
+      element.dataset.selected = String(INITIAL_SELECTED_PROJECT === projectName);
+      element.addEventListener("click", () => setSelectedName(projectName));
 
       const marker = new maplibregl.Marker({ element, anchor: "center" })
         .setLngLat(project.map!.coordinates)
         .addTo(map);
 
-      return marker;
+      markerStore.set(projectName, { marker, element, project });
     });
 
     return () => {
-      markersRef.current.forEach((marker) => marker.remove());
-      markersRef.current = [];
+      markerStore.forEach(({ marker }) => marker.remove());
+      markerStore.clear();
     };
-  }, [locale, mappedProjects, selectedName]);
+  }, [mappedProjects]);
+
+  useEffect(() => {
+    markersRef.current.forEach(({ element, project }, projectName) => {
+      element.dataset.selected = String(selectedName === projectName);
+      element.setAttribute("aria-label", `${localize(project.name, locale)} 지도 마커`);
+    });
+  }, [locale, selectedName]);
 
   useEffect(() => {
     const map = mapRef.current;
-    const target = selectedProject?.map?.coordinates;
-    if (!map || !target) return;
+    if (!map || !selectedProject) return;
 
     const updateRoutes = () => {
       const source = map.getSource("routes") as GeoJSONSource | undefined;
@@ -199,13 +214,6 @@ export function PortfolioMap() {
       map.once("load", updateRoutes);
     }
 
-    map.flyTo({
-      center: target,
-      zoom: localize(selectedProject.name, "ko") === "Comitsu" ? 4.2 : 7.3,
-      speed: 0.8,
-      curve: 1.35,
-      essential: false,
-    });
   }, [selectedProject]);
 
   return (
@@ -223,10 +231,10 @@ export function PortfolioMap() {
           boxShadow: "0 20px 60px rgba(15, 23, 42, 0.10)",
         }}
       >
-        <div ref={containerRef} className="min-h-[520px]" />
+        <div ref={containerRef} className="h-[520px] min-h-0 lg:h-[680px]" />
 
         <aside
-          className="flex min-h-[520px] flex-col border-t p-4 lg:border-l lg:border-t-0"
+          className="flex h-[520px] min-h-0 flex-col overflow-y-auto border-t p-4 lg:h-[680px] lg:border-l lg:border-t-0"
           style={{ borderColor: "var(--border)" }}
         >
           <div className="mb-4">
