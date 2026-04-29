@@ -12,18 +12,20 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="hero-surface relative flex min-h-[82vh] items-center overflow-hidden px-6 pb-16 pt-28"
+      className="hero-surface relative flex min-h-[88vh] items-center overflow-hidden px-6 pb-20 pt-28"
     >
-      <div className="cyber-grid absolute inset-0" aria-hidden="true" />
-      <div className="plasma-field absolute inset-0" aria-hidden="true" />
+      <CyberOrbit />
+      <div className="cyber-grid absolute inset-0 z-[1]" aria-hidden="true" />
+      <div className="plasma-field absolute inset-0 z-[1]" aria-hidden="true" />
+      <div className="hero-space-fade absolute inset-0 z-[2]" aria-hidden="true" />
 
       <motion.div
         initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 24 }}
         animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
         transition={{ duration: 0.55, ease: "easeOut" }}
-        className="relative z-10 mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-[1fr_460px] lg:items-center"
+        className="relative z-10 mx-auto w-full max-w-6xl"
       >
-        <div>
+        <div className="max-w-3xl">
           <h1 className="max-w-3xl text-4xl font-black leading-[1.08] tracking-normal sm:text-6xl">
             {t.hero.headline}
           </h1>
@@ -55,11 +57,6 @@ export function Hero() {
               {t.nav.githubRepo}
             </a>
           </div>
-        </div>
-
-        <div className="relative">
-          <div className="orbit-aura absolute inset-x-8 bottom-[-28px] top-12 rounded-lg blur-2xl" aria-hidden="true" />
-          <CyberOrbit />
         </div>
       </motion.div>
     </section>

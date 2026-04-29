@@ -156,6 +156,26 @@ code, .font-mono {
   opacity: 1;
 }
 
+.hero-space-fade {
+  background:
+    linear-gradient(90deg, var(--bg-primary) 0%, color-mix(in srgb, var(--bg-primary) 96%, transparent) 34%, color-mix(in srgb, var(--bg-primary) 62%, transparent) 54%, color-mix(in srgb, var(--bg-primary) 20%, transparent) 72%, transparent 88%),
+    linear-gradient(180deg, transparent 0%, transparent 58%, color-mix(in srgb, var(--bg-primary) 88%, transparent) 84%, var(--bg-primary) 100%);
+}
+
+.dark .hero-space-fade {
+  background:
+    linear-gradient(90deg, var(--bg-primary) 0%, color-mix(in srgb, var(--bg-primary) 96%, transparent) 36%, color-mix(in srgb, var(--bg-primary) 64%, transparent) 56%, color-mix(in srgb, var(--bg-primary) 18%, transparent) 74%, transparent 90%),
+    linear-gradient(180deg, transparent 0%, transparent 56%, color-mix(in srgb, var(--bg-primary) 82%, transparent) 84%, var(--bg-primary) 100%);
+}
+
+@media (max-width: 640px) {
+  .hero-space-fade {
+    background:
+      linear-gradient(90deg, var(--bg-primary) 0%, color-mix(in srgb, var(--bg-primary) 94%, transparent) 44%, color-mix(in srgb, var(--bg-primary) 48%, transparent) 72%, color-mix(in srgb, var(--bg-primary) 12%, transparent) 92%, transparent 100%),
+      linear-gradient(180deg, color-mix(in srgb, var(--bg-primary) 62%, transparent) 0%, transparent 34%, color-mix(in srgb, var(--bg-primary) 30%, transparent) 62%, color-mix(in srgb, var(--bg-primary) 86%, transparent) 90%, var(--bg-primary) 100%);
+  }
+}
+
 .cyber-panel {
   position: relative;
   border: 1px solid var(--border);
@@ -244,14 +264,39 @@ code, .font-mono {
   transform: translateX(70%) rotate(18deg);
 }
 
-.cyber-orbit {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  box-shadow: var(--panel-shadow);
+.space-flight-scene {
+  background:
+    radial-gradient(circle at 78% 34%, rgba(124, 58, 237, 0.16), transparent 24%),
+    radial-gradient(circle at 70% 62%, rgba(96, 165, 250, 0.1), transparent 28%),
+    linear-gradient(135deg, #f9fafb, #eef2ff 56%, #f5f3ff);
+  opacity: 0.96;
 }
 
-.dark .cyber-orbit {
-  background: var(--bg-card);
+.dark .space-flight-scene {
+  background:
+    radial-gradient(circle at 78% 34%, rgba(168, 85, 247, 0.28), transparent 24%),
+    radial-gradient(circle at 70% 62%, rgba(96, 165, 250, 0.15), transparent 28%),
+    linear-gradient(135deg, #111318, #1b1f27 58%, #0b0d12);
+  opacity: 0.95;
+}
+
+.space-flight-scene::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(color-mix(in srgb, var(--accent-line) 18%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--accent-line) 16%, transparent) 1px, transparent 1px);
+  background-size: 74px 74px;
+  opacity: 0.2;
+  mask-image: radial-gradient(circle at 62% 48%, rgba(0, 0, 0, 0.7), transparent 74%);
+}
+
+.space-flight-scene canvas {
+  position: relative;
+  z-index: 1;
 }
 
 .orbit-aura {
