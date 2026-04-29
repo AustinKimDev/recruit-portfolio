@@ -40,7 +40,7 @@ export const experiences: ExperienceItem[] = [
     ),
     highlights: [
       lt("BootPay 정기결제 등록/콜백, Expo 푸시 토큰, 회원탈퇴 시 예약결제 확인 등 운영 이슈에 직접 대응", "Handled BootPay recurring payment callbacks, Expo push tokens, and subscription checks during account deletion."),
-      lt("Next.js/Redux 화면과 Node.js 백엔드, Elasticsearch 검색, React Native WebView/Push 초기 설정까지 이어지는 유지보수 범위 담당", "Covered Next.js/Redux UI, Node.js backend maintenance, Elasticsearch search, and React Native WebView/Push setup."),
+      lt("Next.js/Redux 화면과 Python/Django 백엔드, Elasticsearch 검색, React Native WebView/Push 초기 설정까지 이어지는 유지보수 범위 담당", "Covered Next.js/Redux UI, Python/Django backend maintenance, Elasticsearch search, and React Native WebView/Push setup."),
     ],
   },
   {

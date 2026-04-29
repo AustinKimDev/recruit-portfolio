@@ -50,9 +50,9 @@ export const skillCategories: SkillCategory[] = [
     name: lt("Backend / Data", "Backend / Data"),
     summary: lt("프론트엔드에 필요한 API, DB, 인증 흐름은 직접 설계하고 검증합니다.", "I design and validate the API, data, and auth flows frontend products depend on."),
     items: [
+      { name: "Python / Django", evidence: lt("Fruiting 증권 플랫폼 4년 백엔드 유지보수, 권한/회원/결제/알림 운영 흐름", "Four years of Fruiting backend maintenance across permissions, users, payments, and notifications") },
       { name: "FastAPI / Flask", evidence: lt("AI 연동, 크롤러, 프록시 API, 에이전트 백엔드", "AI integrations, crawlers, proxy APIs, agent backends") },
       { name: "C# / ASP.NET Core", evidence: lt("Comitsu Clean Architecture API, WPF 카메라 프로그램", "Comitsu Clean Architecture API and WPF camera tools") },
-      { name: "Node.js", evidence: lt("Fruiting 증권 플랫폼 장기 유지보수와 결제/알림 흐름", "Long-term Fruiting maintenance with payment and notification flows") },
       { name: "PostgreSQL", evidence: lt("pgvector, PostGIS, Prisma/EF 연동 프로젝트", "pgvector, PostGIS, Prisma, and EF-backed projects") },
     ],
   },

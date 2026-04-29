@@ -132,11 +132,11 @@ export const projects: Project[] = [
     period: "2022 - 2026.02",
     scope: lt("증권사 프로젝트 / 백엔드 유지보수", "Securities project / backend maintenance"),
     details: [
-      lt("Next.js/Redux 기반 화면 유지보수와 함께 Node.js 백엔드의 권한, 댓글, 회원, 배포 이슈를 처리했습니다.", "Maintained Next.js/Redux frontend flows while handling Node.js backend issues around permissions, comments, users, and deployment."),
+      lt("Next.js/Redux 기반 화면 유지보수와 함께 Python/Django 백엔드의 권한, 댓글, 회원, 배포 이슈를 처리했습니다.", "Maintained Next.js/Redux frontend flows while handling Python/Django backend issues around permissions, comments, users, and deployment."),
       lt("BootPay 정기결제 등록/콜백, Expo 푸시 토큰, 회원탈퇴 시 예약결제 확인 등 운영에 직접 닿는 흐름을 보강했습니다.", "Improved operational flows including BootPay recurring payments/callbacks, Expo push tokens, and subscription checks on account deletion."),
       lt("Elasticsearch 검색과 모바일 프로필, React Native WebView/Push 초기 설정까지 이어지는 유지보수 범위를 맡았습니다.", "Covered Elasticsearch search, mobile profile flows, and the initial React Native WebView/Push setup."),
     ],
-    stack: ["Next.js", "Redux", "Node.js", "BootPay", "Expo", "Elasticsearch"],
+    stack: ["Python", "Django", "Next.js", "Redux", "BootPay", "Expo", "Elasticsearch"],
     metric: lt("2026.02까지 장기 유지보수", "Long-term maintenance through 2026.02"),
     featured: true,
     categories: ["backend", "fullstack"],
@@ -149,7 +149,7 @@ export const projects: Project[] = [
     map: {
       coordinates: [126.929, 37.521],
       label: lt("금융 백엔드", "Finance backend"),
-      note: lt("BootPay, Expo Push, Elasticsearch, Node.js", "BootPay, Expo Push, Elasticsearch, Node.js"),
+      note: lt("Python, Django, BootPay, Expo Push, Elasticsearch", "Python, Django, BootPay, Expo Push, Elasticsearch"),
     },
   },
   {
