@@ -26,12 +26,12 @@ export const copy = {
         { label: "위성영상 응답 개선", value: "0.2초" },
         { label: "인프라 안정 운영", value: "2년+" },
         { label: "지식그래프 시각화", value: "500노드" },
-        { label: "라이브/스트리밍 인프라", value: "HLS" },
+        { label: "라이브/근태 운영 모듈", value: "HLS + Timesheet" },
       ],
       impact: [
         "위성영상 로딩 불가 상태를 WMTS 캐시 구성으로 0.2초 응답 흐름까지 개선",
         "사내 네트워크/배포 인프라를 정비해 1~2일 단위 장애를 2년+ 무중단 운영으로 전환",
-        "LiveKit, FFmpeg, Nginx, CloudFront를 연결해 방송 송출/시청 경로를 직접 구성",
+        "MateYou에서 LiveKit/HLS 방송 인프라와 Supabase 기반 출근부/근태 운영 모듈을 함께 구현",
       ],
     },
     hero: {
@@ -51,7 +51,7 @@ export const copy = {
         },
         {
           title: "방송/운영 인프라",
-          body: "LiveKit, HLS, FFmpeg, Nginx, CloudFront, Docker Compose로 실시간 방송과 배포 환경을 직접 구성했습니다.",
+          body: "LiveKit, HLS, FFmpeg, Nginx, CloudFront, Docker Compose로 방송 경로를 만들고, MateYou 내부 timesheet 운영 모듈까지 연결했습니다.",
         },
         {
           title: "제품 운영 감각",
@@ -114,12 +114,12 @@ export const copy = {
         { label: "Satellite imagery response", value: "0.2s" },
         { label: "Stable infra operation", value: "2y+" },
         { label: "Knowledge graph render", value: "500 nodes" },
-        { label: "Live streaming path", value: "HLS" },
+        { label: "Live/timesheet module", value: "HLS + Timesheet" },
       ],
       impact: [
         "Reduced blank satellite imagery loading paths into a 0.2s WMTS cache-backed flow",
         "Rebuilt network and deployment infrastructure that had failed every few days into a stable long-running environment",
-        "Built live streaming delivery paths with LiveKit, FFmpeg, Nginx, CloudFront, and Docker Compose",
+        "Built both MateYou live streaming infrastructure and a Supabase-backed timesheet operations module",
       ],
     },
     hero: {
@@ -139,7 +139,7 @@ export const copy = {
         },
         {
           title: "Streaming infra",
-          body: "I built live streaming and delivery paths with LiveKit, HLS, FFmpeg, Nginx, CloudFront, and Docker Compose.",
+          body: "I built live streaming paths with LiveKit, HLS, FFmpeg, Nginx, CloudFront, and Docker Compose, plus MateYou's internal timesheet module.",
         },
         {
           title: "Product operations",

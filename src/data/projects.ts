@@ -95,32 +95,33 @@ export const projects: Project[] = [
     },
   },
   {
-    name: lt("MateYou Live", "MateYou Live"),
+    name: lt("MateYou 플랫폼", "MateYou Platform"),
     summary: lt(
-      "매칭 기반 라이브 방송 플랫폼. 프론트엔드와 스트리밍 인프라를 함께 담당했습니다.",
-      "Live broadcasting platform where I handled both frontend workflows and streaming infrastructure."
+      "매칭 기반 플랫폼 내부에 라이브 방송, 스토어, 출근부/근태 관리까지 붙인 운영형 서비스입니다.",
+      "Operations-heavy matching platform combining live streaming, store workflows, and an internal timesheet module."
     ),
     period: "2025",
-    scope: lt("외주 / 방송 인프라", "Client project / streaming infrastructure"),
+    scope: lt("외주 / 방송 인프라 + 내부 운영 모듈", "Client project / streaming infra and internal operations"),
     details: [
       lt("LiveKit WebRTC 기반 실시간 방송 구조를 HLS 시청 경로로 확장하고 FFmpeg 트랜스코딩 파이프라인을 구성했습니다.", "Extended LiveKit WebRTC streaming into an HLS viewing path with an FFmpeg transcoding pipeline."),
       lt("Nginx 리버스 프록시, CloudFront 배포, Docker Compose 기반 서버 구성을 연결해 송출/시청 경로를 분리했습니다.", "Separated broadcaster and viewer paths through Nginx reverse proxying, CloudFront delivery, and Docker Compose services."),
-      lt("모바일 세로 방송 해상도, 레터박스, 보이스룸 권한, 미션 타임아웃과 스트림 정리 자동화를 처리했습니다.", "Handled vertical mobile streams, letterboxing, voice-room permissions, mission timeouts, and stream cleanup automation."),
+      lt("MateYou 프론트 내부 /timesheet 기능으로 출근/휴게/퇴근 요청, 매니저 승인/반려, 실시간 출근자 현황, 근태 통계/정산 화면을 구현했습니다.", "Built the internal /timesheet module for check-in/break/check-out requests, manager approvals, realtime working partner views, and attendance statistics/settlement screens."),
+      lt("timesheet_ 네임스페이스 테이블, Supabase RPC/Realtime, 감사 로그, 스토어 수령 완료의 출근 상태 조건까지 서비스 흐름에 연결했습니다.", "Connected timesheet_ tables, Supabase RPC/Realtime, audit logs, and the store pickup flow's WORKING-state gate into the product workflow."),
     ],
-    stack: ["React", "TypeScript", "LiveKit", "HLS", "FFmpeg", "Docker", "Nginx", "CloudFront"],
-    metric: lt("방송 송출/시청 인프라 직접 구성", "Built broadcast and viewer delivery infrastructure"),
+    stack: ["React", "TypeScript", "Supabase", "Realtime", "LiveKit", "HLS", "FFmpeg", "Docker", "Nginx", "CloudFront"],
+    metric: lt("방송 인프라 + 출근부 운영 모듈 구현", "Built streaming infrastructure and timesheet operations module"),
     featured: true,
-    categories: ["fullstack", "infra"],
+    categories: ["fullstack", "infra", "backend"],
     caseStudy: {
-      role: lt("방송 UI, WebRTC/HLS 전환, 스트리밍 서버 구성", "Broadcast UI, WebRTC/HLS bridge, streaming server setup"),
-      challenge: lt("실시간 송출과 다수 시청자 전달 경로가 달라 WebRTC만으로는 운영/확장성이 부족했습니다.", "The broadcaster and viewer paths had different requirements, and WebRTC alone was not enough for operating and scaling viewers."),
-      approach: lt("송출은 LiveKit으로 유지하고, 시청은 FFmpeg로 HLS 변환 후 Nginx/CloudFront 경로로 전달하는 구조를 만들었습니다.", "Kept LiveKit for broadcasting and converted streams to HLS through FFmpeg, then served them via Nginx and CloudFront."),
-      outcome: lt("방송 기능을 화면 구현에서 끝내지 않고 인프라와 운영 경로까지 직접 설계한 사례가 됐습니다.", "It became a clear case of building not only the UI but the infrastructure needed to operate live media."),
+      role: lt("방송 UI/인프라, 출근부/근태 운영 모듈, 스토어 연동", "Broadcast UI/infrastructure, timesheet operations, store integration"),
+      challenge: lt("방송은 송출/시청 경로가 분리되어야 했고, MateYou 내부 운영은 파트너 출근 상태와 주문 수령 완료 같은 실제 업무 조건까지 묶어야 했습니다.", "Streaming needed separate broadcaster/viewer paths, while operations had to connect partner attendance state with store pickup rules."),
+      approach: lt("송출은 LiveKit, 시청은 FFmpeg 기반 HLS + Nginx/CloudFront로 나누고, 출근부는 Supabase timesheet_ 테이블/RPC/Realtime과 React 라우트로 독립 모듈화했습니다.", "Separated broadcasting through LiveKit from HLS viewing via FFmpeg/Nginx/CloudFront, and modularized timesheet with Supabase timesheet_ tables, RPC, Realtime, and React routes."),
+      outcome: lt("라이브 미디어 인프라와 내부 운영/정산 흐름을 같은 제품 안에서 연결한 풀스택 사례로 정리할 수 있습니다.", "This is a full-stack case where live media infrastructure and internal operations/settlement workflows shipped within one product."),
     },
     map: {
       coordinates: [126.923, 37.556],
-      label: lt("라이브 방송", "Live streaming"),
-      note: lt("LiveKit, HLS, FFmpeg, Nginx, CloudFront", "LiveKit, HLS, FFmpeg, Nginx, CloudFront"),
+      label: lt("라이브/운영 플랫폼", "Live and operations platform"),
+      note: lt("LiveKit, HLS, FFmpeg, Supabase Timesheet, Realtime", "LiveKit, HLS, FFmpeg, Supabase Timesheet, Realtime"),
     },
   },
   {
@@ -150,34 +151,6 @@ export const projects: Project[] = [
       coordinates: [126.929, 37.521],
       label: lt("금융 백엔드", "Finance backend"),
       note: lt("Python, Django, BootPay, Expo Push, Elasticsearch", "Python, Django, BootPay, Expo Push, Elasticsearch"),
-    },
-  },
-  {
-    name: lt("근태/출근부 관리 시스템", "Attendance Management System"),
-    summary: lt(
-      "출근부와 근태 데이터를 다루는 내부 운영 시스템. 기록, 승인, 집계 흐름을 웹 화면으로 정리했습니다.",
-      "Internal attendance management system for records, approvals, and aggregated work-time views."
-    ),
-    period: "2025",
-    scope: lt("운영툴 / 풀스택", "Operations tool / full-stack"),
-    details: [
-      lt("출근/퇴근 기록, 근태 상태, 관리자 승인 흐름을 한 화면에서 확인할 수 있도록 운영 UI를 구성했습니다.", "Built an operations UI for check-in/out records, attendance status, and manager approval flows."),
-      lt("반복 입력과 예외 케이스가 많은 업무 특성에 맞춰 필터, 테이블, 상태 뱃지, 수정 흐름을 촘촘히 설계했습니다.", "Designed filters, tables, status badges, and edit flows for repetitive operational work with many exception cases."),
-      lt("단순 CRUD보다 운영자가 빠르게 확인하고 수정할 수 있는 데이터 밀도와 사용성을 우선했습니다.", "Prioritized dense, scannable data and quick corrections over a plain CRUD surface."),
-    ],
-    stack: ["React", "TypeScript", "Table UI", "Admin UX", "API Integration"],
-    metric: lt("운영자 중심 데이터 밀도 설계", "Operator-focused dense data UI"),
-    categories: ["fullstack", "backend"],
-    caseStudy: {
-      role: lt("운영 화면, 상태 모델, 승인/수정 UX", "Operations UI, state model, approval/edit UX"),
-      challenge: lt("근태 데이터는 단순 목록보다 예외 확인, 수정, 승인, 집계가 빠르게 이어져야 했습니다.", "Attendance data required fast exception checks, edits, approvals, and summaries beyond simple listing."),
-      approach: lt("테이블 중심 UI와 상태별 필터를 먼저 잡고, 수정/승인 흐름을 같은 화면 안에서 이어지게 설계했습니다.", "Started with table-first UI and status filters, then kept edit and approval flows within the same working surface."),
-      outcome: lt("반복 운영 업무를 빠르게 처리하는 백오피스 화면 설계 경험을 보강했습니다.", "Added practical back-office experience for repetitive operational workflows."),
-    },
-    map: {
-      coordinates: [127.027, 37.497],
-      label: lt("운영툴", "Operations tool"),
-      note: lt("출근부, 근태 상태, 승인 흐름", "Attendance records, status, approvals"),
     },
   },
   {
