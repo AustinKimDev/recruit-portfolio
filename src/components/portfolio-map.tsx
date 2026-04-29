@@ -6,9 +6,10 @@ import { localize, projects } from "@/data/projects";
 import { useI18n } from "@/i18n/i18n-provider";
 import { useTheme } from "./theme-provider";
 
-const HUB: [number, number] = [126.978, 37.566];
+const HUB: [number, number] = [126.7, 37.3];
 const INITIAL_SELECTED_PROJECT = "Bluebon / Bluebon-prod";
 type MappedProject = (typeof projects)[number];
+type RouteKind = "base" | "active";
 type MarkerRecord = {
   marker: maplibregl.Marker;
   element: HTMLButtonElement;
@@ -29,21 +30,82 @@ function getProjectColor(project: MappedProject) {
   return categoryColor[category] ?? categoryColor.default;
 }
 
+function sameCoordinate(a: [number, number], b: [number, number]) {
+  return Math.abs(a[0] - b[0]) < 0.0001 && Math.abs(a[1] - b[1]) < 0.0001;
+}
+
 function buildRouteGeoJson(selectedName: string | null) {
   const visibleProjects = projects.filter((project) => project.map);
-  return {
-    type: "FeatureCollection" as const,
-    features: visibleProjects.map((project) => ({
+  const selectedProject =
+    visibleProjects.find((project) => localize(project.name, "ko") === selectedName) ??
+    visibleProjects[0];
+  const selectedCoordinates = selectedProject?.map?.coordinates;
+  const features = visibleProjects
+    .filter((project) => !sameCoordinate(project.map!.coordinates, HUB))
+    .map((project) => {
+      const projectName = localize(project.name, "ko");
+      return {
+        type: "Feature" as const,
+        properties: {
+          name: projectName,
+          kind: "base" as RouteKind,
+        },
+        geometry: {
+          type: "LineString" as const,
+          coordinates: [HUB, project.map!.coordinates],
+        },
+      };
+    });
+
+  if (selectedCoordinates && !sameCoordinate(selectedCoordinates, HUB)) {
+    features.push({
       type: "Feature" as const,
       properties: {
-        name: localize(project.name, "ko"),
-        selected: selectedName === localize(project.name, "ko"),
+        name: localize(selectedProject.name, "ko"),
+        kind: "active" as RouteKind,
       },
       geometry: {
         type: "LineString" as const,
-        coordinates: [HUB, project.map?.coordinates ?? HUB],
+        coordinates: [HUB, selectedCoordinates],
       },
-    })),
+    });
+  }
+
+  return {
+    type: "FeatureCollection" as const,
+    features,
+  };
+}
+
+function buildEndpointGeoJson(selectedName: string | null) {
+  const visibleProjects = projects.filter((project) => project.map);
+  const selectedProject =
+    visibleProjects.find((project) => localize(project.name, "ko") === selectedName) ??
+    visibleProjects[0];
+  const selectedCoordinates = selectedProject?.map?.coordinates;
+  const features = [
+    {
+      type: "Feature" as const,
+      properties: {
+        kind: "hub",
+      },
+      geometry: { type: "Point" as const, coordinates: HUB },
+    },
+  ];
+
+  if (selectedCoordinates && !sameCoordinate(selectedCoordinates, HUB)) {
+    features.push({
+      type: "Feature" as const,
+      properties: {
+        kind: "active",
+      },
+      geometry: { type: "Point" as const, coordinates: selectedCoordinates },
+    });
+  }
+
+  return {
+    type: "FeatureCollection" as const,
+    features,
   };
 }
 
@@ -90,6 +152,10 @@ export function PortfolioMap() {
             type: "geojson",
             data: buildRouteGeoJson(INITIAL_SELECTED_PROJECT),
           },
+          routeEndpoints: {
+            type: "geojson",
+            data: buildEndpointGeoJson(INITIAL_SELECTED_PROJECT),
+          },
           hub: {
             type: "geojson",
             data: {
@@ -97,7 +163,7 @@ export function PortfolioMap() {
               features: [
                 {
                   type: "Feature",
-                  properties: { name: "Seoul engineering hub" },
+                  properties: { name: "Project atlas hub" },
                   geometry: { type: "Point", coordinates: HUB },
                 },
               ],
@@ -116,23 +182,70 @@ export function PortfolioMap() {
             },
           },
           {
-            id: "routes-line",
+            id: "routes-base-line",
             type: "line",
             source: "routes",
+            filter: ["==", ["get", "kind"], "base"],
+            layout: {
+              "line-cap": "round",
+              "line-join": "round",
+            },
             paint: {
-              "line-color": [
-                "case",
-                ["boolean", ["get", "selected"], false],
-                "#c084fc",
-                "rgba(168, 85, 247, 0.22)",
-              ],
-              "line-width": [
-                "case",
-                ["boolean", ["get", "selected"], false],
-                3,
-                1.2,
-              ],
-              "line-dasharray": [1.2, 1.4],
+              "line-color": "#c084fc",
+              "line-opacity": 0.32,
+              "line-width": 1.4,
+            },
+          },
+          {
+            id: "routes-active-glow",
+            type: "line",
+            source: "routes",
+            filter: ["==", ["get", "kind"], "active"],
+            layout: {
+              "line-cap": "round",
+              "line-join": "round",
+            },
+            paint: {
+              "line-blur": 5,
+              "line-color": "#c084fc",
+              "line-opacity": 0.34,
+              "line-width": 12,
+            },
+          },
+          {
+            id: "routes-active-line",
+            type: "line",
+            source: "routes",
+            filter: ["==", ["get", "kind"], "active"],
+            layout: {
+              "line-cap": "round",
+              "line-join": "round",
+            },
+            paint: {
+              "line-color": "#c084fc",
+              "line-opacity": 0.94,
+              "line-width": 3.6,
+            },
+          },
+          {
+            id: "route-endpoint-halo",
+            type: "circle",
+            source: "routeEndpoints",
+            paint: {
+              "circle-radius": ["case", ["==", ["get", "kind"], "active"], 16, 11],
+              "circle-color": ["case", ["==", ["get", "kind"], "active"], "#c084fc", "#f0abfc"],
+              "circle-opacity": ["case", ["==", ["get", "kind"], "active"], 0.22, 0.18],
+            },
+          },
+          {
+            id: "route-endpoint-core",
+            type: "circle",
+            source: "routeEndpoints",
+            paint: {
+              "circle-radius": ["case", ["==", ["get", "kind"], "active"], 4, 3],
+              "circle-color": ["case", ["==", ["get", "kind"], "active"], "#f0abfc", "#ffffff"],
+              "circle-stroke-color": "#a855f7",
+              "circle-stroke-width": 2,
             },
           },
           {
@@ -208,6 +321,8 @@ export function PortfolioMap() {
     const updateRoutes = () => {
       const source = map.getSource("routes") as GeoJSONSource | undefined;
       source?.setData(buildRouteGeoJson(localize(selectedProject.name, "ko")));
+      const endpointSource = map.getSource("routeEndpoints") as GeoJSONSource | undefined;
+      endpointSource?.setData(buildEndpointGeoJson(localize(selectedProject.name, "ko")));
     };
 
     if (map.isStyleLoaded()) {
@@ -227,24 +342,29 @@ export function PortfolioMap() {
       map.setPaintProperty("osm", "raster-opacity", isDark ? 0.26 : 0.58);
       map.setPaintProperty("osm", "raster-saturation", isDark ? -0.85 : -0.35);
       map.setPaintProperty("osm", "raster-contrast", isDark ? 0.22 : -0.08);
-      map.setPaintProperty("routes-line", "line-color", [
+      map.setPaintProperty("routes-base-line", "line-color", isDark ? "#c084fc" : "#6d28d9");
+      map.setPaintProperty("routes-base-line", "line-opacity", isDark ? 0.32 : 0.3);
+      map.setPaintProperty("routes-base-line", "line-width", isDark ? 1.4 : 1.6);
+      map.setPaintProperty("routes-active-glow", "line-color", isDark ? "#c084fc" : "#7c3aed");
+      map.setPaintProperty("routes-active-glow", "line-opacity", isDark ? 0.34 : 0.26);
+      map.setPaintProperty("routes-active-glow", "line-width", isDark ? 12 : 14);
+      map.setPaintProperty("routes-active-line", "line-color", isDark ? "#c084fc" : "#6d28d9");
+      map.setPaintProperty("routes-active-line", "line-opacity", isDark ? 0.94 : 0.9);
+      map.setPaintProperty("routes-active-line", "line-width", isDark ? 3.6 : 4);
+      map.setPaintProperty("route-endpoint-halo", "circle-color", [
         "case",
-        ["boolean", ["get", "selected"], false],
-        isDark ? "#c084fc" : "#6d28d9",
-        isDark ? "rgba(168, 85, 247, 0.22)" : "rgba(109, 40, 217, 0.32)",
+        ["==", ["get", "kind"], "active"],
+        isDark ? "#c084fc" : "#7c3aed",
+        isDark ? "#f0abfc" : "#6d28d9",
       ]);
-      map.setPaintProperty("routes-line", "line-opacity", [
+      map.setPaintProperty("route-endpoint-halo", "circle-opacity", isDark ? 0.22 : 0.16);
+      map.setPaintProperty("route-endpoint-core", "circle-color", [
         "case",
-        ["boolean", ["get", "selected"], false],
-        isDark ? 0.84 : 0.72,
-        isDark ? 0.5 : 0.36,
+        ["==", ["get", "kind"], "active"],
+        isDark ? "#f0abfc" : "#6d28d9",
+        "#ffffff",
       ]);
-      map.setPaintProperty("routes-line", "line-width", [
-        "case",
-        ["boolean", ["get", "selected"], false],
-        isDark ? 3 : 3.4,
-        isDark ? 1.2 : 1.45,
-      ]);
+      map.setPaintProperty("route-endpoint-core", "circle-stroke-color", isDark ? "#a855f7" : "#6d28d9");
       map.setPaintProperty("hub-circle", "circle-color", isDark ? "#f0abfc" : "#6d28d9");
     };
 
