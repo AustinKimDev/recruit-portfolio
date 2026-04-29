@@ -6,7 +6,16 @@ export interface ExperienceItem {
   period: string;
   description: LocalizedText;
   highlights: LocalizedText[];
+  projects?: ExperienceProject[];
   isMain?: boolean;
+}
+
+export interface ExperienceProject {
+  name: LocalizedText;
+  scope: LocalizedText;
+  result: LocalizedText;
+  details: LocalizedText[];
+  stack: string[];
 }
 
 const lt = (ko: string, en: string): LocalizedText => ({ ko, en });
@@ -22,12 +31,69 @@ export const experiences: ExperienceItem[] = [
     ),
     isMain: true,
     highlights: [
-      lt("PIXATIVE v1/v2: OpenLayers + MapLibre 지도 구조, proj4 좌표계 정합, WMTS 캐시 구성으로 영상 로딩 불가 상태를 0.2초 응답 흐름까지 개선", "PIXATIVE v1/v2: improved satellite imagery loading through OpenLayers, MapLibre, proj4, and WMTS cache paths."),
-      lt("Bluebon/Bluebon-prod: TLE 기반 SGP4 궤도 전파, Mapbox/Deck.gl 레이어, Three.js 3D 뷰, Keycloak SSO + FastAPI 프록시까지 프로덕션 구조 확장", "Bluebon/Bluebon-prod: built SGP4 orbit propagation, Mapbox/Deck.gl layers, Three.js 3D view, Keycloak SSO, and FastAPI proxy flows."),
-      lt("LIC 플랫폼: Remix SSR + Mapbox GL, WKT/turf.js AOI 편집, 관측소 데이터 5종, PDF 리포트/모바일 Drawer까지 포함한 B2G 운영 화면 완수", "LIC platform: delivered B2G operations UI with Remix SSR, Mapbox GL, WKT/turf.js AOI editing, station data, PDF reports, and mobile drawers."),
-      lt("멀티모달 AI 시각화: LTF/Graph/Entity 산출물을 FE에서 직접 파싱하고, react-force-graph + Canvas로 500노드 지식 그래프와 원문 하이라이트를 연결", "Multimodal AI visualization: parsed LTF/Graph/Entity output in the frontend and linked a 500-node graph with source text highlighting."),
-      lt("telepix-ui: Radix UI + TailwindCSS 4 기반 사내 NPM 패키지, 100+ 디자인 토큰, Storybook v9 문서화와 릴리즈 운영", "telepix-ui: operated an internal Radix/Tailwind package with semantic tokens, Storybook docs, and releases."),
-      lt("사내 인프라: Switch/Router/방화벽/VPN/DNS/VLAN, Jenkins + Docker 배포, AWS/Terraform을 직접 정비해 1~2일 장애를 2년+ 무중단 환경으로 전환", "Infrastructure: rebuilt network, Jenkins/Docker deployments, and AWS/Terraform flows from frequent outages into long-running stable operations."),
+      lt("지도/GIS, 데이터 시각화, 디자인 시스템, 인프라까지 제품 운영에 필요한 영역을 프로젝트 단위로 맡았습니다.", "Owned GIS, visualization, design system, and infrastructure work across product projects."),
+    ],
+    projects: [
+      {
+        name: lt("PIXATIVE v1/v2", "PIXATIVE v1/v2"),
+        scope: lt("위성영상 GIS 플랫폼 / 프론트엔드 주도", "Satellite imagery GIS platform / frontend lead"),
+        result: lt("영상 로딩 불가 흐름을 0.2초 응답 경로로 개선", "Improved blank imagery loading into a 0.2s response path"),
+        details: [
+          lt("OpenLayers와 MapLibre를 프로젝트 성격에 맞게 분리하고, proj4 좌표계 정합 계층을 구성했습니다.", "Split OpenLayers and MapLibre responsibilities and built a proj4 CRS alignment layer."),
+          lt("WMTS 캐시 경로를 붙여 지도 탐색 중 빈 화면으로 멈추던 병목을 줄였습니다.", "Added a WMTS cache route to reduce blank-map bottlenecks during map navigation."),
+        ],
+        stack: ["OpenLayers", "MapLibre", "proj4", "WMTS", "Zustand"],
+      },
+      {
+        name: lt("Bluebon / Bluebon-prod", "Bluebon / Bluebon-prod"),
+        scope: lt("위성 미션 계획 / 프로덕션 확장", "Satellite mission planning / production expansion"),
+        result: lt("CLI 중심 궤도 계산을 웹 기반 운영 화면으로 전환", "Moved CLI-first orbit workflows into an operational web product"),
+        details: [
+          lt("TLE 기반 SGP4 궤도 전파, Mapbox/Deck.gl 레이어, Three.js 3D 뷰를 연결했습니다.", "Connected TLE-based SGP4 propagation with Mapbox, Deck.gl, and Three.js views."),
+          lt("Keycloak SSO와 FastAPI 프록시를 붙여 외부 운영 버전까지 확장했습니다.", "Extended it for production usage with Keycloak SSO and a FastAPI proxy."),
+        ],
+        stack: ["SGP4", "Mapbox GL", "Deck.gl", "Three.js", "Keycloak", "FastAPI"],
+      },
+      {
+        name: lt("LIC 플랫폼", "LIC Platform"),
+        scope: lt("B2G 운영 화면 / 지도·리포트", "B2G operations UI / maps and reports"),
+        result: lt("AOI 편집부터 PDF 리포트까지 한 화면 흐름으로 완수", "Delivered one workflow from AOI editing to PDF reporting"),
+        details: [
+          lt("Remix SSR과 Mapbox GL 기반으로 관측소 데이터 5종, WKT/turf.js AOI 편집을 구현했습니다.", "Built five station data layers and WKT/turf.js AOI editing with Remix SSR and Mapbox GL."),
+          lt("모바일 Drawer와 PDF 리포트까지 포함해 현장 운영에 필요한 화면 흐름을 정리했습니다.", "Organized mobile drawers and PDF reporting for field operations."),
+        ],
+        stack: ["Remix", "Mapbox GL", "WKT", "turf.js", "PDF"],
+      },
+      {
+        name: lt("멀티모달 AI 시각화", "Multimodal AI Visualization"),
+        scope: lt("지식 그래프 / 원문 하이라이트", "Knowledge graph / source highlighting"),
+        result: lt("500노드 지식 그래프와 원문 근거를 같은 화면에서 추적", "Linked a 500-node graph with source evidence in one view"),
+        details: [
+          lt("LTF, Graph, Entity 산출물을 프론트엔드에서 직접 파싱해 시각화 데이터로 변환했습니다.", "Parsed LTF, Graph, and Entity outputs in the frontend into visualization data."),
+          lt("react-force-graph와 Canvas로 그래프 노드, 문서 하이라이트, 엔티티 흐름을 연결했습니다.", "Connected graph nodes, document highlights, and entity flows with react-force-graph and Canvas."),
+        ],
+        stack: ["React", "Canvas", "react-force-graph", "LTF", "Entity"],
+      },
+      {
+        name: lt("telepix-ui", "telepix-ui"),
+        scope: lt("사내 디자인 시스템 / NPM 패키지", "Internal design system / NPM package"),
+        result: lt("100+ 토큰과 Storybook 문서로 반복 UI 구현을 표준화", "Standardized repeated UI work with 100+ tokens and Storybook docs"),
+        details: [
+          lt("Radix UI와 TailwindCSS 4 기반 컴포넌트, 토큰, 릴리즈 흐름을 운영했습니다.", "Operated components, tokens, and release flows on Radix UI and TailwindCSS 4."),
+          lt("프로젝트마다 달라지던 폼, 버튼, 패널, 테이블 패턴을 패키지 기준으로 맞췄습니다.", "Aligned forms, buttons, panels, and table patterns through a shared package."),
+        ],
+        stack: ["Radix UI", "TailwindCSS 4", "Storybook v9", "NPM"],
+      },
+      {
+        name: lt("사내 인프라 전면 구축", "Internal Infrastructure Rebuild"),
+        scope: lt("네트워크·배포·클라우드 운영", "Network, deployment, and cloud operations"),
+        result: lt("1~2일 단위 장애가 반복되던 환경을 2년+ 안정 운영으로 전환", "Turned recurring 1-2 day outages into 2+ years of stable operations"),
+        details: [
+          lt("Switch, Router, 방화벽, VPN, DNS, VLAN을 직접 정비해 개발 조직의 운영 기반을 만들었습니다.", "Rebuilt switches, routers, firewall, VPN, DNS, and VLAN foundations for the engineering team."),
+          lt("Jenkins, Docker 배포와 AWS/Terraform 흐름을 정리해 프론트엔드 밖의 문제까지 처리했습니다.", "Organized Jenkins, Docker deployment, and AWS/Terraform flows beyond frontend-only work."),
+        ],
+        stack: ["Network", "Jenkins", "Docker", "AWS", "Terraform"],
+      },
     ],
   },
   {
@@ -39,8 +105,19 @@ export const experiences: ExperienceItem[] = [
       "Maintained long-running securities product flows across payments, notifications, permissions, search, and mobile integration."
     ),
     highlights: [
-      lt("BootPay 정기결제 등록/콜백, Expo 푸시 토큰, 회원탈퇴 시 예약결제 확인 등 운영 이슈에 직접 대응", "Handled BootPay recurring payment callbacks, Expo push tokens, and subscription checks during account deletion."),
-      lt("Next.js/Redux 화면과 Python/Django 백엔드, Elasticsearch 검색, React Native WebView/Push 초기 설정까지 이어지는 유지보수 범위 담당", "Covered Next.js/Redux UI, Python/Django backend maintenance, Elasticsearch search, and React Native WebView/Push setup."),
+      lt("Next.js 화면과 Python/Django 백엔드, 모바일 연동까지 이어지는 운영 이슈를 장기간 유지보수했습니다.", "Maintained long-running issues across Next.js screens, Python/Django backend, and mobile integration."),
+    ],
+    projects: [
+      {
+        name: lt("Fruiting 증권 플랫폼", "Fruiting Securities Platform"),
+        scope: lt("증권사 서비스 / 백엔드 유지보수", "Securities service / backend maintenance"),
+        result: lt("2026.02까지 4년간 결제·알림·회원·검색 흐름을 안정 운영", "Operated payments, notifications, users, and search flows for four years until 2026.02"),
+        details: [
+          lt("BootPay 정기결제 등록/콜백, 회원탈퇴 시 예약결제 확인 등 돈이 오가는 운영 이슈를 직접 처리했습니다.", "Handled payment-sensitive issues including BootPay recurring callbacks and subscription checks on account deletion."),
+          lt("Python/Django 백엔드, Elasticsearch 검색, Expo 푸시 토큰, React Native WebView/Push 초기 설정까지 대응했습니다.", "Covered Python/Django backend, Elasticsearch search, Expo push tokens, and React Native WebView/Push setup."),
+        ],
+        stack: ["Python", "Django", "Next.js", "Redux", "Elasticsearch", "BootPay"],
+      },
     ],
   },
   {

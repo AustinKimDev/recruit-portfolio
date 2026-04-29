@@ -59,13 +59,28 @@ export default function ResumePage() {
               <span className="text-[10px] text-zinc-500">{exp.period}</span>
             </div>
             <p className="text-[10px] text-zinc-500">{localize(exp.role, locale)}</p>
-            {exp.highlights.length > 0 && (
+            {exp.projects && exp.projects.length > 0 ? (
+              <div className="mt-1 space-y-1">
+                {exp.projects.map((project) => (
+                  <div key={localize(project.name, locale)} className="border-l border-zinc-200 pl-2 text-[10px]">
+                    <div className="flex items-baseline gap-1">
+                      <span className="font-semibold text-zinc-800">{localize(project.name, locale)}</span>
+                      <span className="text-zinc-400">— {localize(project.scope, locale)}</span>
+                    </div>
+                    <p className="text-zinc-700">{localize(project.result, locale)}</p>
+                    <p className="text-zinc-500">
+                      {project.stack.join(", ")} / {project.details.map((detail) => localize(detail, locale)).join(" ")}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            ) : exp.highlights.length > 0 ? (
               <ul className="mt-1 list-inside list-disc space-y-0.5 text-[10px] text-zinc-700">
                 {exp.highlights.map((h, i) => (
                   <li key={i}>{localize(h, locale)}</li>
                 ))}
               </ul>
-            )}
+            ) : null}
           </div>
         ))}
       </section>

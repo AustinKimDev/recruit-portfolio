@@ -68,12 +68,91 @@ export function Experience() {
               {exp.period}
             </p>
             <p
-              className="mb-3 text-sm"
+              className="mb-4 text-sm"
               style={{ color: "var(--text-muted)" }}
             >
               {localize(exp.description, locale)}
             </p>
-            {exp.highlights.length > 0 && (
+            {exp.projects && exp.projects.length > 0 ? (
+              <div className="grid gap-3 sm:grid-cols-2">
+                {exp.projects.map((project, index) => (
+                  <article
+                    key={localize(project.name, locale)}
+                    className="group relative overflow-hidden rounded-xl border p-4 transition duration-200 hover:-translate-y-0.5"
+                    style={{
+                      borderColor: "var(--border)",
+                      background: "var(--bg-card)",
+                      boxShadow: "var(--panel-shadow)",
+                    }}
+                  >
+                    <div
+                      className="absolute inset-x-0 top-0 h-1"
+                      style={{ background: "linear-gradient(90deg, var(--accent-strong), var(--accent-vivid))" }}
+                    />
+                    <div className="mb-3 flex items-start justify-between gap-3">
+                      <div>
+                        <p
+                          className="font-mono text-[11px] font-semibold"
+                          style={{ color: "var(--accent-strong)" }}
+                        >
+                          PROJECT {String(index + 1).padStart(2, "0")}
+                        </p>
+                        <h5 className="mt-1 text-base font-extrabold" style={{ color: "var(--text-primary)" }}>
+                          {localize(project.name, locale)}
+                        </h5>
+                      </div>
+                      <span
+                        className="shrink-0 rounded-full px-2 py-1 font-mono text-[10px]"
+                        style={{
+                          color: "var(--accent-strong)",
+                          backgroundColor: "var(--accent-soft)",
+                        }}
+                      >
+                        {project.stack[0]}
+                      </span>
+                    </div>
+                    <p className="text-xs leading-5" style={{ color: "var(--text-muted)" }}>
+                      {localize(project.scope, locale)}
+                    </p>
+                    <p className="mt-3 text-sm font-bold leading-6" style={{ color: "var(--text-primary)" }}>
+                      {localize(project.result, locale)}
+                    </p>
+                    <div className="mt-3 space-y-2">
+                      {project.details.map((detail, detailIndex) => (
+                        <p
+                          key={localize(detail, locale)}
+                          className="grid grid-cols-[22px_1fr] gap-2 text-sm leading-6"
+                          style={{ color: "var(--text-secondary)" }}
+                        >
+                          <span
+                            className="font-mono text-[11px]"
+                            style={{ color: "var(--accent-strong)" }}
+                          >
+                            {String(detailIndex + 1).padStart(2, "0")}
+                          </span>
+                          <span>{localize(detail, locale)}</span>
+                        </p>
+                      ))}
+                    </div>
+                    <div className="mt-4 flex flex-wrap gap-1.5">
+                      {project.stack.slice(1).map((stack) => (
+                        <span
+                          key={stack}
+                          className="rounded-md border px-2 py-1 font-mono text-[10px]"
+                          style={{
+                            borderColor: "var(--border)",
+                            color: "var(--text-muted)",
+                            backgroundColor: "var(--bg-primary)",
+                          }}
+                        >
+                          {stack}
+                        </span>
+                      ))}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            ) : exp.highlights.length > 0 ? (
               <ul className="space-y-1.5 text-sm" style={{ color: "var(--text-secondary)" }}>
                 {exp.highlights.map((h, i) => (
                   <li key={i} className="flex gap-2">
@@ -85,7 +164,7 @@ export function Experience() {
                   </li>
                 ))}
               </ul>
-            )}
+            ) : null}
           </motion.div>
         ))}
       </motion.div>
