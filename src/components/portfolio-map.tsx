@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import maplibregl, { type GeoJSONSource, type Map as MapLibreMap } from "maplibre-gl";
 import { localize, projects } from "@/data/projects";
 import { useI18n } from "@/i18n/i18n-provider";
+import { useTheme } from "./theme-provider";
 
 const HUB: [number, number] = [126.978, 37.566];
 const INITIAL_SELECTED_PROJECT = "Bluebon / Bluebon-prod";
@@ -52,6 +53,7 @@ export function PortfolioMap() {
   const markersRef = useRef<Map<string, MarkerRecord>>(new Map());
   const [selectedName, setSelectedName] = useState(INITIAL_SELECTED_PROJECT);
   const { locale, t } = useI18n();
+  const { theme } = useTheme();
 
   const mappedProjects = useMemo(
     () => projects.filter((project) => project.map),
@@ -215,6 +217,43 @@ export function PortfolioMap() {
     }
 
   }, [selectedProject]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+
+    const applyThemePaint = () => {
+      const isDark = theme === "dark";
+      map.setPaintProperty("osm", "raster-opacity", isDark ? 0.26 : 0.58);
+      map.setPaintProperty("osm", "raster-saturation", isDark ? -0.85 : -0.35);
+      map.setPaintProperty("osm", "raster-contrast", isDark ? 0.22 : -0.08);
+      map.setPaintProperty("routes-line", "line-color", [
+        "case",
+        ["boolean", ["get", "selected"], false],
+        isDark ? "#c084fc" : "#6d28d9",
+        isDark ? "rgba(168, 85, 247, 0.22)" : "rgba(109, 40, 217, 0.32)",
+      ]);
+      map.setPaintProperty("routes-line", "line-opacity", [
+        "case",
+        ["boolean", ["get", "selected"], false],
+        isDark ? 0.84 : 0.72,
+        isDark ? 0.5 : 0.36,
+      ]);
+      map.setPaintProperty("routes-line", "line-width", [
+        "case",
+        ["boolean", ["get", "selected"], false],
+        isDark ? 3 : 3.4,
+        isDark ? 1.2 : 1.45,
+      ]);
+      map.setPaintProperty("hub-circle", "circle-color", isDark ? "#f0abfc" : "#6d28d9");
+    };
+
+    if (map.isStyleLoaded()) {
+      applyThemePaint();
+    } else {
+      map.once("load", applyThemePaint);
+    }
+  }, [theme]);
 
   return (
     <section id="map" className="mx-auto max-w-6xl px-6 py-20">

@@ -12,7 +12,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-[92vh] items-center overflow-hidden px-6 pb-20 pt-32"
+      className="hero-surface relative flex min-h-[92vh] items-center overflow-hidden px-6 pb-20 pt-32"
     >
       <div className="cyber-grid absolute inset-0" aria-hidden="true" />
       <div className="plasma-field absolute inset-0" aria-hidden="true" />
@@ -58,7 +58,7 @@ export function Hero() {
         </div>
 
         <div className="relative">
-          <div className="absolute inset-0 rounded-lg bg-fuchsia-500/20 blur-3xl" aria-hidden="true" />
+          <div className="orbit-aura absolute inset-x-4 bottom-[-52px] top-10 rounded-lg blur-3xl" aria-hidden="true" />
           <CyberOrbit />
         </div>
       </motion.div>

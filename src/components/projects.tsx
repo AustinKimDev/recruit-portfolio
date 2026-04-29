@@ -112,9 +112,8 @@ export function Projects() {
                 <div
                   className="pointer-events-none absolute inset-0 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                   style={{
-                    background:
-                      "linear-gradient(135deg, rgba(168,85,247,0.14), rgba(34,211,238,0.08), rgba(217,70,239,0.10))",
-                    boxShadow: "inset 0 0 0 1px color-mix(in srgb, var(--accent) 24%, transparent)",
+                    background: "var(--card-hover-overlay)",
+                    boxShadow: "var(--card-hover-inset)",
                   }}
                 />
 
