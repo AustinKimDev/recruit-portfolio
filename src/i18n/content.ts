@@ -64,7 +64,7 @@ export const copy = {
       body:
         "실제 위치가 아닌 기술 도메인별 배치입니다. 지도 레이어, 마커 상태, 경로 라인, 선택 패널을 코드로 연결해 GIS 경험을 보여줍니다.",
       activeNode: "활성 노드",
-      routeLock: "경로 고정",
+      routeLock: "선택 연결",
       period: "기간",
       scope: "범위",
       coordinates: "좌표",
@@ -160,7 +160,7 @@ export const copy = {
       body:
         "These are not real project locations. The atlas maps technical domains with interactive layers, markers, route lines, and a selected detail panel.",
       activeNode: "Active Node",
-      routeLock: "Route Lock",
+      routeLock: "Selected Links",
       period: "Period",
       scope: "Scope",
       coordinates: "Coordinates",
