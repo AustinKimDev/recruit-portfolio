@@ -1,12 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import maplibregl, {
   type GeoJSONSource,
   type Map as MapLibreMap,
   type MapLayerMouseEvent,
 } from "maplibre-gl";
-import { localize, projects } from "@/data/projects";
+import { localize, projects, type ProjectCategory } from "@/data/projects";
 import { useI18n } from "@/i18n/i18n-provider";
 import { useTheme } from "./theme-provider";
 
@@ -22,6 +22,14 @@ const categoryColor = {
   fullstack: "#f59e0b",
   infra: "#94a3b8",
   default: "#c084fc",
+};
+
+const categoryLabel: Record<ProjectCategory, { ko: string; en: string }> = {
+  gis: { ko: "GIS", en: "GIS" },
+  ai: { ko: "AI", en: "AI" },
+  backend: { ko: "백엔드", en: "Backend" },
+  fullstack: { ko: "풀스택", en: "Full-stack" },
+  infra: { ko: "인프라", en: "Infra" },
 };
 
 function getProjectColor(project: MappedProject) {
@@ -149,6 +157,34 @@ export function PortfolioMap() {
       mappedProjects[0],
     [mappedProjects, selectedName]
   );
+
+  const selectedIndex = Math.max(
+    mappedProjects.findIndex((project) => localize(project.name, "ko") === selectedName),
+    0
+  );
+  const selectedColor = selectedProject ? getProjectColor(selectedProject) : categoryColor.default;
+  const selectedCategory = selectedProject?.categories?.[0];
+  const selectedCategoryText = selectedCategory
+    ? categoryLabel[selectedCategory][locale]
+    : locale === "ko" ? "프로젝트" : "Project";
+  const selectedCoordinatesText = selectedProject?.map
+    ? selectedProject.map.coordinates
+        .map((coordinate) => coordinate.toFixed(3))
+        .join(", ")
+    : "-";
+  const selectedRoleText = selectedProject?.caseStudy?.role
+    ? localize(selectedProject.caseStudy.role, locale)
+    : selectedProject?.scope
+      ? localize(selectedProject.scope, locale)
+      : selectedCategoryText;
+  const selectedMetricText = selectedProject?.metric
+    ? localize(selectedProject.metric, locale)
+    : selectedProject?.map?.note
+      ? localize(selectedProject.map.note, locale)
+      : "-";
+  const selectedScopeText = selectedProject?.scope
+    ? localize(selectedProject.scope, locale)
+    : selectedCategoryText;
 
   const selectProject = useCallback((projectName: string) => {
     shouldFlyToSelectedRef.current = true;
@@ -466,7 +502,7 @@ export function PortfolioMap() {
   }, [theme]);
 
   return (
-    <section id="map" className="mx-auto max-w-6xl px-6 py-20">
+    <section id="map" className="mx-auto max-w-7xl px-6 py-20">
       <div className="mb-7 flex flex-col gap-2">
         <h3 className="section-title">{t.map.title}</h3>
         <p className="max-w-3xl text-sm leading-6" style={{ color: "var(--text-secondary)" }}>
@@ -475,81 +511,146 @@ export function PortfolioMap() {
       </div>
 
       <div
-        className="cyber-panel grid overflow-hidden rounded-lg lg:grid-cols-[1fr_360px]"
+        className="cyber-panel grid overflow-hidden rounded-lg lg:grid-cols-[minmax(0,1fr)_430px] xl:grid-cols-[minmax(0,1fr)_460px]"
         style={{
           boxShadow: "0 20px 60px rgba(15, 23, 42, 0.10)",
         }}
       >
-        <div ref={containerRef} className="h-[520px] min-h-0 lg:h-[680px]" />
+        <div ref={containerRef} className="h-[520px] min-h-0 lg:h-[720px]" />
 
         <aside
-          className="flex h-[520px] min-h-0 flex-col overflow-y-auto border-t p-4 lg:h-[680px] lg:border-l lg:border-t-0"
-          style={{ borderColor: "var(--border)" }}
+          className="atlas-detail-panel flex h-[620px] min-h-0 flex-col overflow-y-auto border-t p-5 lg:h-[720px] lg:border-l lg:border-t-0"
+          style={{
+            borderColor: "var(--border)",
+            "--project-color": selectedColor,
+          } as CSSProperties}
         >
-          <div className="mb-4">
-            <p className="font-mono text-[11px]" style={{ color: "var(--text-muted)" }}>
-              {selectedProject?.map && localize(selectedProject.map.label, locale)}
-            </p>
-            <h4 className="mt-1 text-xl font-bold leading-tight" style={{ color: "var(--text-primary)" }}>
-              {selectedProject && localize(selectedProject.name, locale)}
-            </h4>
-            <p className="mt-2 text-sm leading-6" style={{ color: "var(--text-secondary)" }}>
-              {selectedProject && localize(selectedProject.summary, locale)}
-            </p>
+          <div className="relative z-10">
+            <div className="mb-5 flex items-center justify-between gap-3">
+              <span className="atlas-status-chip">
+                <span className="atlas-live-dot" />
+                {t.map.activeNode} {String(selectedIndex + 1).padStart(2, "0")}
+              </span>
+              <span className="atlas-route-chip">{t.map.routeLock}</span>
+            </div>
+
+            <div className="atlas-hero-card">
+              <div className="flex items-start gap-4">
+                <div className="atlas-node-orb" aria-hidden="true">
+                  <span />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="font-mono text-[11px]" style={{ color: "var(--text-muted)" }}>
+                    {selectedProject?.map && localize(selectedProject.map.label, locale)} / {selectedCategoryText}
+                  </p>
+                  <h4 className="mt-1 text-2xl font-black leading-tight tracking-normal" style={{ color: "var(--text-primary)" }}>
+                    {selectedProject && localize(selectedProject.name, locale)}
+                  </h4>
+                  <p className="mt-3 text-sm leading-6" style={{ color: "var(--text-secondary)" }}>
+                    {selectedProject && localize(selectedProject.summary, locale)}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <dl className="atlas-meta-grid mt-4">
+              <div>
+                <dt>{t.map.period}</dt>
+                <dd>{selectedProject?.period ?? "-"}</dd>
+              </div>
+              <div>
+                <dt>{t.map.scope}</dt>
+                <dd>{selectedScopeText}</dd>
+              </div>
+              <div>
+                <dt>{t.map.coordinates}</dt>
+                <dd>{selectedCoordinatesText}</dd>
+              </div>
+            </dl>
+
+            <dl className="atlas-impact-grid mt-4">
+              <div>
+                <dt>{t.projects.role}</dt>
+                <dd>{selectedRoleText}</dd>
+              </div>
+              <div>
+                <dt>{t.map.metric}</dt>
+                <dd>{selectedMetricText}</dd>
+              </div>
+            </dl>
+
+            <div className="mt-5 space-y-2">
+              <div className="mb-3 flex items-center justify-between">
+                <p className="text-xs font-bold text-accent">{t.map.nodeList}</p>
+                <p className="font-mono text-[10px]" style={{ color: "var(--text-muted)" }}>
+                  {mappedProjects.length} nodes
+                </p>
+              </div>
+              {mappedProjects.map((project, index) => {
+                const selected = selectedName === localize(project.name, "ko");
+                const projectColor = getProjectColor(project);
+                const projectCategory = project.categories?.[0];
+                return (
+                  <button
+                    key={localize(project.name, "ko")}
+                    type="button"
+                    onClick={() => selectProject(localize(project.name, "ko"))}
+                    className={`atlas-node-button ${selected ? "is-selected" : ""}`}
+                    style={{
+                      "--project-color": projectColor,
+                    } as CSSProperties}
+                  >
+                    <span className="atlas-node-index">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate">{localize(project.name, locale)}</span>
+                      <span className="mt-0.5 block truncate text-[11px]">
+                        {projectCategory ? categoryLabel[projectCategory][locale] : selectedCategoryText}
+                        {project.period ? ` / ${project.period}` : ""}
+                      </span>
+                    </span>
+                    <span className="atlas-node-dot" />
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
-          {selectedProject?.map?.note && (
-            <p
-              className="mb-4 rounded-md px-3 py-2 text-xs leading-5"
-              style={{
-                backgroundColor: "var(--bg-secondary)",
-                color: "var(--text-secondary)",
-              }}
-            >
-              {localize(selectedProject.map.note, locale)}
-            </p>
+          {selectedProject?.stack && selectedProject.stack.length > 0 && (
+            <div className="relative z-10 mt-5">
+              <div className="mb-2 flex items-center justify-between">
+                <p className="text-xs font-bold text-accent">{t.map.stack}</p>
+                <p className="font-mono text-[10px]" style={{ color: "var(--text-muted)" }}>
+                  {selectedProject.stack.length} signals
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {selectedProject.stack.map((stack) => (
+                  <span key={stack} className="atlas-stack-chip">
+                    {stack}
+                  </span>
+                ))}
+              </div>
+            </div>
           )}
 
           {selectedProject?.caseStudy && (
-            <dl className="mb-4 space-y-3 text-sm">
+            <dl className="atlas-case-grid relative z-10 mt-5">
               <div>
-                <dt className="mb-1 text-xs font-semibold text-accent">{t.map.decision}</dt>
-                <dd className="leading-6" style={{ color: "var(--text-secondary)" }}>
+                <dt>{t.map.decision}</dt>
+                <dd>
                   {localize(selectedProject.caseStudy.approach, locale)}
                 </dd>
               </div>
               <div>
-                <dt className="mb-1 text-xs font-semibold text-accent">{t.map.result}</dt>
-                <dd className="leading-6" style={{ color: "var(--text-secondary)" }}>
+                <dt>{t.map.result}</dt>
+                <dd>
                   {localize(selectedProject.caseStudy.outcome, locale)}
                 </dd>
               </div>
             </dl>
           )}
-
-          <div className="mt-auto space-y-2">
-            {mappedProjects.map((project) => {
-              const selected = selectedName === localize(project.name, "ko");
-              return (
-                <button
-                  key={localize(project.name, "ko")}
-                  type="button"
-                  onClick={() => selectProject(localize(project.name, "ko"))}
-                  className="flex w-full items-center justify-between gap-3 rounded-md px-3 py-2 text-left text-sm transition"
-                  style={{
-                    backgroundColor: selected ? "color-mix(in srgb, var(--accent) 12%, transparent)" : "transparent",
-                    color: selected ? "var(--text-primary)" : "var(--text-secondary)",
-                  }}
-                >
-                  <span className="truncate">{localize(project.name, locale)}</span>
-                  <span
-                    className="h-2.5 w-2.5 shrink-0 rounded-full"
-                    style={{ backgroundColor: getProjectColor(project) }}
-                  />
-                </button>
-              );
-            })}
-          </div>
         </aside>
       </div>
     </section>

@@ -302,6 +302,301 @@ code, .font-mono {
   }
 }
 
+.atlas-detail-panel {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(248, 245, 255, 0.95)),
+    linear-gradient(135deg, color-mix(in srgb, var(--project-color) 9%, transparent), transparent 46%);
+  scrollbar-color: color-mix(in srgb, var(--accent) 34%, transparent) transparent;
+  scrollbar-width: thin;
+}
+
+.atlas-detail-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--project-color) 14%, transparent) 1px, transparent 1px),
+    linear-gradient(color-mix(in srgb, var(--accent) 9%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7), transparent 74%);
+  opacity: 0.26;
+}
+
+.atlas-detail-panel::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 120px;
+  pointer-events: none;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--project-color) 14%, transparent), transparent);
+  opacity: 0.55;
+}
+
+.dark .atlas-detail-panel {
+  background:
+    linear-gradient(180deg, rgba(9, 3, 20, 0.96), rgba(15, 6, 31, 0.92)),
+    radial-gradient(circle at 12% 0%, color-mix(in srgb, var(--project-color) 24%, transparent), transparent 34%);
+}
+
+.dark .atlas-detail-panel::before {
+  opacity: 0.42;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--project-color) 18%, transparent) 1px, transparent 1px),
+    linear-gradient(color-mix(in srgb, var(--accent-light) 12%, transparent) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.atlas-status-chip,
+.atlas-route-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  border: 1px solid color-mix(in srgb, var(--project-color) 26%, var(--border));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg-card) 76%, transparent);
+  color: var(--text-secondary);
+  font-family: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
+  font-size: 0.66rem;
+  font-weight: 800;
+  line-height: 1;
+  padding: 0 10px;
+}
+
+.atlas-route-chip {
+  color: color-mix(in srgb, var(--project-color) 72%, var(--text-primary));
+}
+
+.atlas-live-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 8px;
+  border-radius: 999px;
+  background: var(--project-color);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--project-color) 72%, transparent);
+  animation: atlas-live-dot 1.4s ease-in-out infinite;
+}
+
+.atlas-hero-card,
+.atlas-impact-grid > div,
+.atlas-case-grid > div {
+  border: 1px solid color-mix(in srgb, var(--project-color) 20%, var(--border));
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--project-color) 10%, transparent), transparent 44%),
+    color-mix(in srgb, var(--bg-card) 86%, transparent);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.58);
+}
+
+.dark .atlas-hero-card,
+.dark .atlas-impact-grid > div,
+.dark .atlas-case-grid > div {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--project-color) 16%, transparent), transparent 46%),
+    color-mix(in srgb, var(--bg-card) 80%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 28px color-mix(in srgb, var(--project-color) 12%, transparent);
+}
+
+.atlas-hero-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  padding: 18px;
+}
+
+.atlas-hero-card::after {
+  content: "";
+  position: absolute;
+  inset: auto 18px 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--project-color), transparent);
+  opacity: 0.7;
+}
+
+.atlas-node-orb {
+  position: relative;
+  display: grid;
+  width: 52px;
+  height: 52px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 999px;
+  background: conic-gradient(from 120deg, var(--project-color), var(--accent-light), var(--accent-cyan), var(--project-color));
+  box-shadow: 0 0 28px color-mix(in srgb, var(--project-color) 32%, transparent);
+}
+
+.atlas-node-orb::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border-radius: inherit;
+  background: var(--bg-primary);
+}
+
+.atlas-node-orb span {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: var(--project-color);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--project-color) 68%, transparent);
+}
+
+.atlas-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.atlas-meta-grid > div,
+.atlas-impact-grid > div {
+  min-width: 0;
+  border-radius: 8px;
+  padding: 11px 12px;
+}
+
+.atlas-meta-grid > div {
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg-secondary) 68%, transparent);
+}
+
+.atlas-meta-grid dt,
+.atlas-impact-grid dt,
+.atlas-case-grid dt {
+  color: color-mix(in srgb, var(--project-color) 78%, var(--accent));
+  font-size: 0.68rem;
+  font-weight: 900;
+}
+
+.atlas-meta-grid dd {
+  margin-top: 5px;
+  color: var(--text-primary);
+  font-family: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.atlas-impact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.atlas-impact-grid dd,
+.atlas-case-grid dd {
+  margin-top: 7px;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  line-height: 1.65;
+}
+
+.atlas-stack-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  border: 1px solid color-mix(in srgb, var(--project-color) 20%, var(--border));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--project-color) 9%, transparent);
+  color: var(--text-secondary);
+  font-size: 0.74rem;
+  font-weight: 750;
+  padding: 0 10px;
+}
+
+.atlas-case-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.atlas-case-grid > div {
+  border-radius: 8px;
+  padding: 13px;
+}
+
+.atlas-node-button {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 36px minmax(0, 1fr) 12px;
+  align-items: center;
+  gap: 12px;
+  min-height: 58px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-secondary);
+  padding: 9px 12px;
+  text-align: left;
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, color 160ms ease;
+}
+
+.atlas-node-button:hover,
+.atlas-node-button.is-selected {
+  border-color: color-mix(in srgb, var(--project-color) 34%, var(--border));
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--project-color) 16%, transparent), transparent 72%),
+    color-mix(in srgb, var(--bg-card) 72%, transparent);
+  color: var(--text-primary);
+}
+
+.atlas-node-button:hover {
+  transform: translateX(3px);
+}
+
+.atlas-node-button.is-selected {
+  box-shadow:
+    inset 3px 0 0 var(--project-color),
+    0 12px 28px color-mix(in srgb, var(--project-color) 12%, transparent);
+}
+
+.atlas-node-index {
+  color: color-mix(in srgb, var(--project-color) 74%, var(--text-secondary));
+  font-family: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+.atlas-node-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--project-color);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--project-color) 58%, transparent);
+}
+
+@keyframes atlas-live-dot {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: scale(1.35);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atlas-live-dot {
+    animation: none;
+  }
+
+  .atlas-node-button:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .atlas-meta-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .maplibregl-ctrl-group {
   border-radius: 8px;
   overflow: hidden;
