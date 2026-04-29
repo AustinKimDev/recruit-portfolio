@@ -25,7 +25,7 @@ export function CyberOrbit() {
     const core = new THREE.Mesh(
       new THREE.IcosahedronGeometry(1.08, 2),
       new THREE.MeshStandardMaterial({
-        color: 0x6f5cff,
+        color: 0x7c3aed,
         emissive: 0x171a21,
         metalness: 0.18,
         roughness: 0.58,
@@ -46,7 +46,7 @@ export function CyberOrbit() {
     group.add(shell);
 
     const orbitMaterial = new THREE.LineBasicMaterial({
-      color: 0x6f5cff,
+      color: 0x9b8cff,
       transparent: true,
       opacity: 0.34,
     });
@@ -83,7 +83,7 @@ export function CyberOrbit() {
     scene.add(particles);
 
     scene.add(new THREE.AmbientLight(0xffffff, 1));
-    const violet = new THREE.PointLight(0x8b7bff, 1.4, 20);
+    const violet = new THREE.PointLight(0xc4b5fd, 1.4, 20);
     violet.position.set(-3, 3, 4);
     scene.add(violet);
     const cyan = new THREE.PointLight(0x64a8ff, 0.8, 18);

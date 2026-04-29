@@ -15,11 +15,11 @@ type MappedProject = (typeof projects)[number];
 
 const categoryColor = {
   gis: "#3182f6",
-  ai: "#6f5cff",
+  ai: "#7c3aed",
   backend: "#e64980",
   fullstack: "#ff8a00",
   infra: "#8b95a1",
-  default: "#6f5cff",
+  default: "#7c3aed",
 };
 
 const categoryLabel: Record<ProjectCategory, { ko: string; en: string }> = {
@@ -188,7 +188,7 @@ export function PortfolioMap() {
               "line-join": "round",
             },
             paint: {
-              "line-color": "#6f5cff",
+              "line-color": "#9b8cff",
               "line-opacity": 0.18,
               "line-width": 1.2,
             },
@@ -203,7 +203,7 @@ export function PortfolioMap() {
             },
             paint: {
               "line-blur": 5,
-              "line-color": "#6f5cff",
+              "line-color": "#9b8cff",
               "line-opacity": 0.2,
               "line-width": 8,
             },
@@ -217,7 +217,7 @@ export function PortfolioMap() {
               "line-join": "round",
             },
             paint: {
-              "line-color": "#6f5cff",
+              "line-color": "#4f35e8",
               "line-opacity": 0.66,
               "line-width": 2.2,
             },
@@ -363,14 +363,14 @@ export function PortfolioMap() {
       map.setPaintProperty("osm", "raster-opacity", isDark ? 0.26 : 0.58);
       map.setPaintProperty("osm", "raster-saturation", isDark ? -0.85 : -0.35);
       map.setPaintProperty("osm", "raster-contrast", isDark ? 0.22 : -0.08);
-      map.setPaintProperty("routes-base-line", "line-color", isDark ? "#8b7bff" : "#6f5cff");
+      map.setPaintProperty("routes-base-line", "line-color", isDark ? "#a596ff" : "#9b8cff");
       map.setPaintProperty("routes-base-line", "line-opacity", isDark ? 0.18 : 0.16);
       map.setPaintProperty("routes-base-line", "line-width", isDark ? 1.2 : 1.3);
-      map.setPaintProperty("routes-selected-glow", "line-color", isDark ? "#8b7bff" : "#6f5cff");
+      map.setPaintProperty("routes-selected-glow", "line-color", isDark ? "#c4b5fd" : "#9b8cff");
       map.setPaintProperty("routes-selected-glow", "line-opacity", isDark ? 0.2 : 0.14);
       map.setPaintProperty("routes-selected-glow", "line-width", isDark ? 8 : 9);
-      map.setPaintProperty("routes-selected-line", "line-color", isDark ? "#8b7bff" : "#6f5cff");
-      map.setPaintProperty("routes-selected-line", "line-opacity", isDark ? 0.66 : 0.48);
+      map.setPaintProperty("routes-selected-line", "line-color", isDark ? "#c4b5fd" : "#4f35e8");
+      map.setPaintProperty("routes-selected-line", "line-opacity", isDark ? 0.66 : 0.56);
       map.setPaintProperty("routes-selected-line", "line-width", isDark ? 2.2 : 2.4);
     };
 
@@ -461,7 +461,7 @@ export function PortfolioMap() {
 
             <div className="mt-5 space-y-2">
               <div className="mb-3 flex items-center justify-between">
-                <p className="text-xs font-bold text-accent">{t.map.nodeList}</p>
+                <p className="text-xs font-bold text-accent-strong">{t.map.nodeList}</p>
                 <p className="font-mono text-[10px]" style={{ color: "var(--text-muted)" }}>
                   {mappedProjects.length} nodes
                 </p>
@@ -500,7 +500,7 @@ export function PortfolioMap() {
           {selectedProject?.stack && selectedProject.stack.length > 0 && (
             <div className="relative z-10 mt-5">
               <div className="mb-2 flex items-center justify-between">
-                <p className="text-xs font-bold text-accent">{t.map.stack}</p>
+                <p className="text-xs font-bold text-accent-strong">{t.map.stack}</p>
                 <p className="font-mono text-[10px]" style={{ color: "var(--text-muted)" }}>
                   {selectedProject.stack.length} signals
                 </p>

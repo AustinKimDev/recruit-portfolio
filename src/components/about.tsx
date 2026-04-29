@@ -29,14 +29,14 @@ export function About() {
         </p>
       </div>
 
-      <p className="mb-3 text-xs font-bold text-accent">{t.about.proofTitle}</p>
+      <p className="mb-3 text-xs font-bold text-accent-strong">{t.about.proofTitle}</p>
       <div className="mb-6 grid gap-3 sm:grid-cols-4">
         {t.profile.stats.map((stat) => (
           <div key={stat.label} className="cyber-panel p-4">
             <p className="text-xs font-semibold leading-5" style={{ color: "var(--text-secondary)" }}>
               {stat.label}
             </p>
-            <p className="mt-3 text-2xl font-black text-accent">{stat.value}</p>
+            <p className="mt-3 text-2xl font-black text-accent-strong">{stat.value}</p>
             <p className="mt-2 text-xs leading-5" style={{ color: "var(--text-muted)" }}>
               {stat.detail}
             </p>
@@ -58,7 +58,7 @@ export function About() {
             variants={prefersReducedMotion ? undefined : cardVariants}
             initial={false}
           >
-            <p className="mb-2 font-mono text-[11px] text-accent">
+            <p className="mb-2 font-mono text-[11px] text-accent-strong">
               {String(index + 1).padStart(2, "0")}
             </p>
             <h4 className="mb-2 text-sm font-semibold">{item.title}</h4>

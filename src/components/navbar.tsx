@@ -118,13 +118,13 @@ export function Navbar() {
                       onClick={() => scrollToSection(link.id)}
                       aria-current={isActive ? "location" : undefined}
                       className="relative px-3 py-2 text-sm transition-colors"
-                      style={{ color: isActive ? "var(--text-primary)" : "var(--text-muted)" }}
+                      style={{ color: isActive ? "var(--accent-strong)" : "var(--text-muted)" }}
                     >
                       {t.nav[link.labelKey]}
                       {isActive && (
                         <motion.span
                           layoutId="active-underline"
-                          className="absolute bottom-0 left-3 right-3 h-0.5 rounded-full bg-accent"
+                          className="absolute bottom-0 left-3 right-3 h-0.5 rounded-full bg-accent-strong"
                           transition={{
                             type: "spring",
                             stiffness: 380,
@@ -219,10 +219,10 @@ export function Navbar() {
                           onClick={() => scrollToSection(link.id)}
                           aria-current={isActive ? "location" : undefined}
                           className="w-full px-6 py-3 text-left text-base transition-colors"
-                          style={{ color: isActive ? "var(--text-primary)" : "var(--text-muted)" }}
+                          style={{ color: isActive ? "var(--accent-strong)" : "var(--text-muted)" }}
                         >
                           {isActive && (
-                            <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-accent align-middle" />
+                            <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-accent-strong align-middle" />
                           )}
                           {t.nav[link.labelKey]}
                         </button>

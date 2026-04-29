@@ -65,7 +65,7 @@ export function Projects() {
             className={[
               "relative rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
               activeTab === tab.id
-                ? "text-accent"
+                ? "text-accent-strong"
                 : "",
             ].join(" ")}
             style={activeTab !== tab.id ? { color: "var(--text-muted)" } : undefined}
@@ -73,7 +73,7 @@ export function Projects() {
             {activeTab === tab.id && (
               <motion.span
                 layoutId="tab-indicator"
-                className="absolute inset-0 rounded-md bg-accent/10"
+                className="absolute inset-0 rounded-md bg-accent-soft"
                 transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
               />
             )}
@@ -81,7 +81,7 @@ export function Projects() {
             {activeTab === tab.id && (
               <motion.span
                 layoutId="tab-underline"
-                className="absolute bottom-0 left-3 right-3 h-px bg-accent"
+                className="absolute bottom-0 left-3 right-3 h-px bg-accent-strong"
                 transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
               />
             )}
@@ -136,7 +136,7 @@ export function Projects() {
                         </span>
                       )}
                       {p.isAI && (
-                        <span className="rounded-md bg-accent/10 px-2 py-0.5 text-[10px] font-semibold text-accent">
+                        <span className="rounded-md bg-accent-soft px-2 py-0.5 text-[10px] font-semibold text-accent-strong">
                           AI
                         </span>
                       )}
@@ -159,7 +159,7 @@ export function Projects() {
                           className="grid grid-cols-[42px_1fr] gap-3 border-t py-2 first:border-t-0 first:pt-0"
                           style={{ borderColor: "var(--border)" }}
                         >
-                          <dt className="text-xs font-semibold text-accent">{label}</dt>
+                          <dt className="text-xs font-semibold text-accent-strong">{label}</dt>
                           <dd className="text-xs leading-5" style={{ color: "var(--text-secondary)" }}>
                             {localize(value, locale)}
                           </dd>
@@ -208,7 +208,7 @@ export function Projects() {
                   </motion.div>
 
                   {p.metric && (
-                    <p className="mt-3 text-xs font-semibold text-accent">
+                    <p className="mt-3 text-xs font-semibold text-accent-strong">
                       {localize(p.metric, locale)}
                     </p>
                   )}
@@ -233,7 +233,7 @@ export function Projects() {
                           href={p.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="rounded-md border border-accent/30 bg-accent/10 px-2.5 py-1 text-xs text-accent transition hover:border-accent/60 hover:bg-accent/20"
+                          className="rounded-md border border-accent-line bg-accent-soft px-2.5 py-1 text-xs text-accent-strong transition hover:border-accent-strong"
                         >
                           Live -&gt;
                         </a>
