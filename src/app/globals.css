@@ -295,6 +295,138 @@ code, .font-mono {
   }
 }
 
+.atlas-command {
+  background: var(--bg-card);
+}
+
+.atlas-map-shell {
+  position: relative;
+  min-height: 820px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 38% 46%, color-mix(in srgb, var(--project-color) 12%, transparent), transparent 28%),
+    var(--bg-secondary);
+}
+
+.atlas-map-stage {
+  height: 820px;
+  min-height: 0;
+}
+
+.atlas-map-vignette,
+.atlas-scan-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.atlas-map-vignette {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--bg-primary) 62%, transparent), transparent 30%, transparent 62%, color-mix(in srgb, var(--bg-primary) 54%, transparent)),
+    linear-gradient(180deg, color-mix(in srgb, var(--bg-primary) 42%, transparent), transparent 30%, transparent 72%, color-mix(in srgb, var(--bg-primary) 64%, transparent));
+}
+
+.dark .atlas-map-vignette {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--bg-primary) 58%, transparent), transparent 26%, transparent 62%, color-mix(in srgb, var(--bg-primary) 72%, transparent)),
+    linear-gradient(180deg, color-mix(in srgb, var(--bg-primary) 52%, transparent), transparent 30%, transparent 72%, color-mix(in srgb, var(--bg-primary) 74%, transparent));
+}
+
+.atlas-scan-grid {
+  opacity: 0.22;
+  background:
+    linear-gradient(color-mix(in srgb, var(--accent-line) 32%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--accent-line) 32%, transparent) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.72), transparent 78%);
+}
+
+.atlas-overlay {
+  position: absolute;
+  z-index: 2;
+  border: 1px solid color-mix(in srgb, var(--project-color) 18%, var(--accent-line));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--bg-card) 88%, transparent);
+  box-shadow: 0 18px 44px rgba(15, 23, 42, 0.12);
+  font-family: var(--font-jetbrains-mono), "Pretendard Variable", Pretendard, system-ui, sans-serif;
+  backdrop-filter: blur(18px);
+}
+
+.dark .atlas-overlay {
+  background: color-mix(in srgb, var(--bg-card) 84%, transparent);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.28);
+}
+
+.atlas-briefing {
+  top: 24px;
+  left: 24px;
+  width: min(460px, calc(100% - 440px));
+  padding: 18px;
+}
+
+.atlas-briefing h4 {
+  font-family: var(--font-jetbrains-mono), "Pretendard Variable", Pretendard, system-ui, sans-serif;
+  font-size: 1.42rem;
+  line-height: 1.18;
+}
+
+.atlas-briefing p {
+  font-size: 0.78rem;
+  line-height: 1.72;
+}
+
+.atlas-node-console {
+  top: 24px;
+  right: 24px;
+  width: 356px;
+  max-height: calc(100% - 48px);
+  overflow-y: auto;
+  padding: 14px;
+  scrollbar-color: color-mix(in srgb, var(--accent) 34%, transparent) transparent;
+  scrollbar-width: thin;
+}
+
+.atlas-telemetry {
+  left: 24px;
+  bottom: 24px;
+  width: min(680px, calc(100% - 440px));
+  padding: 16px;
+}
+
+.atlas-stack-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.atlas-relay-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.atlas-relay-grid > div {
+  min-width: 0;
+  border: 1px solid color-mix(in srgb, var(--project-color) 16%, var(--border));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--bg-card) 72%, transparent);
+  padding: 11px 12px;
+}
+
+.atlas-relay-grid dt {
+  color: color-mix(in srgb, var(--project-color) 54%, var(--accent-strong));
+  font-size: 0.68rem;
+  font-weight: 900;
+}
+
+.atlas-relay-grid dd {
+  margin-top: 6px;
+  color: var(--text-secondary);
+  font-size: 0.72rem;
+  line-height: 1.55;
+}
+
 .atlas-detail-panel {
   position: relative;
   background: var(--bg-card);
@@ -336,7 +468,7 @@ code, .font-mono {
   background: color-mix(in srgb, var(--accent-soft) 70%, var(--bg-card));
   color: var(--accent-strong);
   font-family: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
-  font-size: 0.66rem;
+  font-size: 0.62rem;
   font-weight: 800;
   line-height: 1;
   padding: 0 10px;
@@ -435,7 +567,7 @@ code, .font-mono {
 .atlas-impact-grid dt,
 .atlas-case-grid dt {
   color: color-mix(in srgb, var(--project-color) 54%, var(--accent-strong));
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   font-weight: 900;
 }
 
@@ -443,7 +575,7 @@ code, .font-mono {
   margin-top: 5px;
   color: var(--text-primary);
   font-family: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   line-height: 1.35;
   overflow-wrap: anywhere;
 }
@@ -458,7 +590,7 @@ code, .font-mono {
 .atlas-case-grid dd {
   margin-top: 7px;
   color: var(--text-secondary);
-  font-size: 0.82rem;
+  font-size: 0.74rem;
   line-height: 1.65;
 }
 
@@ -470,7 +602,7 @@ code, .font-mono {
   border-radius: 999px;
   background: color-mix(in srgb, var(--project-color) 8%, var(--bg-card));
   color: var(--text-secondary);
-  font-size: 0.74rem;
+  font-size: 0.68rem;
   font-weight: 750;
   padding: 0 10px;
 }
@@ -491,7 +623,7 @@ code, .font-mono {
   grid-template-columns: 36px minmax(0, 1fr) 12px;
   align-items: center;
   gap: 12px;
-  min-height: 58px;
+  min-height: 52px;
   border: 1px solid transparent;
   border-radius: 8px;
   background: transparent;
@@ -523,7 +655,7 @@ code, .font-mono {
 .atlas-node-index {
   color: color-mix(in srgb, var(--project-color) 74%, var(--text-secondary));
   font-family: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 900;
 }
 
@@ -559,6 +691,69 @@ code, .font-mono {
 
 @media (max-width: 640px) {
   .atlas-meta-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1180px) {
+  .atlas-map-shell {
+    min-height: 900px;
+  }
+
+  .atlas-map-stage {
+    height: 900px;
+  }
+
+  .atlas-briefing,
+  .atlas-telemetry {
+    width: min(480px, calc(100% - 408px));
+  }
+
+  .atlas-node-console {
+    width: 336px;
+  }
+}
+
+@media (max-width: 960px) {
+  .atlas-map-shell {
+    display: flex;
+    min-height: 0;
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .atlas-map-stage {
+    height: 520px;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+
+  .atlas-map-vignette,
+  .atlas-scan-grid {
+    display: none;
+  }
+
+  .atlas-overlay {
+    position: relative;
+    inset: auto;
+    width: auto;
+    max-height: none;
+  }
+
+  .atlas-briefing,
+  .atlas-node-console,
+  .atlas-telemetry {
+    padding: 14px;
+  }
+
+  .atlas-node-console {
+    overflow: visible;
+  }
+}
+
+@media (max-width: 640px) {
+  .atlas-relay-grid {
     grid-template-columns: 1fr;
   }
 }

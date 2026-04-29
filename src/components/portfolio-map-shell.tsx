@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 
 function MapSkeleton() {
   return (
-    <section id="map" className="mx-auto max-w-6xl px-6 py-20">
+    <section id="map" className="mx-auto max-w-6xl scroll-mt-24 px-6 py-20">
       <div className="h-[560px] animate-pulse rounded-lg" style={{ backgroundColor: "var(--bg-secondary)" }} />
     </section>
   );
